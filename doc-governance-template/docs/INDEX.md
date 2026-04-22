@@ -70,6 +70,8 @@ Start at [docs/reference/registry/DOC_REGISTRY.yaml](reference/registry/DOC_REGI
 | Repository Index | `docs/INDEX.md` | This file — universal navigation entrypoint |
 | Reference Map | `docs/REFERENCE.md` | "Where is the truth?" — authority surfaces and resolution chains |
 | Agent Workflow | `docs/development/AGENT_WORKFLOW.md` | Normative task routing and read-order rules for agents |
+| Agent Capabilities | `docs/development/AGENT_CAPABILITIES.md` | Permitted tools and execution environment |
+| Needs Attention | `docs/plans/NEEDS_ATTENTION.md` | Human-Agent Handoff / Interrupt blockers |
 | Documentation Registry | `docs/reference/registry/DOC_REGISTRY.yaml` | Canonical doc classification, routing, and ownership |
 | Maintenance Guide | `docs/development/DOCUMENTATION_MAINTENANCE.md` | When and how to update governed docs |
 | Release Checklist | `docs/development/RELEASE_CHECKLIST.md` | Pre-release documentation checks |

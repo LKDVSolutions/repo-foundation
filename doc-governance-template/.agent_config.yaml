@@ -1,0 +1,24 @@
+# Agent Configuration
+agent:
+  name: "project-agent"
+  version: "1.0.0"
+  default_model: "gemini-1.5-pro"
+  max_iterations: 25
+  memory_scope: "project"
+  capabilities:
+    - shell_execution
+    - file_system_access
+    - codebase_search
+  allowed_tools:
+    - write_file
+    - read_file
+    - run_shell_command
+    - replace
+    - grep_search
+    - glob
+  restrictions:
+    - "Never log, print, or commit secrets, API keys, or sensitive credentials."
+    - "Do not stage or commit changes unless specifically requested."
+  observability:
+    state_file: "docs/history/AGENT_STATE.md"
+    decision_log: "docs/history/DECISION_LOG.md"

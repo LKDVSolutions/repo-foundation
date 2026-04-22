@@ -218,7 +218,19 @@ For audit and review tasks (refresh_current_docs, investigate_runtime_issue), in
 
 ---
 
-## Section 6: Staleness Protocol
+## Section 6: Execution Guidelines & Human Handoff
+
+### The Agent Scratchpad
+If a task requires more than 3 steps, or if you need to perform complex refactoring, write your intermediate findings, plans, and next steps to `.agent_scratchpad.md` before executing. This prevents losing context and maintains a clear trail of thought.
+
+### Human-Agent Handoff (Interrupts)
+If you hit an unresolvable blocker (e.g., a missing dependency, ambiguous architectural choice, or repeated errors you cannot fix), do not spiral into loops or hallucinate solutions. You MUST:
+1. Document the current state, blocker, and 2-3 proposed options in `docs/plans/NEEDS_ATTENTION.md`.
+2. Cleanly exit and wait for human intervention.
+
+---
+
+## Section 7: Staleness Protocol
 
 1. **"Last Updated" timestamps are advisory only.** They appear in README files and overview docs. They are set manually and are not machine-verifiable. A "Last Updated: YYYY-MM-DD" header does not mean every claim in the document was true on that date.
 

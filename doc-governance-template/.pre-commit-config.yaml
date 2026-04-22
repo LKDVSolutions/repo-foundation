@@ -1,0 +1,21 @@
+repos:
+  - repo: local
+    hooks:
+      - id: check-doc-registry
+        name: Check Doc Registry Sync
+        entry: python scripts/check_doc_registry_sync.py
+        language: system
+        files: ^docs/.*\.md$
+        pass_filenames: false
+      - id: validate-doc-links
+        name: Validate Document Links
+        entry: python scripts/validate_doc_links.py
+        language: system
+        files: ^docs/.*\.md$
+        pass_filenames: false
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml

@@ -246,6 +246,202 @@ entries:
       view derived from this YAML. When adding new docs, update this YAML first,
       then run python scripts/build_doc_registry_md.py to regenerate.
 
+  - doc_id: PROMPT_INDEX
+    path: docs/plans/prompts/PROMPT_INDEX.md
+    doc_class: active
+    authority_kind: guide
+    title: "Prompt Library Index"
+    primary_audience: both
+    task_entry_for: null
+    read_sequence: null
+    system_owner: documentation-governance
+    doc_owner: "[YOUR-NAME]"
+    updated_by: human
+    authoritative_for:
+      - standardized agent prompt templates
+    source_inputs: null
+    refresh_policy: manual
+    verification_level: none
+    last_verified: null
+    evidence_refs: null
+    supersedes: null
+    superseded_by: null
+    status: active
+
+  - doc_id: PROMPT_BACKLOG_INTAKE
+    path: docs/plans/prompts/PROMPT_BACKLOG_INTAKE.md
+    doc_class: active
+    authority_kind: plan
+    title: "Prompt Template: Backlog Intake"
+    primary_audience: humans
+    task_entry_for: null
+    read_sequence: null
+    system_owner: documentation-governance
+    doc_owner: "[YOUR-NAME]"
+    updated_by: human
+    authoritative_for: []
+    source_inputs: null
+    refresh_policy: manual
+    verification_level: none
+    last_verified: null
+    evidence_refs: null
+    supersedes: null
+    superseded_by: null
+    status: active
+
+  - doc_id: PROMPT_BATCH_EXECUTION
+    path: docs/plans/prompts/PROMPT_BATCH_EXECUTION.md
+    doc_class: active
+    authority_kind: guide
+    title: "Prompt Template: Batch Execution"
+    primary_audience: humans
+    task_entry_for: null
+    read_sequence: null
+    system_owner: documentation-governance
+    doc_owner: "[YOUR-NAME]"
+    updated_by: human
+    authoritative_for: []
+    source_inputs: null
+    refresh_policy: manual
+    verification_level: none
+    last_verified: null
+    evidence_refs: null
+    supersedes: null
+    superseded_by: null
+    status: active
+
+  - doc_id: PROMPT_QA_GATE
+    path: docs/plans/prompts/PROMPT_QA_GATE.md
+    doc_class: active
+    authority_kind: guide
+    title: "Prompt Template: QA Gate"
+    primary_audience: humans
+    task_entry_for: null
+    read_sequence: null
+    system_owner: documentation-governance
+    doc_owner: "[YOUR-NAME]"
+    updated_by: human
+    authoritative_for: []
+    source_inputs: null
+    refresh_policy: manual
+    verification_level: none
+    last_verified: null
+    evidence_refs: null
+    supersedes: null
+    superseded_by: null
+    status: active
+
+  - doc_id: PROMPT_SYSTEM_AUDIT
+    path: docs/plans/prompts/PROMPT_SYSTEM_AUDIT.md
+    doc_class: active
+    authority_kind: guide
+    title: "Prompt Template: System Audit"
+    primary_audience: humans
+    task_entry_for: null
+    read_sequence: null
+    system_owner: documentation-governance
+    doc_owner: "[YOUR-NAME]"
+    updated_by: human
+    authoritative_for: []
+    source_inputs: null
+    refresh_policy: manual
+    verification_level: none
+    last_verified: null
+    evidence_refs: null
+    supersedes: null
+    superseded_by: null
+    status: active
+
+  - doc_id: PROMPT_DEBT_DISCOVERY
+    path: docs/plans/prompts/PROMPT_DEBT_DISCOVERY.md
+    doc_class: active
+    authority_kind: guide
+    title: "Prompt Template: Debt Discovery"
+    primary_audience: humans
+    task_entry_for: null
+    read_sequence: null
+    system_owner: documentation-governance
+    doc_owner: "[YOUR-NAME]"
+    updated_by: human
+    authoritative_for: []
+    source_inputs: null
+    refresh_policy: manual
+    verification_level: none
+    last_verified: null
+    evidence_refs: null
+    supersedes: null
+    superseded_by: null
+    status: active
+
+  - doc_id: PROMPT_DEPENDENCY_BOOTSTRAP
+    path: docs/plans/prompts/PROMPT_DEPENDENCY_BOOTSTRAP.md
+    doc_class: active
+    authority_kind: guide
+    title: "Prompt Template: Dependency Bootstrap"
+    primary_audience: humans
+    task_entry_for: null
+    read_sequence: null
+    system_owner: documentation-governance
+    doc_owner: "[YOUR-NAME]"
+    updated_by: human
+    authoritative_for: []
+    source_inputs: null
+    refresh_policy: manual
+    verification_level: none
+    last_verified: null
+    evidence_refs: null
+    supersedes: null
+    superseded_by: null
+    status: active
+
+  - doc_id: SECURITY_AND_DEPENDENCIES
+    path: docs/development/SECURITY_AND_DEPENDENCIES.md
+    doc_class: active
+    authority_kind: blueprint
+    title: "Security and Dependency Governance"
+    primary_audience: both
+    task_entry_for: null
+    read_sequence: null
+    system_owner: security
+    doc_owner: "[YOUR-NAME]"
+    updated_by: human
+    authoritative_for:
+      - dependency pinning rules
+      - secret management rules
+    source_inputs: null
+    refresh_policy: manual
+    verification_level: none
+    last_verified: null
+    evidence_refs: null
+    supersedes: null
+    superseded_by: null
+    status: active
+
+  - doc_id: ENGINEERING_STANDARDS
+    path: docs/development/ENGINEERING_STANDARDS.md
+    doc_class: active
+    authority_kind: blueprint
+    title: "Core Engineering Standards"
+    primary_audience: both
+    task_entry_for: null
+    read_sequence: null
+    system_owner: engineering
+    doc_owner: "[YOUR-NAME]"
+    updated_by: human
+    authoritative_for:
+      - idempotency rules
+      - infrastructure as code standards
+      - fail fast principles
+      - observability requirements
+    source_inputs: null
+    refresh_policy: manual
+    verification_level: none
+    last_verified: null
+    evidence_refs: null
+    supersedes: null
+    superseded_by: null
+    status: active
+
   - doc_id: DOC_REGISTRY_MD
     path: docs/reference/registry/DOC_REGISTRY.md
     doc_class: generated
@@ -270,3 +466,50 @@ entries:
     notes: >
       Generated view of DOC_REGISTRY.yaml. Do not edit directly — update
       DOC_REGISTRY.yaml and run python scripts/build_doc_registry_md.py to regenerate.
+
+  - doc_id: AGENT_CAPABILITIES
+    path: docs/development/AGENT_CAPABILITIES.md
+    doc_class: active
+    authority_kind: guide
+    title: "Agent Capabilities & Execution Environment"
+    primary_audience: agents
+    task_entry_for: null
+    read_sequence: null
+    system_owner: documentation-governance
+    doc_owner: "[YOUR-NAME]"
+    updated_by: human
+    authoritative_for:
+      - permitted execution tools
+      - package management environment
+      - secret access limitations
+      - git operations
+    source_inputs: null
+    refresh_policy: manual
+    verification_level: none
+    last_verified: null
+    evidence_refs: null
+    supersedes: null
+    superseded_by: null
+    status: active
+
+  - doc_id: NEEDS_ATTENTION
+    path: docs/plans/NEEDS_ATTENTION.md
+    doc_class: active
+    authority_kind: plan
+    title: "Human-Agent Handoff (Interrupts)"
+    primary_audience: both
+    task_entry_for: null
+    read_sequence: null
+    system_owner: documentation-governance
+    doc_owner: "[YOUR-NAME]"
+    updated_by: human
+    authoritative_for:
+      - agent blockers and handoff status
+    source_inputs: null
+    refresh_policy: manual
+    verification_level: none
+    last_verified: null
+    evidence_refs: null
+    supersedes: null
+    superseded_by: null
+    status: active

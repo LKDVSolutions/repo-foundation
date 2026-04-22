@@ -1,0 +1,6 @@
+# Agent OS specific ignores
+.agent_context.md
+.agent_scratchpad.md
+__pycache__/
+*.pyc
+.env

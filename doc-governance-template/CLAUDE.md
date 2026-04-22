@@ -79,7 +79,13 @@ Work is not complete without a passing gate result.
 - If something could not be verified, record it as `unverified` + next action.
 - Do not close a task with empty `unresolved_drift` if host-level or container-level checks are missing from the requested scope.
 
-### 8) Decision control
+### 8) Security & Dependency Rules (Mandatory)
+- **No Guessing Versions:** Never rely on LLM memory for package versions. You MUST use shell tools to query the live registry (npm, PyPI) to find the actual current version before adding dependencies.
+- **Strict Pinning:** Never use `^`, `~`, or `latest`. Pin all packages to exact versions in config files. Lockfiles are mandatory.
+- **No Hardcoded Secrets:** Never write API keys, passwords, or secrets into code. Use environment variables.
+- See `docs/development/SECURITY_AND_DEPENDENCIES.md` for full blueprints.
+
+### 9) Decision control
 Do not assume a migration (e.g., host move, service rename) without:
 1. A recorded decision (commit/doc/ADR) AND
 2. Runtime evidence + publish evidence.

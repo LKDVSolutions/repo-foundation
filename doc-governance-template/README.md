@@ -1,121 +1,109 @@
-# Documentation Governance Template
+# Agentic OS Governance Template
 
-A portable documentation governance framework for AI-assisted development. Drop this into any repo to establish an authority hierarchy, task-routing rules, and automated quality gates that prevent documentation drift.
+A portable, "0-to-1" Agentic Operating System and documentation governance framework. Drop this into any repository to establish strict authority hierarchies, task-routing rules, automated quality gates, and deterministic agent prompts that prevent AI hallucinations and documentation drift.
 
 ## What This Provides
 
-- **Authority hierarchy** — explicit priority order so agents and humans know which doc wins when two docs conflict
-- **Task-class routing** — INDEX.md routes by task type (implement / investigate / audit), not by topic
-- **Staleness as metadata** — `last_verified` and `verification_level` in a registry, not freeform timestamps
-- **Closure output contract** — every implementation task ends with a structured summary
-- **Known conflicts registry** — explicit entries for where docs disagree + resolution chain
-- **Automated quality gate** — `scripts/docs_gate.py` validates registry integrity, metadata, and link health
+- **The Bootstrapper** — `scripts/init_project.py` initializes the workspace and generates explicit instructions for your LLM (CLI or Web) to wake up and take control safely.
+- **Planning Lifecycle (0-to-1)** — Strict progression from `IDEA_INBOX` → `PROBLEM_STATEMENT` → `ARCHITECTURE_DECISION` → `BACKLOG` to stop agents from writing code before defining the problem.
+- **The Prompt Library** — Pre-compiled, deterministic system prompts (`docs/plans/prompts/`) for Backlog Intake, Batch Execution, System Audits, and QA Self-Review.
+- **Authority Hierarchy** — Explicit priority order (`runtime_evidence` > `current_config` > `blueprint`) so agents and humans know which doc wins when two docs conflict.
+- **Security & Engineering Guardrails** — Baked-in enforcement of the OWASP Top 10, Microsoft SDL, strict dependency pinning, and idempotency rules.
+- **Automated Quality Gate** — `scripts/docs_gate.py` validates registry integrity, metadata staleness, and link health before commits.
 
-## Quick Start
+---
 
-1. Copy this directory's **contents** (not the directory itself) into your repo root
-2. Merge `CLAUDE.md` into your existing `CLAUDE.md`, or use it as-is if you don't have one
-3. Customize the three placeholder-heavy files:
-   - `docs/INDEX.md` — update task routes to point to your project's actual docs
-   - `docs/REFERENCE.md` — fill in your project's authority surface map
-   - `docs/development/AGENT_WORKFLOW.md` — update task class details for your stack
-4. Add entries to `docs/reference/registry/DOC_REGISTRY.yaml` for every governed doc in your project
-5. Install dependency: `pip install pyyaml`
-6. Generate the registry markdown: `python scripts/build_doc_registry_md.py`
-7. Run the gate: `python scripts/docs_gate.py --fast` — all checks should pass
+## 🚀 How to Use This System (User Manual)
 
-## Directory Structure After Copying
+### Step 1: Initialization (The Handoff)
 
+Do not manually copy-paste placeholders. Run the bootstrapper:
+
+```bash
+python scripts/init_project.py
 ```
+
+1. **Answer the prompts:** The script will ask for your Project Name and whether this is a **[1] Blank Canvas** (new project) or a **[2] Retrofit** (existing codebase).
+2. **Wake up the Agent:** The script will generate a `.gemini/boot_instruction.md` file. It will print a command for you to run (e.g., `gemini "Read .gemini/boot_instruction.md..."`) or tell you to copy-paste the contents into ChatGPT/Claude.
+3. **Follow the Agent's Lead:** 
+   - *If Blank Canvas:* The agent will enter Product Manager mode and interview you to draft a `PROBLEM_STATEMENT.md`.
+   - *If Retrofit:* The agent will enter Systems Architect mode, scan your codebase, map your architecture, and populate the documentation registry.
+
+### Step 2: Planning & Discovery
+
+Never let an agent write code without a plan. Use the [Prompt Library](docs/plans/prompts/PROMPT_INDEX.md) to guide your AI:
+
+- **Have a new idea?** Drop it in `docs/plans/IDEA_INBOX.md`.
+- **Retrofitting an old codebase?** Give the agent `PROMPT_SYSTEM_AUDIT.md` to map the architecture, and then `PROMPT_DEBT_DISCOVERY.md` to find technical debt and hardcoded secrets.
+- **Ready to prioritize?** Give the agent `PROMPT_BACKLOG_INTAKE.md` to move ideas into the prioritized `BACKLOG.md`.
+
+### Step 3: Execution (Surgical Agent Work)
+
+When you are ready to write code or fix bugs, do not give the agent an open-ended prompt. 
+
+1. Copy the `PROMPT_BATCH_EXECUTION.md` template.
+2. Fill in the specific Backlog IDs and strictly define the **Allowed Files** the agent is permitted to touch.
+3. Pass the prompt to your agent. The agent is forced to stick to those boundaries and run validation commands.
+
+### Step 4: QA and Validation
+
+Before merging or calling a task "Done", force the agent to review its own work:
+
+1. Pass the agent the `PROMPT_QA_GATE.md` template.
+2. The agent will verify it did not break scope, check for hardcoded values, and run the automated `docs_gate.py` script.
+3. If the gate fails, the agent must fix it autonomously.
+
+---
+
+## Directory Structure
+
+```text
 your-repo/
 ├── CLAUDE.md                                   # Agent behavioral guardrails
+├── .github/workflows/agent-os-gate.yml         # CI/CD enforcement
+├── .gitignore                                  # Includes `.agent_context.md` & scratchpad
 ├── docs/
 │   ├── INDEX.md                                # Universal navigation entrypoint
-│   ├── REFERENCE.md                            # "Where is the truth?" authority surface map
-│   ├── development/
-│   │   ├── AGENT_WORKFLOW.md                   # Normative task routing for agents
-│   │   ├── DOCUMENTATION_MAINTENANCE.md        # Maintenance procedures
-│   │   └── RELEASE_CHECKLIST.md                # Pre-release doc checks
+│   ├── REFERENCE.md                            # Authority surface map ("Where is the truth?")
+│   ├── architecture/                           # High-level system design
+│   ├── development/                            # Engineering standards, security rules, workflow
+│   │   └── AGENT_CAPABILITIES.md               # What the agent is permitted/able to do
+│   ├── plans/
+│   │   ├── IDEA_INBOX.md                       # Raw intake for ideas/findings
+│   │   ├── NEEDS_ATTENTION.md                  # Human-Agent Handoff (Interrupts)
+│   │   ├── PLANNING_INDEX.md                   # 0-to-1 lifecycle rules
+│   │   ├── prompts/                            # Standardized AI Agent prompt templates
+│   │   └── templates/                          # PRD and ADR templates
 │   └── reference/
 │       └── registry/
 │           ├── DOC_REGISTRY.yaml               # Canonical doc registry (source of truth)
 │           └── DOC_REGISTRY.md                 # Human-readable view (generated)
 └── scripts/
-    ├── build_doc_registry_md.py                # Generate DOC_REGISTRY.md from YAML
-    ├── check_doc_registry.py                   # Validate registry structure
-    ├── check_doc_metadata.py                   # Validate per-entry metadata
-    ├── check_doc_registry_sync.py              # Verify MD matches YAML
-    ├── validate_doc_links.py                   # Check internal markdown links
-    └── docs_gate.py                            # Orchestrate all checks
+    ├── hydrate_context.py                      # Compiles agent "RAM" context
+    ├── detect_drift.py                         # Auto-drift detection cron script
+    ├── init_project.py                         # Agentic OS Bootstrapper
+    ├── build_doc_registry_md.py                # Generates DOC_REGISTRY.md from YAML
+    ├── docs_gate.py                            # Orchestrates all registry/metadata checks
+    └── ...                                     # Validation sub-scripts
 ```
 
-## Core Concepts
+## Security & Engineering Mandates
 
-### Authority Kinds (priority order, high to low)
+This template enforces strict guardrails found in `docs/development/`.
+- **`SECURITY_AND_DEPENDENCIES.md`**: Enforces strict dependency pinning (no LLM version guessing), the OWASP Top 10 (2025), and Microsoft SDL practices.
+- **`ENGINEERING_STANDARDS.md`**: Enforces idempotency in scripts, Infrastructure as Code, "Fail Fast" blast radiuses, and structured observability.
 
-| authority_kind | Answers |
-|---|---|
-| `runtime_evidence` | What has been verified in the live environment |
-| `current_config` | What source artifacts currently define |
-| `blueprint` | How this is designed / intended implementation |
-| `plan` | Why we're doing this and in what order |
-| `guide` | How to execute or operate safely |
+## Manual Maintenance (Scripts)
 
-When two docs conflict on a mutable fact, prefer the one with higher authority_kind. If same kind, prefer the one with a more recent `last_verified` in the registry.
-
-### Doc Classes
-
-| doc_class | Meaning |
-|---|---|
-| `entrypoint` | Navigation only — no factual claims |
-| `active` | Human-maintained, normative |
-| `generated` | Auto-refreshed from source artifacts |
-| `historical` | Archived, superseded |
-
-### Task Classes
-
-The framework ships with 6 task classes. Customize them for your project in `AGENT_WORKFLOW.md` and `INDEX.md`:
-
-| Task class | Meaning |
-|---|---|
-| `implement_change` | Source code or config changes |
-| `investigate_runtime_issue` | Diagnosing bugs or service failures |
-| `refresh_current_docs` | Updating docs after source artifacts change |
-| `update_plan_or_roadmap` | Updating planning or roadmap docs |
-| `operate_or_release` | Deploying or releasing |
-| `test_or_operate_dev_environment` | Working in a non-production environment |
-
-## Scripts
-
-All scripts run from the repo root. Requires Python 3.8+ and `pyyaml`:
+If you modify the documentation registry manually, you must run the gate:
 
 ```bash
-pip install pyyaml
-
-# Regenerate DOC_REGISTRY.md from DOC_REGISTRY.yaml (run after any registry edit)
+# Regenerate DOC_REGISTRY.md from DOC_REGISTRY.yaml
 python scripts/build_doc_registry_md.py
 
-# Fast gate — required before every commit touching docs/ or governed source artifacts
+# Fast gate — required before every commit touching docs/
 python scripts/docs_gate.py --fast
 
 # Full gate — run before significant releases (adds broken link check)
 python scripts/docs_gate.py --full
-
-# Run individual checks
-python scripts/check_doc_registry.py        # Registry structure and schema
-python scripts/check_doc_metadata.py        # Per-entry required metadata
-python scripts/check_doc_registry_sync.py   # MD matches YAML
-python scripts/validate_doc_links.py        # Internal markdown links
 ```
-
-## Customization Checklist
-
-- [ ] Replace all `[YOUR-PROJECT-NAME]` and `[YOUR-PROJECT-DESCRIPTION]` placeholders
-- [ ] Replace all `[YOUR-NAME]` placeholders in `DOC_REGISTRY.yaml`
-- [ ] Update task-class routes in `docs/INDEX.md` to point to your actual docs
-- [ ] Fill in the authority surface map in `docs/REFERENCE.md`
-- [ ] Update task class details in `docs/development/AGENT_WORKFLOW.md` with your stack's specific sources and paths
-- [ ] Add entries to `docs/reference/registry/DOC_REGISTRY.yaml` for all your governed docs
-- [ ] Run `python scripts/build_doc_registry_md.py` to generate `DOC_REGISTRY.md`
-- [ ] Run `python scripts/docs_gate.py --fast` — all checks should pass before first commit
-- [ ] Merge `CLAUDE.md` documentation governance section into your project's `CLAUDE.md`
