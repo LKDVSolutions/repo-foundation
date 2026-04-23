@@ -2,19 +2,33 @@
 """Hydrate the active agent context into `.agent_context.md`.
 
 Run from repo root:
-    python scripts/hydrate_context.py [--backlog-item path/to/item.md]
+    python scripts/hydrate_context.py [--backlog-item path/to/item.md] [--jira JIRA-123] [--github "#456"]
 """
 
 import argparse
+import subprocess
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
 CONTEXT_FILE = REPO_ROOT / ".agent_context.md"
 
+def fetch_github_context(issue: str) -> str:
+    try:
+        res = subprocess.run(["gh", "issue", "view", issue], capture_output=True, text=True, check=True)
+        return res.stdout
+    except Exception as e:
+        return f"Failed to fetch GitHub context: {e}"
+
+def fetch_jira_context(issue: str) -> str:
+    # Placeholder for Jira API
+    return f"Jira context for {issue} (Mocked data)"
+
 def main():
     parser = argparse.ArgumentParser(description="Hydrate agent context.")
     parser.add_argument("--backlog-item", type=str, help="Path to the active backlog item or task.")
+    parser.add_argument("--jira", type=str, help="Jira issue ID to fetch context.")
+    parser.add_argument("--github", type=str, help="GitHub issue ID to fetch context.")
     args = parser.parse_args()
 
     context_parts = ["# Agent Context\n\nThis file is dynamically generated. Do not edit manually.\n"]
@@ -42,8 +56,14 @@ def main():
         if task_file.exists():
             context_parts.append(f"\n## Active Task ({task_file.name})\n")
             context_parts.append(task_file.read_text(encoding="utf-8"))
-        else:
-            context_parts.append(f"\n## Active Task\nWarning: Specified task file {task_file} not found.\n")
+            
+    if args.jira:
+        context_parts.append(f"\n## Jira Context ({args.jira})\n")
+        context_parts.append(fetch_jira_context(args.jira))
+        
+    if args.github:
+        context_parts.append(f"\n## GitHub Context ({args.github})\n")
+        context_parts.append(fetch_github_context(args.github))
 
     CONTEXT_FILE.write_text("\n".join(context_parts), encoding="utf-8")
     print(f"Context hydrated into {CONTEXT_FILE.relative_to(REPO_ROOT)}")

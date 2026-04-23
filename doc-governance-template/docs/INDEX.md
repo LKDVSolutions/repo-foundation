@@ -2,7 +2,10 @@
 
 [YOUR-PROJECT-DESCRIPTION]
 
-This INDEX.md is a navigation entrypoint only. It contains no runtime facts, service status, or mutable state. For "where is the truth?" on any class of fact, see [docs/REFERENCE.md](REFERENCE.md). For normative agent task routing, see [docs/development/AGENT_WORKFLOW.md](development/AGENT_WORKFLOW.md).
+---
+
+## Strategic Planning (Day 0)
+Before writing code or defining architecture, you MUST run the **[Strategic Alignment & Challenge](plans/prompts/PROMPT_STRATEGIC_ALIGNMENT.md)** prompt. This forces a deep-dive into feasibility, ecosystem dependencies (versions, licenses, risks), and technical friction to ensure the foundation is sound.
 
 ---
 

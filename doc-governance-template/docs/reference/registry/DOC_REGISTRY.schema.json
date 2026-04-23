@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Document Registry Schema",
+  "type": "object",
+  "properties": {
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "doc_id": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "doc_class": {
+            "type": "string",
+            "enum": ["entrypoint", "active", "generated", "historical"]
+          },
+          "authority_kind": {
+            "type": ["string", "null"],
+            "enum": ["plan", "blueprint", "guide", "current_config", "runtime_evidence", null]
+          },
+          "status": {
+            "type": "string"
+          },
+          "task_entry_for": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "superseded_by": {
+            "type": ["string", "null"]
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "doc_id",
+          "path",
+          "doc_class",
+          "authority_kind",
+          "status"
+        ],
+        "additionalProperties": true
+      }
+    }
+  },
+  "required": [
+    "entries"
+  ]
+}

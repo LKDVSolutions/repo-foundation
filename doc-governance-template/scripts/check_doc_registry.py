@@ -1,18 +1,15 @@
 #!/usr/bin/env python3
-"""Check that DOC_REGISTRY.yaml exists, parses, and contains required fields."""
+"""Check that DOC_REGISTRY.yaml exists, parses, and contains required fields using JSON schema."""
 
 import sys
 import yaml
+import json
 from pathlib import Path
+import jsonschema
 
-REPO_ROOT = Path(__file__).resolve().parent.parent  # scripts/ -> repo_root
+REPO_ROOT = Path(__file__).resolve().parent.parent
 REGISTRY_PATH = REPO_ROOT / "docs" / "reference" / "registry" / "DOC_REGISTRY.yaml"
-
-VALID_DOC_CLASSES = {"entrypoint", "active", "generated", "historical"}
-VALID_AUTHORITY_KINDS = {"plan", "blueprint", "guide", "current_config", "runtime_evidence", None}
-
-REQUIRED_ENTRY_FIELDS = {"doc_id", "path", "doc_class", "authority_kind", "status"}
-
+SCHEMA_PATH = REPO_ROOT / "docs" / "reference" / "registry" / "DOC_REGISTRY.schema.json"
 
 def check_registry():
     """Run all registry checks. Returns (passed, warnings, failures)."""
@@ -20,7 +17,6 @@ def check_registry():
     warnings = 0
     failures = 0
 
-    # Check 1: File exists
     if not REGISTRY_PATH.exists():
         print(f"[FAIL] Registry file not found: {REGISTRY_PATH.relative_to(REPO_ROOT)}")
         failures += 1
@@ -29,7 +25,6 @@ def check_registry():
         print(f"[PASS] Registry file exists: {REGISTRY_PATH.relative_to(REPO_ROOT)}")
         passed += 1
 
-    # Check 2: YAML parses without errors
     try:
         with open(REGISTRY_PATH, "r", encoding="utf-8") as f:
             data = yaml.safe_load(f)
@@ -40,64 +35,28 @@ def check_registry():
         failures += 1
         return passed, warnings, failures
 
-    # Check 3: 'entries' key exists and is a non-empty list
-    entries = data.get("entries")
-    if not isinstance(entries, list) or len(entries) == 0:
-        print("[FAIL] 'entries' key missing or empty")
+    # Load JSON schema
+    try:
+        with open(SCHEMA_PATH, "r", encoding="utf-8") as f:
+            schema = json.load(f)
+    except Exception as e:
+        print(f"[FAIL] Could not load schema: {e}")
         failures += 1
         return passed, warnings, failures
-    else:
-        print(f"[PASS] 'entries' key exists with {len(entries)} entries")
-        passed += 1
 
-    # Check 4: Each entry has required fields
-    missing_fields_found = False
-    for i, entry in enumerate(entries):
-        doc_id = entry.get("doc_id", f"<entry #{i}>")
-        missing = REQUIRED_ENTRY_FIELDS - set(entry.keys())
-        if missing:
-            print(f"[FAIL] Entry '{doc_id}' missing required fields: {missing}")
-            failures += 1
-            missing_fields_found = True
-    if not missing_fields_found:
-        print(
-            f"[PASS] All {len(entries)} entries have required fields "
-            f"(doc_id, path, doc_class, authority_kind, status)"
-        )
+    # Validate against schema
+    try:
+        jsonschema.validate(instance=data, schema=schema)
+        print("[PASS] JSON Schema validation passed")
         passed += 1
-
-    # Check 5: doc_class values are valid
-    invalid_classes = []
-    for entry in entries:
-        doc_id = entry.get("doc_id", "<unknown>")
-        dc = entry.get("doc_class")
-        if dc not in VALID_DOC_CLASSES:
-            invalid_classes.append(f"'{doc_id}' has doc_class='{dc}'")
-    if invalid_classes:
-        for msg in invalid_classes:
-            print(f"[FAIL] Invalid doc_class: {msg} (allowed: {VALID_DOC_CLASSES})")
-            failures += 1
-    else:
-        print(f"[PASS] All doc_class values are valid ({VALID_DOC_CLASSES})")
-        passed += 1
-
-    # Check 6: authority_kind values are valid
-    invalid_kinds = []
-    for entry in entries:
-        doc_id = entry.get("doc_id", "<unknown>")
-        ak = entry.get("authority_kind")
-        if ak not in VALID_AUTHORITY_KINDS:
-            invalid_kinds.append(f"'{doc_id}' has authority_kind='{ak}'")
-    if invalid_kinds:
-        for msg in invalid_kinds:
-            print(f"[FAIL] Invalid authority_kind: {msg} (allowed: {VALID_AUTHORITY_KINDS})")
-            failures += 1
-    else:
-        print("[PASS] All authority_kind values are valid")
-        passed += 1
+    except jsonschema.exceptions.ValidationError as e:
+        print(f"[FAIL] JSON Schema validation failed: {e.message}")
+        failures += 1
+    
+    entries = data.get("entries", [])
 
     # Check 7: No duplicate doc_ids
-    doc_ids = [e.get("doc_id") for e in entries]
+    doc_ids = [e.get("doc_id") for e in entries if "doc_id" in e]
     seen_ids: set = set()
     dup_ids: set = set()
     for d in doc_ids:
@@ -150,13 +109,11 @@ def check_registry():
 
     return passed, warnings, failures
 
-
 def main():
     print("=== check_doc_registry.py ===")
     passed, warnings, failures = check_registry()
     print(f"\nResult: {passed} passed, {warnings} warnings, {failures} failures")
     sys.exit(0 if failures == 0 else 1)
-
 
 if __name__ == "__main__":
     main()

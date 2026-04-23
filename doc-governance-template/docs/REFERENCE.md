@@ -38,10 +38,12 @@ For each class of fact, this table identifies the single authoritative source.
 |---|---|---|---|
 | Agent behavioral guardrails | `CLAUDE.md` | Markdown | Behavioral rules only — not mutable facts |
 | Documentation classification and routing | `docs/reference/registry/DOC_REGISTRY.yaml` | YAML | |
-| [Service host placement] | [e.g. `docker-compose.yml`] | [YAML] | [Notes] |
-| [Database schema] | [e.g. `schema.yaml` or `migrations/`] | [YAML/SQL] | [Notes] |
-| [API contracts / webhooks] | [e.g. `api/webhooks.yaml`] | [YAML] | [Notes] |
-| [Environment variables] | [e.g. `.env.example` or config docs] | [Text] | [Source only, not secret values] |
+| Registry validation schema | `docs/reference/registry/DOC_REGISTRY.schema.json` | JSON | |
+| CI/CD quality gate rules | `.github/workflows/agent-os-gate.yml` | YAML | |
+| Dependency pinning and constraints | `requirements-dev.txt` | Text | |
+| Local environment configuration | `.env.example` | Text | Blueprint for local dev |
+| System architecture | `docs/architecture/OVERVIEW.md` | Markdown | |
+| Automation service inventory | `docs/reference/current/SERVICE_INVENTORY.md` | Markdown | |
 
 <!--
 Add rows for every class of fact that matters in your project. Examples:

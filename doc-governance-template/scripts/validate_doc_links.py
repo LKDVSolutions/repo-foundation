@@ -37,7 +37,11 @@ def resolve_link(link: str, doc_path: Path) -> Path | None:
         link = link[: link.index("#")]
     if not link:
         return None
-    return (doc_path.parent / link).resolve()
+    try:
+        return (doc_path.parent / link).resolve(strict=False)
+    except RuntimeError:
+        # e.g., symlink loop
+        return None
 
 
 def check_links():

@@ -112,16 +112,29 @@ def check_metadata():
             print(f"[PASS] '{doc_id}' (runtime_evidence) has last_verified: {last_verified}")
             passed += 1
 
-    # Check 4: superseded_by references exist in registry
-    all_doc_ids = {e.get("doc_id") for e in entries}
+    # Check 4: superseded_by references exist in registry and no cycles
+    all_doc_ids = {e.get("doc_id") for e in entries if e.get("doc_id")}
+    entry_dict = {e.get("doc_id"): e for e in entries if e.get("doc_id")}
     supersession_failures = []
     for entry in entries:
         doc_id = entry.get("doc_id", "<unknown>")
         superseded_by = entry.get("superseded_by")
-        if superseded_by and superseded_by not in all_doc_ids:
-            supersession_failures.append(
-                f"'{doc_id}' superseded_by='{superseded_by}' but that doc_id does not exist in registry"
-            )
+        if superseded_by:
+            if superseded_by not in all_doc_ids:
+                supersession_failures.append(
+                    f"'{doc_id}' superseded_by='{superseded_by}' but that doc_id does not exist in registry"
+                )
+            else:
+                # Cycle detection
+                visited = {doc_id}
+                current = superseded_by
+                while current:
+                    if current in visited:
+                        supersession_failures.append(f"Cycle detected in superseded_by starting at '{doc_id}'")
+                        break
+                    visited.add(current)
+                    curr_entry = entry_dict.get(current)
+                    current = curr_entry.get("superseded_by") if curr_entry else None
 
     if supersession_failures:
         for msg in supersession_failures:

@@ -1,515 +1,644 @@
-# DOC_REGISTRY.yaml
-# Canonical documentation registry for [YOUR-PROJECT-NAME].
-# Authority: current_config (maintained by agents and humans)
-# DO NOT edit the generated DOC_REGISTRY.md directly — update this YAML and regenerate.
-#
-# Schema version: 1.0
-#
-# Field reference:
-#   doc_id:             Unique identifier (snake_case, typically mirrors filename)
-#   path:               Path relative to repo root
-#   doc_class:          entrypoint | active | generated | historical
-#   authority_kind:     plan | blueprint | guide | current_config | runtime_evidence | null
-#   title:              Human-readable title
-#   primary_audience:   agents | humans | both
-#   task_entry_for:     Task classes this doc is a primary entry point for (list)
-#   read_sequence:      Per task class, ordered list of doc_ids to read next (map)
-#   system_owner:       Which system/subsystem owns this doc
-#   doc_owner:          Person responsible for this doc
-#   updated_by:         human | agent
-#   authoritative_for:  List of fact classes this doc owns (empty list [] if none)
-#   source_inputs:      Source artifacts this doc is derived from (null if not derived)
-#   refresh_policy:     manual | on_source_change | scheduled
-#   verification_level: none | repo_derived | ssh_verified
-#   last_verified:      ISO date of last verification (YYYY-MM-DD), null if never verified
-#   evidence_refs:      Links or descriptions of verification evidence (null if none)
-#   supersedes:         doc_id this entry replaces (null if none)
-#   superseded_by:      doc_id that replaces this entry (null if none)
-#   status:             active | historical
-#   notes:              Free-text notes
-
 entries:
+- doc_id: CONTRIBUTING_md
+  path: CONTRIBUTING.md
+  doc_class: entrypoint
+  authority_kind: null
+  title: "Contributing Guide \u2014 Rules of the House"
+  primary_audience: both
+  task_entry_for:
+  - bootstrap_project
+  status: active
+  depends_on: []
+  authoritative_for: []
+  system_owner: system-wide
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  refresh_policy: manual
+- doc_id: INDEX_md
+  path: docs/INDEX.md
+  doc_class: entrypoint
+  authority_kind: null
+  title: "[YOUR-PROJECT-NAME] \u2014 Repository Index"
+  primary_audience: both
+  task_entry_for:
+  - implement_change
+  - investigate_runtime_issue
+  - refresh_current_docs
+  - update_plan_or_roadmap
+  - operate_or_release
+  - test_or_operate_dev_environment
+  read_sequence:
+  - implement_change:
+    - CLAUDE_md
+  - investigate_runtime_issue:
+    - AGENT_WORKFLOW_md
+    - CLAUDE_md
+  - refresh_current_docs:
+    - DOC_REGISTRY_YAML
+    - REFERENCE_md
+  - update_plan_or_roadmap: []
+  - operate_or_release:
+    - CLAUDE_md
+  - test_or_operate_dev_environment: []
+  system_owner: system-wide
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for: []
+  source_inputs: null
+  refresh_policy: manual
+  verification_level: none
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  notes: "Universal repo entrypoint. Navigation only \u2014 no mutable facts. All\
+    \ task classes route through this doc first.\n"
+  depends_on: []
+- doc_id: REFERENCE_md
+  path: docs/REFERENCE.md
+  doc_class: active
+  authority_kind: guide
+  title: "[YOUR-PROJECT-NAME] \u2014 Where Is the Truth?"
+  primary_audience: both
+  task_entry_for: []
+  read_sequence: null
+  system_owner: system-wide
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for:
+  - authority surface map (which source owns each class of fact)
+  - resolution chains for known conflicts
+  source_inputs: null
+  refresh_policy: manual
+  verification_level: none
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  notes: 'Where-is-the-truth map. Update when new current_config or runtime_evidence
+    surfaces are added, or when a known transitional state is resolved.
 
-  # ─── Entrypoints ───────────────────────────────────────────────────────────
+    '
+  depends_on: []
+- doc_id: AGENT_WORKFLOW_md
+  path: docs/development/AGENT_WORKFLOW.md
+  doc_class: active
+  authority_kind: guide
+  title: "Agent Workflow \u2014 Task Routing and Read-Order Rules"
+  primary_audience: agents
+  task_entry_for: []
+  read_sequence: null
+  system_owner: documentation-governance
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for:
+  - agent task routing (which docs to read for each task class)
+  - read order rules (authority_kind priority)
+  - known authority conflict resolution
+  - fallback rules (missing docs, conflicting sources)
+  - closure output requirements
+  - staleness protocol
+  source_inputs: null
+  refresh_policy: manual
+  verification_level: none
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  notes: "Normative routing document for agents. If an agent needs freeform search\
+    \ to complete a task, this doc is underspecified \u2014 update it.\n"
+  depends_on: []
+- doc_id: CLAUDE_md
+  path: CLAUDE.md
+  doc_class: active
+  authority_kind: guide
+  title: "CLAUDE.md \u2014 Agent Instruction Surface"
+  primary_audience: agents
+  task_entry_for:
+  - implement_change
+  - investigate_runtime_issue
+  - operate_or_release
+  - refresh_current_docs
+  read_sequence: null
+  system_owner: system-wide
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for:
+  - agent operational guardrails
+  - source of truth architecture rules
+  - documentation governance rules
+  source_inputs: null
+  refresh_policy: manual
+  verification_level: none
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  notes: 'Agent instruction surface. Authoritative for behavioral rules. Mutable facts
+    (IPs, ports, service health) belong in current_config or runtime_evidence docs,
+    not here.
 
-  - doc_id: INDEX_md
-    path: docs/INDEX.md
-    doc_class: entrypoint
-    authority_kind: null
-    title: "[YOUR-PROJECT-NAME] — Repository Index"
-    primary_audience: both
-    task_entry_for:
-      - implement_change
-      - investigate_runtime_issue
-      - refresh_current_docs
-      - update_plan_or_roadmap
-      - operate_or_release
-      - test_or_operate_dev_environment
-    read_sequence:
-      - implement_change: [CLAUDE_md]
-      - investigate_runtime_issue: [AGENT_WORKFLOW_md, CLAUDE_md]
-      - refresh_current_docs: [DOC_REGISTRY_YAML, REFERENCE_md]
-      - update_plan_or_roadmap: []
-      - operate_or_release: [CLAUDE_md]
-      - test_or_operate_dev_environment: []
-    system_owner: system-wide
-    doc_owner: "[YOUR-NAME]"
-    updated_by: human
-    authoritative_for: []
-    source_inputs: null
-    refresh_policy: manual
-    verification_level: none
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
-    notes: >
-      Universal repo entrypoint. Navigation only — no mutable facts.
-      All task classes route through this doc first.
+    '
+  depends_on: []
+- doc_id: DOCUMENTATION_MAINTENANCE
+  path: docs/development/DOCUMENTATION_MAINTENANCE.md
+  doc_class: active
+  authority_kind: guide
+  title: "Documentation Maintenance \u2014 Procedures and Expectations"
+  primary_audience: both
+  task_entry_for: []
+  read_sequence: null
+  system_owner: documentation-governance
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for:
+  - documentation maintenance procedures
+  - docs gate invocation and interpretation
+  - when to update which docs (refresh trigger table)
+  - closure output format
+  - how to add a new governed doc
+  source_inputs: null
+  refresh_policy: manual
+  verification_level: none
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  depends_on: []
+- doc_id: RELEASE_CHECKLIST
+  path: docs/development/RELEASE_CHECKLIST.md
+  doc_class: active
+  authority_kind: guide
+  title: "Release Checklist \u2014 Pre-Release Documentation Checks"
+  primary_audience: agents
+  task_entry_for: []
+  read_sequence: null
+  system_owner: documentation-governance
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for:
+  - pre-release documentation check sequence
+  - per-change check requirements
+  - advisory (non-blocking) checks
+  source_inputs: null
+  refresh_policy: manual
+  verification_level: none
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  depends_on: []
+- doc_id: DOC_REGISTRY_YAML
+  path: docs/reference/registry/DOC_REGISTRY.yaml
+  doc_class: active
+  authority_kind: current_config
+  title: "Documentation Registry \u2014 Canonical YAML"
+  primary_audience: agents
+  task_entry_for:
+  - refresh_current_docs
+  read_sequence: null
+  system_owner: documentation-governance
+  doc_owner: '[YOUR-NAME]'
+  updated_by: agent
+  authoritative_for:
+  - canonical doc classification (doc_class, authority_kind)
+  - task_entry_for and read_sequence routing
+  - doc ownership and refresh policy per document
+  - verification level and evidence references
+  source_inputs:
+  - docs/INDEX.md
+  - docs/REFERENCE.md
+  - CLAUDE.md
+  - docs/development/AGENT_WORKFLOW.md
+  - docs/development/DOCUMENTATION_MAINTENANCE.md
+  - docs/development/RELEASE_CHECKLIST.md
+  refresh_policy: on_source_change
+  verification_level: repo_derived
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  notes: 'Source of truth for the registry. DOC_REGISTRY.md is a generated human-readable
+    view derived from this YAML. When adding new docs, update this YAML first, then
+    run python scripts/build_doc_registry_md.py to regenerate.
 
-  # ─── Active docs: guides ───────────────────────────────────────────────────
-
-  - doc_id: REFERENCE_md
-    path: docs/REFERENCE.md
-    doc_class: active
-    authority_kind: guide
-    title: "[YOUR-PROJECT-NAME] — Where Is the Truth?"
-    primary_audience: both
-    task_entry_for: null
-    read_sequence: null
-    system_owner: system-wide
-    doc_owner: "[YOUR-NAME]"
-    updated_by: human
-    authoritative_for:
-      - authority surface map (which source owns each class of fact)
-      - resolution chains for known conflicts
-    source_inputs: null
-    refresh_policy: manual
-    verification_level: none
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
-    notes: >
-      Where-is-the-truth map. Update when new current_config or runtime_evidence
-      surfaces are added, or when a known transitional state is resolved.
-
-  - doc_id: AGENT_WORKFLOW_md
-    path: docs/development/AGENT_WORKFLOW.md
-    doc_class: active
-    authority_kind: guide
-    title: "Agent Workflow — Task Routing and Read-Order Rules"
-    primary_audience: agents
-    task_entry_for: null
-    read_sequence: null
-    system_owner: documentation-governance
-    doc_owner: "[YOUR-NAME]"
-    updated_by: human
-    authoritative_for:
-      - agent task routing (which docs to read for each task class)
-      - read order rules (authority_kind priority)
-      - known authority conflict resolution
-      - fallback rules (missing docs, conflicting sources)
-      - closure output requirements
-      - staleness protocol
-    source_inputs: null
-    refresh_policy: manual
-    verification_level: none
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
-    notes: >
-      Normative routing document for agents. If an agent needs freeform search to
-      complete a task, this doc is underspecified — update it.
-
-  - doc_id: CLAUDE_md
-    path: CLAUDE.md
-    doc_class: active
-    authority_kind: guide
-    title: "CLAUDE.md — Agent Instruction Surface"
-    primary_audience: agents
-    task_entry_for:
-      - implement_change
-      - investigate_runtime_issue
-      - operate_or_release
-      - refresh_current_docs
-    read_sequence: null
-    system_owner: system-wide
-    doc_owner: "[YOUR-NAME]"
-    updated_by: human
-    authoritative_for:
-      - agent operational guardrails
-      - source of truth architecture rules
-      - documentation governance rules
-    source_inputs: null
-    refresh_policy: manual
-    verification_level: none
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
-    notes: >
-      Agent instruction surface. Authoritative for behavioral rules.
-      Mutable facts (IPs, ports, service health) belong in current_config or
-      runtime_evidence docs, not here.
-
-  - doc_id: DOCUMENTATION_MAINTENANCE
-    path: docs/development/DOCUMENTATION_MAINTENANCE.md
-    doc_class: active
-    authority_kind: guide
-    title: "Documentation Maintenance — Procedures and Expectations"
-    primary_audience: both
-    task_entry_for: null
-    read_sequence: null
-    system_owner: documentation-governance
-    doc_owner: "[YOUR-NAME]"
-    updated_by: human
-    authoritative_for:
-      - documentation maintenance procedures
-      - docs gate invocation and interpretation
-      - when to update which docs (refresh trigger table)
-      - closure output format
-      - how to add a new governed doc
-    source_inputs: null
-    refresh_policy: manual
-    verification_level: none
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
-
-  - doc_id: RELEASE_CHECKLIST
-    path: docs/development/RELEASE_CHECKLIST.md
-    doc_class: active
-    authority_kind: guide
-    title: "Release Checklist — Pre-Release Documentation Checks"
-    primary_audience: agents
-    task_entry_for: null
-    read_sequence: null
-    system_owner: documentation-governance
-    doc_owner: "[YOUR-NAME]"
-    updated_by: human
-    authoritative_for:
-      - pre-release documentation check sequence
-      - per-change check requirements
-      - advisory (non-blocking) checks
-    source_inputs: null
-    refresh_policy: manual
-    verification_level: none
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
-
-  # ─── Generated docs ────────────────────────────────────────────────────────
-
-  - doc_id: DOC_REGISTRY_YAML
-    path: docs/reference/registry/DOC_REGISTRY.yaml
-    doc_class: active
-    authority_kind: current_config
-    title: "Documentation Registry — Canonical YAML"
-    primary_audience: agents
-    task_entry_for:
-      - refresh_current_docs
-    read_sequence: null
-    system_owner: documentation-governance
-    doc_owner: "[YOUR-NAME]"
-    updated_by: agent
-    authoritative_for:
-      - canonical doc classification (doc_class, authority_kind)
-      - task_entry_for and read_sequence routing
-      - doc ownership and refresh policy per document
-      - verification level and evidence references
-    source_inputs:
-      - docs/INDEX.md
-      - docs/REFERENCE.md
-      - CLAUDE.md
-      - docs/development/AGENT_WORKFLOW.md
-      - docs/development/DOCUMENTATION_MAINTENANCE.md
-      - docs/development/RELEASE_CHECKLIST.md
-    refresh_policy: on_source_change
-    verification_level: repo_derived
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
-    notes: >
-      Source of truth for the registry. DOC_REGISTRY.md is a generated human-readable
-      view derived from this YAML. When adding new docs, update this YAML first,
-      then run python scripts/build_doc_registry_md.py to regenerate.
-
-  - doc_id: PROMPT_INDEX
-    path: docs/plans/prompts/PROMPT_INDEX.md
-    doc_class: active
-    authority_kind: guide
-    title: "Prompt Library Index"
-    primary_audience: both
-    task_entry_for: null
-    read_sequence: null
-    system_owner: documentation-governance
-    doc_owner: "[YOUR-NAME]"
-    updated_by: human
-    authoritative_for:
-      - standardized agent prompt templates
-    source_inputs: null
-    refresh_policy: manual
-    verification_level: none
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
-
-  - doc_id: PROMPT_BACKLOG_INTAKE
-    path: docs/plans/prompts/PROMPT_BACKLOG_INTAKE.md
-    doc_class: active
-    authority_kind: plan
-    title: "Prompt Template: Backlog Intake"
-    primary_audience: humans
-    task_entry_for: null
-    read_sequence: null
-    system_owner: documentation-governance
-    doc_owner: "[YOUR-NAME]"
-    updated_by: human
-    authoritative_for: []
-    source_inputs: null
-    refresh_policy: manual
-    verification_level: none
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
-
-  - doc_id: PROMPT_BATCH_EXECUTION
-    path: docs/plans/prompts/PROMPT_BATCH_EXECUTION.md
-    doc_class: active
-    authority_kind: guide
-    title: "Prompt Template: Batch Execution"
-    primary_audience: humans
-    task_entry_for: null
-    read_sequence: null
-    system_owner: documentation-governance
-    doc_owner: "[YOUR-NAME]"
-    updated_by: human
-    authoritative_for: []
-    source_inputs: null
-    refresh_policy: manual
-    verification_level: none
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
-
-  - doc_id: PROMPT_QA_GATE
-    path: docs/plans/prompts/PROMPT_QA_GATE.md
-    doc_class: active
-    authority_kind: guide
-    title: "Prompt Template: QA Gate"
-    primary_audience: humans
-    task_entry_for: null
-    read_sequence: null
-    system_owner: documentation-governance
-    doc_owner: "[YOUR-NAME]"
-    updated_by: human
-    authoritative_for: []
-    source_inputs: null
-    refresh_policy: manual
-    verification_level: none
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
-
-  - doc_id: PROMPT_SYSTEM_AUDIT
-    path: docs/plans/prompts/PROMPT_SYSTEM_AUDIT.md
-    doc_class: active
-    authority_kind: guide
-    title: "Prompt Template: System Audit"
-    primary_audience: humans
-    task_entry_for: null
-    read_sequence: null
-    system_owner: documentation-governance
-    doc_owner: "[YOUR-NAME]"
-    updated_by: human
-    authoritative_for: []
-    source_inputs: null
-    refresh_policy: manual
-    verification_level: none
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
-
-  - doc_id: PROMPT_DEBT_DISCOVERY
-    path: docs/plans/prompts/PROMPT_DEBT_DISCOVERY.md
-    doc_class: active
-    authority_kind: guide
-    title: "Prompt Template: Debt Discovery"
-    primary_audience: humans
-    task_entry_for: null
-    read_sequence: null
-    system_owner: documentation-governance
-    doc_owner: "[YOUR-NAME]"
-    updated_by: human
-    authoritative_for: []
-    source_inputs: null
-    refresh_policy: manual
-    verification_level: none
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
-
-  - doc_id: PROMPT_DEPENDENCY_BOOTSTRAP
-    path: docs/plans/prompts/PROMPT_DEPENDENCY_BOOTSTRAP.md
-    doc_class: active
-    authority_kind: guide
-    title: "Prompt Template: Dependency Bootstrap"
-    primary_audience: humans
-    task_entry_for: null
-    read_sequence: null
-    system_owner: documentation-governance
-    doc_owner: "[YOUR-NAME]"
-    updated_by: human
-    authoritative_for: []
-    source_inputs: null
-    refresh_policy: manual
-    verification_level: none
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
-
-  - doc_id: SECURITY_AND_DEPENDENCIES
-    path: docs/development/SECURITY_AND_DEPENDENCIES.md
-    doc_class: active
-    authority_kind: blueprint
-    title: "Security and Dependency Governance"
-    primary_audience: both
-    task_entry_for: null
-    read_sequence: null
-    system_owner: security
-    doc_owner: "[YOUR-NAME]"
-    updated_by: human
-    authoritative_for:
-      - dependency pinning rules
-      - secret management rules
-    source_inputs: null
-    refresh_policy: manual
-    verification_level: none
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
-
-  - doc_id: ENGINEERING_STANDARDS
-    path: docs/development/ENGINEERING_STANDARDS.md
-    doc_class: active
-    authority_kind: blueprint
-    title: "Core Engineering Standards"
-    primary_audience: both
-    task_entry_for: null
-    read_sequence: null
-    system_owner: engineering
-    doc_owner: "[YOUR-NAME]"
-    updated_by: human
-    authoritative_for:
-      - idempotency rules
-      - infrastructure as code standards
-      - fail fast principles
-      - observability requirements
-    source_inputs: null
-    refresh_policy: manual
-    verification_level: none
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
-
-  - doc_id: DOC_REGISTRY_MD
-    path: docs/reference/registry/DOC_REGISTRY.md
-    doc_class: generated
-    authority_kind: current_config
-    title: "Documentation Registry — Human-Readable View"
-    primary_audience: humans
-    task_entry_for: null
-    read_sequence: null
-    system_owner: documentation-governance
-    doc_owner: "[YOUR-NAME]"
-    updated_by: agent
-    authoritative_for: []
-    source_inputs:
-      - docs/reference/registry/DOC_REGISTRY.yaml
-    refresh_policy: on_source_change
-    verification_level: repo_derived
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
-    notes: >
-      Generated view of DOC_REGISTRY.yaml. Do not edit directly — update
-      DOC_REGISTRY.yaml and run python scripts/build_doc_registry_md.py to regenerate.
-
-  - doc_id: AGENT_CAPABILITIES
-    path: docs/development/AGENT_CAPABILITIES.md
-    doc_class: active
-    authority_kind: guide
-    title: "Agent Capabilities & Execution Environment"
-    primary_audience: agents
-    task_entry_for: null
-    read_sequence: null
-    system_owner: documentation-governance
-    doc_owner: "[YOUR-NAME]"
-    updated_by: human
-    authoritative_for:
-      - permitted execution tools
-      - package management environment
-      - secret access limitations
-      - git operations
-    source_inputs: null
-    refresh_policy: manual
-    verification_level: none
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
-
-  - doc_id: NEEDS_ATTENTION
-    path: docs/plans/NEEDS_ATTENTION.md
-    doc_class: active
-    authority_kind: plan
-    title: "Human-Agent Handoff (Interrupts)"
-    primary_audience: both
-    task_entry_for: null
-    read_sequence: null
-    system_owner: documentation-governance
-    doc_owner: "[YOUR-NAME]"
-    updated_by: human
-    authoritative_for:
-      - agent blockers and handoff status
-    source_inputs: null
-    refresh_policy: manual
-    verification_level: none
-    last_verified: null
-    evidence_refs: null
-    supersedes: null
-    superseded_by: null
-    status: active
+    '
+  depends_on: []
+- doc_id: PROMPT_STRATEGIC_ALIGNMENT
+  path: docs/plans/prompts/PROMPT_STRATEGIC_ALIGNMENT.md
+  doc_class: active
+  authority_kind: plan
+  title: 'Prompt Template: Strategic Alignment & Challenge'
+  primary_audience: both
+  task_entry_for:
+  - bootstrap_project
+  - architectural_decision
+  status: active
+  depends_on: []
+  authoritative_for: []
+  system_owner: system-wide
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  refresh_policy: manual
+- doc_id: PROMPT_INDEX
+  path: docs/plans/prompts/PROMPT_INDEX.md
+  doc_class: active
+  authority_kind: guide
+  title: Prompt Library Index
+  primary_audience: both
+  task_entry_for: []
+  read_sequence: null
+  system_owner: documentation-governance
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for:
+  - standardized agent prompt templates
+  source_inputs: null
+  refresh_policy: manual
+  verification_level: none
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  depends_on: []
+- doc_id: PROMPT_BACKLOG_INTAKE
+  path: docs/plans/prompts/PROMPT_BACKLOG_INTAKE.md
+  doc_class: active
+  authority_kind: plan
+  title: 'Prompt Template: Backlog Intake'
+  primary_audience: humans
+  task_entry_for: []
+  read_sequence: null
+  system_owner: documentation-governance
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for: []
+  source_inputs: null
+  refresh_policy: manual
+  verification_level: none
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  depends_on: []
+- doc_id: PROMPT_BATCH_EXECUTION
+  path: docs/plans/prompts/PROMPT_BATCH_EXECUTION.md
+  doc_class: active
+  authority_kind: guide
+  title: 'Prompt Template: Batch Execution'
+  primary_audience: humans
+  task_entry_for: []
+  read_sequence: null
+  system_owner: documentation-governance
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for: []
+  source_inputs: null
+  refresh_policy: manual
+  verification_level: none
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  depends_on: []
+- doc_id: PROMPT_QA_GATE
+  path: docs/plans/prompts/PROMPT_QA_GATE.md
+  doc_class: active
+  authority_kind: guide
+  title: 'Prompt Template: QA Gate'
+  primary_audience: humans
+  task_entry_for: []
+  read_sequence: null
+  system_owner: documentation-governance
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for: []
+  source_inputs: null
+  refresh_policy: manual
+  verification_level: none
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  depends_on: []
+- doc_id: PROMPT_SYSTEM_AUDIT
+  path: docs/plans/prompts/PROMPT_SYSTEM_AUDIT.md
+  doc_class: active
+  authority_kind: guide
+  title: 'Prompt Template: System Audit'
+  primary_audience: humans
+  task_entry_for: []
+  read_sequence: null
+  system_owner: documentation-governance
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for: []
+  source_inputs: null
+  refresh_policy: manual
+  verification_level: none
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  depends_on: []
+- doc_id: PROMPT_DEBT_DISCOVERY
+  path: docs/plans/prompts/PROMPT_DEBT_DISCOVERY.md
+  doc_class: active
+  authority_kind: guide
+  title: 'Prompt Template: Debt Discovery'
+  primary_audience: humans
+  task_entry_for: []
+  read_sequence: null
+  system_owner: documentation-governance
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for: []
+  source_inputs: null
+  refresh_policy: manual
+  verification_level: none
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  depends_on: []
+- doc_id: PROMPT_DEPENDENCY_BOOTSTRAP
+  path: docs/plans/prompts/PROMPT_DEPENDENCY_BOOTSTRAP.md
+  doc_class: active
+  authority_kind: guide
+  title: 'Prompt Template: Dependency Bootstrap'
+  primary_audience: humans
+  task_entry_for: []
+  read_sequence: null
+  system_owner: documentation-governance
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for: []
+  source_inputs: null
+  refresh_policy: manual
+  verification_level: none
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  depends_on: []
+- doc_id: SECURITY_AND_DEPENDENCIES
+  path: docs/development/SECURITY_AND_DEPENDENCIES.md
+  doc_class: active
+  authority_kind: blueprint
+  title: Security and Dependency Governance
+  primary_audience: both
+  task_entry_for: []
+  read_sequence: null
+  system_owner: security
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for:
+  - dependency pinning rules
+  - secret management rules
+  source_inputs: null
+  refresh_policy: manual
+  verification_level: none
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  depends_on: []
+- doc_id: ENGINEERING_STANDARDS
+  path: docs/development/ENGINEERING_STANDARDS.md
+  doc_class: active
+  authority_kind: blueprint
+  title: Core Engineering Standards
+  primary_audience: both
+  task_entry_for: []
+  read_sequence: null
+  system_owner: engineering
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for:
+  - idempotency rules
+  - infrastructure as code standards
+  - fail fast principles
+  - observability requirements
+  source_inputs: null
+  refresh_policy: manual
+  verification_level: none
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  depends_on: []
+- doc_id: DOC_REGISTRY_MD
+  path: docs/reference/registry/DOC_REGISTRY.md
+  doc_class: generated
+  authority_kind: current_config
+  title: "Documentation Registry \u2014 Human-Readable View"
+  primary_audience: humans
+  task_entry_for: []
+  read_sequence: null
+  system_owner: documentation-governance
+  doc_owner: '[YOUR-NAME]'
+  updated_by: agent
+  authoritative_for: []
+  source_inputs:
+  - docs/reference/registry/DOC_REGISTRY.yaml
+  refresh_policy: on_source_change
+  verification_level: repo_derived
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  notes: "Generated view of DOC_REGISTRY.yaml. Do not edit directly \u2014 update\
+    \ DOC_REGISTRY.yaml and run python scripts/build_doc_registry_md.py to regenerate.\n"
+  depends_on: []
+- doc_id: AGENT_CAPABILITIES
+  path: docs/development/AGENT_CAPABILITIES.md
+  doc_class: active
+  authority_kind: guide
+  title: Agent Capabilities & Execution Environment
+  primary_audience: agents
+  task_entry_for: []
+  read_sequence: null
+  system_owner: documentation-governance
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for:
+  - permitted execution tools
+  - package management environment
+  - secret access limitations
+  - git operations
+  source_inputs: null
+  refresh_policy: manual
+  verification_level: none
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  depends_on: []
+- doc_id: ARCH_OVERVIEW
+  path: docs/architecture/OVERVIEW.md
+  doc_class: active
+  authority_kind: blueprint
+  title: Architecture Overview
+  primary_audience: both
+  task_entry_for:
+  - implement_change
+  - investigate_runtime_issue
+  system_owner: documentation-governance
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for:
+  - project architecture summary
+  refresh_policy: manual
+  status: active
+  depends_on: []
+- doc_id: SERVICE_INVENTORY
+  path: docs/reference/current/SERVICE_INVENTORY.md
+  doc_class: active
+  authority_kind: current_config
+  title: Service Inventory
+  primary_audience: both
+  task_entry_for:
+  - investigate_runtime_issue
+  system_owner: documentation-governance
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for:
+  - inventory of automated governance scripts
+  source_inputs:
+  - scripts/
+  verification_level: repo_derived
+  refresh_policy: on_source_change
+  status: active
+  depends_on: []
+- doc_id: REGISTRY_SCHEMA
+  path: docs/reference/registry/DOC_REGISTRY.schema.json
+  doc_class: active
+  authority_kind: current_config
+  title: Registry Validation Schema
+  primary_audience: both
+  system_owner: documentation-governance
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for:
+  - registry schema definition
+  source_inputs:
+  - docs/reference/registry/DOC_REGISTRY.yaml
+  verification_level: repo_derived
+  refresh_policy: on_source_change
+  status: active
+  depends_on: []
+  task_entry_for: []
+- doc_id: USER_MANUAL
+  path: docs/development/USER_MANUAL.md
+  doc_class: active
+  authority_kind: guide
+  title: "User Manual \u2014 Operating the Governance Template"
+  primary_audience: both
+  task_entry_for:
+  - bootstrap_project
+  - operate_or_release
+  status: active
+  depends_on: []
+  authoritative_for: []
+  system_owner: system-wide
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  refresh_policy: manual
+- doc_id: NEEDS_ATTENTION
+  path: docs/plans/NEEDS_ATTENTION.md
+  doc_class: active
+  authority_kind: plan
+  title: Human-Agent Handoff (Interrupts)
+  primary_audience: both
+  task_entry_for: []
+  read_sequence: null
+  system_owner: documentation-governance
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for:
+  - agent blockers and handoff status
+  source_inputs: null
+  refresh_policy: manual
+  verification_level: none
+  last_verified: null
+  evidence_refs: null
+  supersedes: null
+  superseded_by: null
+  status: active
+  depends_on: []
+- doc_id: AGENTS_md
+  path: AGENTS.md
+  doc_class: active
+  authority_kind: guide
+  title: "AGENTS.md \u2014 AI Agent Standard Operating Procedures"
+  primary_audience: agents
+  task_entry_for:
+  - implement_change
+  - investigate_runtime_issue
+  - operate_or_release
+  - refresh_current_docs
+  system_owner: system-wide
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for:
+  - non-negotiable agent behavioral standards
+  - agent execution protocol
+  - session hygiene rules
+  refresh_policy: manual
+  status: active
+  depends_on: []
+- doc_id: GEMINI_md
+  path: GEMINI.md
+  doc_class: active
+  authority_kind: guide
+  title: "GEMINI.md \u2014 Gemini-Specific Agent Guidelines"
+  primary_audience: agents
+  task_entry_for:
+  - implement_change
+  - investigate_runtime_issue
+  - operate_or_release
+  - refresh_current_docs
+  system_owner: system-wide
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for:
+  - gemini-specific operational guardrails
+  - parallelism and context efficiency rules
+  refresh_policy: manual
+  status: active
+  depends_on: []
+- doc_id: ENGINEERING_PHILOSOPHY
+  path: docs/development/ENGINEERING_PHILOSOPHY.md
+  doc_class: active
+  authority_kind: guide
+  title: "Engineering Philosophy \u2014 The Human Manual"
+  primary_audience: both
+  system_owner: system-wide
+  doc_owner: '[YOUR-NAME]'
+  updated_by: human
+  authoritative_for:
+  - engineering core values
+  - strategic friction philosophy
+  - truth over plausibility mandate
+  refresh_policy: manual
+  status: active
+  depends_on: []
+  task_entry_for: []

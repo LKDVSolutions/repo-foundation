@@ -22,8 +22,15 @@ REGISTRY_MD = REPO_ROOT / "docs" / "reference" / "registry" / "DOC_REGISTRY.md"
 
 
 def load_registry_entries() -> list[dict[str, Any]]:
-    with REGISTRY_YAML.open("r", encoding="utf-8") as fh:
-        data = yaml.safe_load(fh) or {}
+    try:
+        with REGISTRY_YAML.open("r", encoding="utf-8") as fh:
+            data = yaml.safe_load(fh)
+    except yaml.YAMLError:
+        data = None
+
+    if not isinstance(data, dict):
+        raise ValueError(f"Root of {REGISTRY_YAML} must be a dictionary. Got malformed or empty file.")
+        
     entries = data.get("entries")
     if not isinstance(entries, list):
         raise ValueError(f"'entries' missing or invalid in {REGISTRY_YAML}")
