@@ -625,6 +625,24 @@ entries:
   refresh_policy: manual
   status: active
   depends_on: []
+- doc_id: CHECK_NEEDS_ATTENTION
+  path: scripts/check_needs_attention.py
+  doc_class: active
+  authority_kind: current_config
+  title: "check_needs_attention.py — CI Escalation Gate"
+  primary_audience: agents
+  task_entry_for: []
+  system_owner: documentation-governance
+  doc_owner: '[YOUR-NAME]'
+  updated_by: agent
+  authoritative_for:
+  - CI enforcement of NEEDS_ATTENTION.md open blocker detection
+  source_inputs:
+  - docs/plans/NEEDS_ATTENTION.md
+  verification_level: repo_derived
+  refresh_policy: on_source_change
+  status: active
+  depends_on: []
 - doc_id: ENGINEERING_PHILOSOPHY
   path: docs/development/ENGINEERING_PHILOSOPHY.md
   doc_class: active

@@ -21,8 +21,10 @@ def fetch_github_context(issue: str) -> str:
         return f"Failed to fetch GitHub context: {e}"
 
 def fetch_jira_context(issue: str) -> str:
-    # Placeholder for Jira API
-    return f"Jira context for {issue} (Mocked data)"
+    return (
+        f"[NOT IMPLEMENTED] Jira integration not configured. Issue: {issue}. "
+        "Configure JIRA_API_TOKEN and JIRA_BASE_URL environment variables and implement this function."
+    )
 
 def main():
     parser = argparse.ArgumentParser(description="Hydrate agent context.")

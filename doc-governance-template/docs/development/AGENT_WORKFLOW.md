@@ -228,6 +228,28 @@ If you hit an unresolvable blocker (e.g., a missing dependency, ambiguous archit
 1. Document the current state, blocker, and 2-3 proposed options in `docs/plans/NEEDS_ATTENTION.md`.
 2. Cleanly exit and wait for human intervention.
 
+### Escalation Path via NEEDS_ATTENTION.md
+
+`docs/plans/NEEDS_ATTENTION.md` is the canonical human escalation surface. It is actively enforced by CI.
+
+**Open blocker convention:** Write each unresolved item as a markdown unchecked task:
+```
+- [ ] Agent blocked: [brief description of the blocker]
+```
+
+**Resolved convention:** Mark it done when the human resolves it:
+```
+- [x] Resolved: [what was done]
+```
+
+**CI enforcement:** `scripts/check_needs_attention.py` runs in the `doc-gate` CI job and **exits 1** (blocking PR merges) if any `- [ ]` items are present. This means a blocked agent is never silently ignored — the repo will show a failing CI status until the blocker is cleared.
+
+**Human resume protocol:** After resolving a blocker, update the item to `- [x]`, then re-run:
+```bash
+python scripts/docs_gate.py --fast
+```
+Confirm the gate passes, then tell the agent to "Resume from NEEDS_ATTENTION."
+
 ---
 
 ## Section 7: Staleness Protocol
@@ -239,6 +261,14 @@ If you hit an unresolvable blocker (e.g., a missing dependency, ambiguous archit
    - `verification_level: repo_derived` — content was derived from source artifacts in the repo, not live system verification
    - `verification_level: ssh_verified` — claims were verified via live SSH commands (highest available level)
 
-3. **runtime_evidence docs with `last_verified` older than 7 days** should be treated as potentially stale for service health or operational state claims. Record this in the task closure `unresolved_drift` field and re-verify before acting.
+3. **Staleness TTL thresholds are enforced by the docs gate.** Thresholds are configured per `authority_kind` in `.agent_config.yaml` under `governance.staleness_ttl`. Defaults:
+
+   | authority_kind | WARN threshold | FAIL threshold |
+   |---|---|---|
+   | `runtime_evidence` | 7 days | 30 days |
+   | `current_config` | 30 days | 90 days |
+
+   - **WARN** (`age >= warn_days`): Record in task closure `unresolved_drift`; re-verify before acting on the stale claim.
+   - **FAIL** (`age >= fail_days`): Gate exits 1. The doc must be re-verified and `last_verified` updated before any PR touching that doc can merge.
 
 4. **When an agent refreshes a doc**, it must update `last_verified` to the current date and set `verification_level` appropriately in DOC_REGISTRY.yaml as part of the closure output.

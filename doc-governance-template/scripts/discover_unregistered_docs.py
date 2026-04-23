@@ -14,7 +14,7 @@ def load_registry(registry_path: Path) -> list:
     with open(registry_path, 'r', encoding='utf-8') as f:
         try:
             data = yaml.safe_load(f)
-            return data.get('documents', []) if data else []
+            return data.get('entries', []) if data else []
         except yaml.YAMLError as e:
             print(f"Error parsing registry YAML: {e}")
             return []
@@ -51,7 +51,7 @@ def main():
 
     print(f"Found {len(unregistered_files)} unregistered markdown files:\\n")
     
-    print("documents:")
+    print("entries:")
     for file_path in sorted(unregistered_files):
         print(f"  - path: {file_path}")
         print(f"    title: \"TODO: Add Title\"")

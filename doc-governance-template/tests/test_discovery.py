@@ -21,7 +21,7 @@ def test_load_registry_empty(tmp_path):
 def test_load_registry_valid(tmp_path):
     registry_file = tmp_path / "DOC_REGISTRY.yaml"
     content = """
-documents:
+entries:
   - path: docs/test.md
     title: Test Doc
 """

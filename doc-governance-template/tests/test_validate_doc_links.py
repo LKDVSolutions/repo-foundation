@@ -27,8 +27,8 @@ def test_resolve_link_infinite_symlink(tmp_path):
 def test_check_links_broken_link(tmp_path):
     doc_path = tmp_path / "doc.md"
     doc_path.write_text("Link to [missing](missing.md)")
-    
-    with patch("scripts.validate_doc_links.DOCS_TO_CHECK", [doc_path]), \
+
+    with patch("scripts.validate_doc_links.get_docs_to_check", return_value=[doc_path]), \
          patch("scripts.validate_doc_links.REPO_ROOT", tmp_path):
         passed, warnings, failures = check_links()
         assert failures == 1

@@ -13,13 +13,16 @@ The system is designed as an "Agent OS" for documentation management. It operate
 2.  **Automation Engine (`scripts/`)**:
     A suite of Python-based tools that execute governance logic.
     - **`docs_gate.py`**: The primary quality gate for ensuring registry and document integrity.
-    - **`auto_fix.py` / `auto_fix_registry.py`**: Self-healing mechanisms that programmatically repair documentation failures.
-    - **`detect_drift.py`**: Proactive drift detection between source artifacts and documentation blueprints.
+    - **`auto_fix.py` / `auto_fix_registry.py`**: Self-healing mechanisms that programmatically repair documentation failures. auto_fix injects sentinel values (`FIXME-NEEDS-TITLE`) that intentionally fail the gate until a human corrects them.
+    - **`detect_drift.py`**: Proactive drift detection between source artifacts and documentation blueprints. Exits 1 on drift — this is a required CI status check.
+    - **`check_needs_attention.py`**: Blocks CI merges when `docs/plans/NEEDS_ATTENTION.md` contains open `- [ ]` agent blockers.
+    - **`cascade_staleness.py` / `auto_fix_registry.py`**: Registry mutation scripts. Both use a full read-modify-write FileLock to prevent concurrent-write data loss (see ENGINEERING_STANDARDS.md — Agent Concurrency Model).
 3.  **Agent Context Layer**:
     - **`hydrate_context.py`**: Aggregates repository and external context for AI agent memory.
     - **`manage_agent_state.py`**: Tracks active agent tasks and blockers.
 4.  **CI/CD Pipeline**:
     - **GitHub Actions**: Daily and push-triggered quality gates ensuring documentation doesn't rot over time.
+    - Both `doc-gate` and `drift-detection` jobs are required status checks — PRs cannot merge if either fails.
 
 ## Data Flows
 

@@ -59,3 +59,23 @@ When an AI agent is tasked to `investigate_runtime_issue`, it relies entirely on
 - **Structured Logging:** All application logs must be emitted as structured JSON, including trace IDs, timestamps, and severity levels.
 - **Health Endpoints:** Every service must expose a `/health` or `/live` HTTP endpoint that validates its internal state and database connectivity.
 - **Metrics:** Services should emit standard operational metrics (e.g., Prometheus format) covering request volume, error rates, and latency.
+
+---
+
+## 5. Agent Concurrency Model
+
+The documentation registry (`DOC_REGISTRY.yaml`) is a file-based single source of truth protected by a `FileLock` covering the full read-modify-write cycle. This is intentionally simple and imposes a hard concurrency ceiling.
+
+**Design ceiling: ≤10 concurrent agents per project.**
+
+**Why this ceiling exists:**
+- The `FileLock` (30s timeout) serializes registry writes. At ≤10 agents, queue depth is acceptable and timeouts are rare.
+- Beyond 10 concurrent writers, lock contention and timeout failures become likely, which halts agents rather than corrupting data — but creates unacceptable operational friction.
+- Introducing a database or distributed lock just to support >10 agents adds operational complexity that contradicts the "simplicity first" principle for the target use case.
+
+**Guardrails:**
+- **All registry mutations** (`auto_fix_registry.py`, `cascade_staleness.py`) must lock the full read-modify-write transaction, not just the write.
+- **`filelock`** is a hard dependency, not an optional import. Do not add a `try/except ImportError` fallback.
+- **Scaling trigger:** If a project requires >10 concurrent agents operating on the registry, evaluate registry sharding (one YAML per subsystem, aggregated by a collector) or migrate to a lightweight embedded store.
+
+The ceiling is configured in `.agent_config.yaml` under `governance.max_concurrent_agents` for observability.

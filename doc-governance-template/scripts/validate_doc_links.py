@@ -1,23 +1,52 @@
 #!/usr/bin/env python3
-"""Validate that internal markdown links in key docs resolve to real files."""
+"""Validate that internal markdown links in governed docs resolve to real files.
+
+Scope: all active and generated docs registered in DOC_REGISTRY.yaml.
+Falls back to a hardcoded list of core docs if the registry is unavailable.
+"""
 
 import re
 import sys
+import yaml
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parent.parent  # scripts/ -> repo_root
+REPO_ROOT = Path(__file__).resolve().parent.parent
 
-# Core governance docs to check for broken links.
-# Extend this list to include your project's key blueprint or index docs.
-DOCS_TO_CHECK = [
+REGISTRY_PATH = REPO_ROOT / "docs" / "reference" / "registry" / "DOC_REGISTRY.yaml"
+
+# Fallback list used only when the registry cannot be loaded
+FALLBACK_DOCS = [
     REPO_ROOT / "docs/INDEX.md",
     REPO_ROOT / "docs/REFERENCE.md",
     REPO_ROOT / "docs/development/AGENT_WORKFLOW.md",
     REPO_ROOT / "docs/reference/registry/DOC_REGISTRY.md",
 ]
 
-# Regex to find markdown links: [text](path)
 LINK_RE = re.compile(r'\[([^\]]*)\]\(([^)]+)\)')
+
+
+def get_docs_to_check() -> list[Path]:
+    """Return all active/generated docs from the registry."""
+    if not REGISTRY_PATH.exists():
+        print(f"[WARN] Registry not found — falling back to hardcoded doc list")
+        return [p for p in FALLBACK_DOCS if p.exists()]
+
+    try:
+        with open(REGISTRY_PATH, encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+    except Exception as e:
+        print(f"[WARN] Could not load registry ({e}) — falling back to hardcoded doc list")
+        return [p for p in FALLBACK_DOCS if p.exists()]
+
+    entries = data.get("entries", [])
+    governed = {"active", "generated"}
+    paths = []
+    for entry in entries:
+        if entry.get("doc_class") in governed and entry.get("path"):
+            p = REPO_ROOT / entry["path"]
+            if p.exists() and p.suffix == ".md":
+                paths.append(p)
+    return paths
 
 
 def extract_links(content: str) -> list[str]:
@@ -40,7 +69,6 @@ def resolve_link(link: str, doc_path: Path) -> Path | None:
     try:
         return (doc_path.parent / link).resolve(strict=False)
     except RuntimeError:
-        # e.g., symlink loop
         return None
 
 
@@ -50,7 +78,14 @@ def check_links():
     warnings = 0
     failures = 0
 
-    for doc_path in DOCS_TO_CHECK:
+    docs_to_check = get_docs_to_check()
+
+    if not docs_to_check:
+        print("[WARN] No docs found to check")
+        warnings += 1
+        return passed, warnings, failures
+
+    for doc_path in docs_to_check:
         if not doc_path.exists():
             print(f"[WARN] Scoped doc not found (skipping): {doc_path.relative_to(REPO_ROOT)}")
             warnings += 1

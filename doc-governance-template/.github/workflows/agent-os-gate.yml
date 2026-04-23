@@ -21,7 +21,10 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install pyyaml
+        run: pip install -r requirements-dev.txt
+
+      - name: Rebuild Registry Markdown
+        run: python scripts/build_doc_registry_md.py
 
       - name: Check Registry Synchronization
         run: python scripts/check_doc_registry_sync.py
@@ -29,14 +32,23 @@ jobs:
       - name: Run Documentation Gate (Fast)
         run: python scripts/docs_gate.py --fast
 
+      - name: Check NEEDS_ATTENTION (open agent blockers block merge)
+        run: python scripts/check_needs_attention.py
+
   drift-detection:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
       - name: Run Auto-Drift Detection
+        # Exits 1 if any adapter reports drift — this job is a required status check.
         run: python scripts/detect_drift.py

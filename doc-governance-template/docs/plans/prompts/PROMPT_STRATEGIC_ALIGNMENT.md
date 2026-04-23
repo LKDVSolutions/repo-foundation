@@ -9,7 +9,7 @@ Analyze the user's request and provide a "Skeptical Critique." Do not accept the
 3. **The "Scale" Audit**: Does this architecture survive 10x the current expected load/data? Where is the first bottleneck?
 
 ### Phase 2: Ecosystem & Dependency Research (Action)
-You MUST NOT guess versions or capabilities. Use your tools (`google_web_search`, `web_fetch`, `npm/pip/cargo search`) to perform an "Ecosystem Scan":
+You MUST NOT guess versions or capabilities. Use your available research tools (web search if available, `web_fetch`, package registry lookups via `npm info`, `pip index versions`, `cargo search`) to perform an "Ecosystem Scan". If web search is unavailable in your environment, request the user to supply current version information for the proposed stack before proceeding.
 1. **Version Conflicts**: Find the latest stable versions of the proposed tech stack. Identify any known breaking changes or security vulnerabilities (CVEs).
 2. **License Audit**: Verify the licenses of all core dependencies. Flag anything that is not MIT/Apache/BSD for review.
 3. **Integration Feasibility**: If the project integrates with external APIs (GitHub, Slack, Stripe), fetch the latest documentation for their auth patterns and rate limits.

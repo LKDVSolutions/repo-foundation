@@ -85,6 +85,23 @@ def check_registry():
         print("[PASS] No duplicate path values")
         passed += 1
 
+    # Check: all registered paths exist on disk
+    path_missing = []
+    for entry in entries:
+        doc_id = entry.get("doc_id", "<unknown>")
+        path_str = entry.get("path")
+        if path_str:
+            full_path = REPO_ROOT / path_str
+            if not full_path.exists():
+                path_missing.append(f"'{doc_id}' → {path_str}")
+    if path_missing:
+        for msg in path_missing:
+            print(f"[FAIL] Registered path does not exist on disk: {msg}")
+            failures += 1
+    else:
+        print(f"[PASS] All {len(entries)} registered paths exist on disk")
+        passed += 1
+
     # Check 9: task_entry_for uniqueness (warn only)
     task_class_map: dict[str, list[str]] = {}
     for entry in entries:

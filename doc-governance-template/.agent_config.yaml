@@ -22,3 +22,18 @@ agent:
   observability:
     state_file: "docs/history/AGENT_STATE.md"
     decision_log: "docs/history/DECISION_LOG.md"
+
+governance:
+  # Staleness TTL thresholds per authority_kind.
+  # warn_days: emit [WARN] — doc is potentially stale
+  # fail_days: emit [FAIL] and exit 1 — doc must be re-verified before merging
+  staleness_ttl:
+    runtime_evidence:
+      warn_days: 7
+      fail_days: 30
+    current_config:
+      warn_days: 30
+      fail_days: 90
+  # Maximum concurrent agents supported by the file-based registry (FileLock RMW model).
+  # Exceeding this ceiling risks lock contention timeouts. See ENGINEERING_STANDARDS.md.
+  max_concurrent_agents: 10
