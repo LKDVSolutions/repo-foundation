@@ -8,7 +8,7 @@ from pathlib import Path
 import jsonschema
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-REGISTRY_PATH = REPO_ROOT / "docs" / "reference" / "registry" / "DOC_REGISTRY.yaml"
+REGISTRY_PATH = REPO_ROOT / ".registry_cache.json"
 SCHEMA_PATH = REPO_ROOT / "docs" / "reference" / "registry" / "DOC_REGISTRY.schema.json"
 
 def check_registry():
@@ -27,11 +27,11 @@ def check_registry():
 
     try:
         with open(REGISTRY_PATH, "r", encoding="utf-8") as f:
-            data = yaml.safe_load(f)
-        print("[PASS] YAML parses without errors")
+            data = json.load(f)
+        print("[PASS] JSON parses without errors")
         passed += 1
-    except yaml.YAMLError as e:
-        print(f"[FAIL] YAML parse error: {e}")
+    except json.JSONDecodeError as e:
+        print(f"[FAIL] JSON parse error: {e}")
         failures += 1
         return passed, warnings, failures
 

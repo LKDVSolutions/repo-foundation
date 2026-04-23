@@ -1,3 +1,19 @@
+---
+doc_id: PROMPT_DEPENDENCY_BOOTSTRAP
+doc_class: active
+authority_kind: guide
+title: 'Prompt Template: Dependency Bootstrap'
+primary_audience: humans
+task_entry_for: []
+system_owner: documentation-governance
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for: []
+refresh_policy: manual
+verification_level: none
+status: active
+depends_on: []
+---
 **Directive**: You are working in: `[PROJECT_ROOT_PATH]`
 
 Your mission is to bootstrap or update the project's dependencies for a `[TECH_STACK_E.G._PYTHON/NODE/GO]` environment. 

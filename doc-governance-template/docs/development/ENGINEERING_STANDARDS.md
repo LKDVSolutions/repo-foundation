@@ -1,3 +1,23 @@
+---
+doc_id: ENGINEERING_STANDARDS
+doc_class: active
+authority_kind: blueprint
+title: Core Engineering Standards
+primary_audience: both
+task_entry_for: []
+system_owner: engineering
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for:
+- idempotency rules
+- infrastructure as code standards
+- fail fast principles
+- observability requirements
+refresh_policy: manual
+verification_level: none
+status: active
+depends_on: []
+---
 # Core Engineering Standards
 
 **doc_id**: ENGINEERING_STANDARDS

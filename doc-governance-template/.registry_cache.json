@@ -1,0 +1,548 @@
+{
+  "entries": [
+    {
+      "doc_id": "AGENTS_md",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "AGENTS.md \u2014 AI Agent Standard Operating Procedures",
+      "primary_audience": "agents",
+      "task_entry_for": [
+        "implement_change",
+        "investigate_runtime_issue",
+        "operate_or_release",
+        "refresh_current_docs"
+      ],
+      "system_owner": "system-wide",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [
+        "non-negotiable agent behavioral standards",
+        "agent execution protocol",
+        "session hygiene rules"
+      ],
+      "refresh_policy": "manual",
+      "status": "active",
+      "depends_on": [],
+      "path": "AGENTS.md"
+    },
+    {
+      "doc_id": "AGENT_CAPABILITIES",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "Agent Capabilities & Execution Environment",
+      "primary_audience": "agents",
+      "task_entry_for": [],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [
+        "permitted execution tools",
+        "package management environment",
+        "secret access limitations",
+        "git operations"
+      ],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/development/AGENT_CAPABILITIES.md"
+    },
+    {
+      "doc_id": "AGENT_WORKFLOW_md",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "Agent Workflow \u2014 Task Routing and Read-Order Rules",
+      "primary_audience": "agents",
+      "task_entry_for": [],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [
+        "agent task routing (which docs to read for each task class)",
+        "read order rules (authority_kind priority)",
+        "known authority conflict resolution",
+        "fallback rules (missing docs, conflicting sources)",
+        "closure output requirements",
+        "staleness protocol"
+      ],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "notes": "Normative routing document for agents. If an agent needs freeform search to complete a task, this doc is underspecified \u2014 update it.\n",
+      "depends_on": [],
+      "path": "docs/development/AGENT_WORKFLOW.md"
+    },
+    {
+      "doc_id": "ARCH_OVERVIEW",
+      "doc_class": "active",
+      "authority_kind": "blueprint",
+      "title": "Architecture Overview",
+      "primary_audience": "both",
+      "task_entry_for": [
+        "implement_change",
+        "investigate_runtime_issue"
+      ],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [
+        "project architecture summary"
+      ],
+      "refresh_policy": "manual",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/architecture/OVERVIEW.md"
+    },
+    {
+      "doc_id": "CLAUDE_md",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "CLAUDE.md \u2014 Agent Instruction Surface",
+      "primary_audience": "agents",
+      "task_entry_for": [
+        "implement_change",
+        "investigate_runtime_issue",
+        "operate_or_release",
+        "refresh_current_docs"
+      ],
+      "system_owner": "system-wide",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [
+        "agent operational guardrails",
+        "source of truth architecture rules",
+        "documentation governance rules"
+      ],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "notes": "Agent instruction surface. Authoritative for behavioral rules. Mutable facts (IPs, ports, service health) belong in current_config or runtime_evidence docs, not here.\n",
+      "depends_on": [],
+      "path": "CLAUDE.md"
+    },
+    {
+      "doc_id": "CONTRIBUTING_md",
+      "doc_class": "entrypoint",
+      "title": "Contributing Guide \u2014 Rules of the House",
+      "primary_audience": "both",
+      "task_entry_for": [
+        "bootstrap_project"
+      ],
+      "status": "active",
+      "depends_on": [],
+      "authoritative_for": [],
+      "system_owner": "system-wide",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "refresh_policy": "manual",
+      "path": "CONTRIBUTING.md"
+    },
+    {
+      "doc_id": "DOCUMENTATION_MAINTENANCE",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "Documentation Maintenance \u2014 Procedures and Expectations",
+      "primary_audience": "both",
+      "task_entry_for": [],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [
+        "documentation maintenance procedures",
+        "docs gate invocation and interpretation",
+        "when to update which docs (refresh trigger table)",
+        "closure output format",
+        "how to add a new governed doc"
+      ],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/development/DOCUMENTATION_MAINTENANCE.md"
+    },
+    {
+      "doc_id": "ENGINEERING_PHILOSOPHY",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "Engineering Philosophy \u2014 The Human Manual",
+      "primary_audience": "both",
+      "system_owner": "system-wide",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [
+        "engineering core values",
+        "strategic friction philosophy",
+        "truth over plausibility mandate"
+      ],
+      "refresh_policy": "manual",
+      "status": "active",
+      "depends_on": [],
+      "task_entry_for": [],
+      "path": "docs/development/ENGINEERING_PHILOSOPHY.md"
+    },
+    {
+      "doc_id": "ENGINEERING_STANDARDS",
+      "doc_class": "active",
+      "authority_kind": "blueprint",
+      "title": "Core Engineering Standards",
+      "primary_audience": "both",
+      "task_entry_for": [],
+      "system_owner": "engineering",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [
+        "idempotency rules",
+        "infrastructure as code standards",
+        "fail fast principles",
+        "observability requirements"
+      ],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/development/ENGINEERING_STANDARDS.md"
+    },
+    {
+      "doc_id": "GEMINI_md",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "GEMINI.md \u2014 Gemini-Specific Agent Guidelines",
+      "primary_audience": "agents",
+      "task_entry_for": [
+        "implement_change",
+        "investigate_runtime_issue",
+        "operate_or_release",
+        "refresh_current_docs"
+      ],
+      "system_owner": "system-wide",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [
+        "gemini-specific operational guardrails",
+        "parallelism and context efficiency rules"
+      ],
+      "refresh_policy": "manual",
+      "status": "active",
+      "depends_on": [],
+      "path": "GEMINI.md"
+    },
+    {
+      "doc_id": "INDEX_md",
+      "doc_class": "entrypoint",
+      "title": "[YOUR-PROJECT-NAME] \u2014 Repository Index",
+      "primary_audience": "both",
+      "task_entry_for": [
+        "implement_change",
+        "investigate_runtime_issue",
+        "refresh_current_docs",
+        "update_plan_or_roadmap",
+        "operate_or_release",
+        "test_or_operate_dev_environment"
+      ],
+      "read_sequence": [
+        {
+          "implement_change": [
+            "CLAUDE_md"
+          ]
+        },
+        {
+          "investigate_runtime_issue": [
+            "AGENT_WORKFLOW_md",
+            "CLAUDE_md"
+          ]
+        },
+        {
+          "refresh_current_docs": [
+            "DOC_REGISTRY_YAML",
+            "REFERENCE_md"
+          ]
+        },
+        {
+          "update_plan_or_roadmap": []
+        },
+        {
+          "operate_or_release": [
+            "CLAUDE_md"
+          ]
+        },
+        {
+          "test_or_operate_dev_environment": []
+        }
+      ],
+      "system_owner": "system-wide",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "notes": "Universal repo entrypoint. Navigation only \u2014 no mutable facts. All task classes route through this doc first.\n",
+      "depends_on": [],
+      "path": "docs/INDEX.md"
+    },
+    {
+      "doc_id": "NEEDS_ATTENTION",
+      "doc_class": "active",
+      "authority_kind": "plan",
+      "title": "Human-Agent Handoff (Interrupts)",
+      "primary_audience": "both",
+      "task_entry_for": [],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [
+        "agent blockers and handoff status"
+      ],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/plans/NEEDS_ATTENTION.md"
+    },
+    {
+      "doc_id": "PROMPT_BACKLOG_INTAKE",
+      "doc_class": "active",
+      "authority_kind": "plan",
+      "title": "Prompt Template: Backlog Intake",
+      "primary_audience": "humans",
+      "task_entry_for": [],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/plans/prompts/PROMPT_BACKLOG_INTAKE.md"
+    },
+    {
+      "doc_id": "PROMPT_BATCH_EXECUTION",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "Prompt Template: Batch Execution",
+      "primary_audience": "humans",
+      "task_entry_for": [],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/plans/prompts/PROMPT_BATCH_EXECUTION.md"
+    },
+    {
+      "doc_id": "PROMPT_DEBT_DISCOVERY",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "Prompt Template: Debt Discovery",
+      "primary_audience": "humans",
+      "task_entry_for": [],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/plans/prompts/PROMPT_DEBT_DISCOVERY.md"
+    },
+    {
+      "doc_id": "PROMPT_DEPENDENCY_BOOTSTRAP",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "Prompt Template: Dependency Bootstrap",
+      "primary_audience": "humans",
+      "task_entry_for": [],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/plans/prompts/PROMPT_DEPENDENCY_BOOTSTRAP.md"
+    },
+    {
+      "doc_id": "PROMPT_INDEX",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "Prompt Library Index",
+      "primary_audience": "both",
+      "task_entry_for": [],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [
+        "standardized agent prompt templates"
+      ],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/plans/prompts/PROMPT_INDEX.md"
+    },
+    {
+      "doc_id": "PROMPT_QA_GATE",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "Prompt Template: QA Gate",
+      "primary_audience": "humans",
+      "task_entry_for": [],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/plans/prompts/PROMPT_QA_GATE.md"
+    },
+    {
+      "doc_id": "PROMPT_STRATEGIC_ALIGNMENT",
+      "doc_class": "active",
+      "authority_kind": "plan",
+      "title": "Prompt Template: Strategic Alignment & Challenge",
+      "primary_audience": "both",
+      "task_entry_for": [
+        "bootstrap_project",
+        "architectural_decision"
+      ],
+      "status": "active",
+      "depends_on": [],
+      "authoritative_for": [],
+      "system_owner": "system-wide",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "refresh_policy": "manual",
+      "path": "docs/plans/prompts/PROMPT_STRATEGIC_ALIGNMENT.md"
+    },
+    {
+      "doc_id": "PROMPT_SYSTEM_AUDIT",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "Prompt Template: System Audit",
+      "primary_audience": "humans",
+      "task_entry_for": [],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/plans/prompts/PROMPT_SYSTEM_AUDIT.md"
+    },
+    {
+      "doc_id": "REFERENCE_md",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "[YOUR-PROJECT-NAME] \u2014 Where Is the Truth?",
+      "primary_audience": "both",
+      "task_entry_for": [],
+      "system_owner": "system-wide",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [
+        "authority surface map (which source owns each class of fact)",
+        "resolution chains for known conflicts"
+      ],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "notes": "Where-is-the-truth map. Update when new current_config or runtime_evidence surfaces are added, or when a known transitional state is resolved.\n",
+      "depends_on": [],
+      "path": "docs/REFERENCE.md"
+    },
+    {
+      "doc_id": "RELEASE_CHECKLIST",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "Release Checklist \u2014 Pre-Release Documentation Checks",
+      "primary_audience": "agents",
+      "task_entry_for": [],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [
+        "pre-release documentation check sequence",
+        "per-change check requirements",
+        "advisory (non-blocking) checks"
+      ],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/development/RELEASE_CHECKLIST.md"
+    },
+    {
+      "doc_id": "SECURITY_AND_DEPENDENCIES",
+      "doc_class": "active",
+      "authority_kind": "blueprint",
+      "title": "Security and Dependency Governance",
+      "primary_audience": "both",
+      "task_entry_for": [],
+      "system_owner": "security",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [
+        "dependency pinning rules",
+        "secret management rules"
+      ],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/development/SECURITY_AND_DEPENDENCIES.md"
+    },
+    {
+      "doc_id": "SERVICE_INVENTORY",
+      "doc_class": "active",
+      "authority_kind": "current_config",
+      "title": "Service Inventory",
+      "primary_audience": "both",
+      "task_entry_for": [
+        "investigate_runtime_issue"
+      ],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [
+        "inventory of automated governance scripts"
+      ],
+      "source_inputs": [
+        "scripts/"
+      ],
+      "verification_level": "repo_derived",
+      "refresh_policy": "on_source_change",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/reference/current/SERVICE_INVENTORY.md"
+    },
+    {
+      "doc_id": "USER_MANUAL",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "User Manual \u2014 Operating the Governance Template",
+      "primary_audience": "both",
+      "task_entry_for": [
+        "bootstrap_project",
+        "operate_or_release"
+      ],
+      "status": "active",
+      "depends_on": [],
+      "authoritative_for": [],
+      "system_owner": "system-wide",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "refresh_policy": "manual",
+      "path": "docs/development/USER_MANUAL.md"
+    }
+  ]
+}

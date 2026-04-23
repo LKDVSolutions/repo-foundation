@@ -4,13 +4,13 @@
 Each adapter extracts a normalized inventory from a source artifact.
 The engine compares that inventory against what is documented in blueprints.
 
-Blueprint convention: declare governed items in a structured comment block:
+Blueprint convention: declare governed items in a fenced code block:
 
-    <!-- governance:services
+    ```yaml governance:services
     web
     db
     worker
-    -->
+    ```
 
 To add a new infrastructure type: implement a new adapter class and register it in ADAPTERS.
 
@@ -25,58 +25,45 @@ import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
 
+import marko
+from marko.block import FencedCode
+
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
 IDEA_INBOX = REPO_ROOT / "docs" / "plans" / "IDEA_INBOX.md"
 
-# Matches <!-- governance:<kind>\n...\n-->
-_GOVERNANCE_BLOCK_RE = re.compile(
-    r"<!--\s*governance:(?P<kind>\w+)\s*\n(?P<body>.*?)-->",
-    re.DOTALL,
-)
-
 
 def extract_governance_block(content: str, kind: str) -> list[str]:
-    """Extract items from a structured governance comment block in a blueprint.
-
+    """Extract items from a structured governance code block using AST parsing.
+    
     Looks for:
-        <!-- governance:<kind>
+        ```yaml governance:<kind>
         item1
         item2
-        -->
-
-    Falls back to scanning prose list items under a heading containing <kind>
-    if no structured block is found (backward compatibility).
+        ```
     """
-    for match in _GOVERNANCE_BLOCK_RE.finditer(content):
-        if match.group("kind") == kind:
-            items = [
-                line.strip()
-                for line in match.group("body").splitlines()
-                if line.strip() and not line.strip().startswith("#")
-            ]
-            return items
-
-    # Fallback: prose parser — handles h2/h3 headings + bullet lists + table rows
-    items: list[str] = []
-    in_section = False
-    for line in content.splitlines():
-        stripped = line.strip()
-        if re.match(r"^#{1,6}\s+", line) and kind in line.lower():
-            in_section = True
-            continue
-        if re.match(r"^#{1,6}\s+", line) and in_section:
-            in_section = False
-            continue
-        if in_section:
-            # Bullet list items
-            if stripped.startswith(("- ", "* ")):
-                items.append(stripped.lstrip("-* ").strip())
-            # Markdown table data rows (skip header and separator rows)
-            elif stripped.startswith("|") and not re.match(r"^\|[-| ]+\|$", stripped):
-                cells = [c.strip() for c in stripped.strip("|").split("|")]
-                if cells and cells[0] and not cells[0].startswith("-"):
-                    items.append(cells[0])
+    doc = marko.parse(content)
+    
+    items = []
+    target_lang = f"governance:{kind}"
+    
+    def _walk(node):
+        if isinstance(node, FencedCode):
+            if node.extra and target_lang in node.extra:
+                # The children of FencedCode are RawText nodes
+                text = "".join(child.children for child in node.children)
+                # For now we just treat it as a newline separated list of strings
+                # In a more advanced implementation, we could parse it as JSON/YAML
+                for line in text.splitlines():
+                    clean_line = line.strip()
+                    if clean_line and not clean_line.startswith("#"):
+                        items.append(clean_line)
+        
+        if hasattr(node, "children") and isinstance(node.children, list):
+            for child in node.children:
+                _walk(child)
+                
+    _walk(doc)
     return items
 
 
@@ -109,7 +96,7 @@ class DockerComposeAdapter:
             return []
 
     def extract_documented_services(self, blueprint: Path) -> list[str]:
-        """Extract service names from blueprint using structured comment block or prose fallback."""
+        """Extract service names from blueprint using AST parsing."""
         content = blueprint.read_text(encoding="utf-8")
         return extract_governance_block(content, "services")
 

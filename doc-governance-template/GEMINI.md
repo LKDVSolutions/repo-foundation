@@ -1,3 +1,24 @@
+---
+doc_id: GEMINI_md
+doc_class: active
+authority_kind: guide
+title: "GEMINI.md \u2014 Gemini-Specific Agent Guidelines"
+primary_audience: agents
+task_entry_for:
+- implement_change
+- investigate_runtime_issue
+- operate_or_release
+- refresh_current_docs
+system_owner: system-wide
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for:
+- gemini-specific operational guardrails
+- parallelism and context efficiency rules
+refresh_policy: manual
+status: active
+depends_on: []
+---
 # GEMINI.md — Gemini-Specific Agent Guidelines
 
 This file provides specialized guidance for Gemini CLI and other Gemini-based agents. It supplements the core standards defined in `AGENTS.md`.

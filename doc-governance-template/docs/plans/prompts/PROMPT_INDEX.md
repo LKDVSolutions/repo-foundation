@@ -1,3 +1,20 @@
+---
+doc_id: PROMPT_INDEX
+doc_class: active
+authority_kind: guide
+title: Prompt Library Index
+primary_audience: both
+task_entry_for: []
+system_owner: documentation-governance
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for:
+- standardized agent prompt templates
+refresh_policy: manual
+verification_level: none
+status: active
+depends_on: []
+---
 # Prompt Library Index
 
 **doc_id**: PROMPT_INDEX

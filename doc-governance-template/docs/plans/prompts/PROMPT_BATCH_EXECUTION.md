@@ -1,3 +1,19 @@
+---
+doc_id: PROMPT_BATCH_EXECUTION
+doc_class: active
+authority_kind: guide
+title: 'Prompt Template: Batch Execution'
+primary_audience: humans
+task_entry_for: []
+system_owner: documentation-governance
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for: []
+refresh_policy: manual
+verification_level: none
+status: active
+depends_on: []
+---
 **Directive**: You are working in: `[PROJECT_ROOT_PATH]`
 
 Target: Continue backlog execution. Start with the first `[N]` `planned` items in the range `[BL-YYYY-XXX..YYY]` from `docs/plans/BACKLOG.md`.

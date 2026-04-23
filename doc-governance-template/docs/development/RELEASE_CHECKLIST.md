@@ -1,3 +1,22 @@
+---
+doc_id: RELEASE_CHECKLIST
+doc_class: active
+authority_kind: guide
+title: "Release Checklist \u2014 Pre-Release Documentation Checks"
+primary_audience: agents
+task_entry_for: []
+system_owner: documentation-governance
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for:
+- pre-release documentation check sequence
+- per-change check requirements
+- advisory (non-blocking) checks
+refresh_policy: manual
+verification_level: none
+status: active
+depends_on: []
+---
 # Release Checklist
 
 **doc_id**: RELEASE_CHECKLIST

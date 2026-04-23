@@ -1,3 +1,19 @@
+---
+doc_id: PROMPT_QA_GATE
+doc_class: active
+authority_kind: guide
+title: 'Prompt Template: QA Gate'
+primary_audience: humans
+task_entry_for: []
+system_owner: documentation-governance
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for: []
+refresh_policy: manual
+verification_level: none
+status: active
+depends_on: []
+---
 **Directive**: Round 2 QA Gate (mandatory). 
 
 You are reviewing your own just-completed batch for regression/drift before handoff. Do not skip checks. If anything fails, fix it immediately and rerun all checks.

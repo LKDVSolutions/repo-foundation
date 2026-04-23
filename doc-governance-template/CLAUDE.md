@@ -1,3 +1,31 @@
+---
+doc_id: CLAUDE_md
+doc_class: active
+authority_kind: guide
+title: "CLAUDE.md \u2014 Agent Instruction Surface"
+primary_audience: agents
+task_entry_for:
+- implement_change
+- investigate_runtime_issue
+- operate_or_release
+- refresh_current_docs
+system_owner: system-wide
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for:
+- agent operational guardrails
+- source of truth architecture rules
+- documentation governance rules
+refresh_policy: manual
+verification_level: none
+status: active
+notes: 'Agent instruction surface. Authoritative for behavioral rules. Mutable facts
+  (IPs, ports, service health) belong in current_config or runtime_evidence docs,
+  not here.
+
+  '
+depends_on: []
+---
 # CLAUDE.md — Claude-Specific Agent Guidelines
 
 This file provides specialized guidance for Claude Code and other Claude-based agents. It supplements the core standards defined in `AGENTS.md`.

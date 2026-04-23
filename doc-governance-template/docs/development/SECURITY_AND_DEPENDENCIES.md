@@ -1,3 +1,21 @@
+---
+doc_id: SECURITY_AND_DEPENDENCIES
+doc_class: active
+authority_kind: blueprint
+title: Security and Dependency Governance
+primary_audience: both
+task_entry_for: []
+system_owner: security
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for:
+- dependency pinning rules
+- secret management rules
+refresh_policy: manual
+verification_level: none
+status: active
+depends_on: []
+---
 # Security and Dependency Governance
 
 **doc_id**: SECURITY_AND_DEPENDENCIES

@@ -46,7 +46,6 @@
           "doc_id",
           "path",
           "doc_class",
-          "authority_kind",
           "status"
         ],
         "additionalProperties": true

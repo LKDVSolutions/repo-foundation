@@ -1,3 +1,25 @@
+---
+doc_id: REFERENCE_md
+doc_class: active
+authority_kind: guide
+title: "[YOUR-PROJECT-NAME] \u2014 Where Is the Truth?"
+primary_audience: both
+task_entry_for: []
+system_owner: system-wide
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for:
+- authority surface map (which source owns each class of fact)
+- resolution chains for known conflicts
+refresh_policy: manual
+verification_level: none
+status: active
+notes: 'Where-is-the-truth map. Update when new current_config or runtime_evidence
+  surfaces are added, or when a known transitional state is resolved.
+
+  '
+depends_on: []
+---
 # [YOUR-PROJECT-NAME] — Where Is the Truth?
 
 **doc_id**: REFERENCE_md

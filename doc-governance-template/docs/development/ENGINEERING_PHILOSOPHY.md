@@ -1,3 +1,21 @@
+---
+doc_id: ENGINEERING_PHILOSOPHY
+doc_class: active
+authority_kind: guide
+title: "Engineering Philosophy \u2014 The Human Manual"
+primary_audience: both
+system_owner: system-wide
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for:
+- engineering core values
+- strategic friction philosophy
+- truth over plausibility mandate
+refresh_policy: manual
+status: active
+depends_on: []
+task_entry_for: []
+---
 # Engineering Philosophy — The Human Manual
 
 This document explains the "why" behind the strict governance and operational standards in this repository. It is intended for both human engineers and AI agents to understand the core values of our development process.

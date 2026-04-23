@@ -1,3 +1,25 @@
+---
+doc_id: AGENTS_md
+doc_class: active
+authority_kind: guide
+title: "AGENTS.md \u2014 AI Agent Standard Operating Procedures"
+primary_audience: agents
+task_entry_for:
+- implement_change
+- investigate_runtime_issue
+- operate_or_release
+- refresh_current_docs
+system_owner: system-wide
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for:
+- non-negotiable agent behavioral standards
+- agent execution protocol
+- session hygiene rules
+refresh_policy: manual
+status: active
+depends_on: []
+---
 # AGENTS.md — AI Agent Standard Operating Procedures
 
 This document defines the non-negotiable behavioral standards for all AI agents (Claude, Gemini, etc.) operating in this repository.

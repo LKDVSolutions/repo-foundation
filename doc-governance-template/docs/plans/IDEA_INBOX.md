@@ -43,3 +43,9 @@ This file is intentionally lightweight:
 | Idea ID | Date | Reason | Decision Owner |
 |---|---|---|---|
 | | | | |
+
+## Automated Drift Report
+**Detected:** docker-compose: 2 service(s) in source not in blueprint: ['db', 'web']
+
+## Automated Drift Report
+**Detected:** docker-compose: 1 service(s) in blueprint not in source: ['worker']

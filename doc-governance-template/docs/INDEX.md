@@ -1,3 +1,39 @@
+---
+doc_id: INDEX_md
+doc_class: entrypoint
+title: "[YOUR-PROJECT-NAME] \u2014 Repository Index"
+primary_audience: both
+task_entry_for:
+- implement_change
+- investigate_runtime_issue
+- refresh_current_docs
+- update_plan_or_roadmap
+- operate_or_release
+- test_or_operate_dev_environment
+read_sequence:
+- implement_change:
+  - CLAUDE_md
+- investigate_runtime_issue:
+  - AGENT_WORKFLOW_md
+  - CLAUDE_md
+- refresh_current_docs:
+  - DOC_REGISTRY_YAML
+  - REFERENCE_md
+- update_plan_or_roadmap: []
+- operate_or_release:
+  - CLAUDE_md
+- test_or_operate_dev_environment: []
+system_owner: system-wide
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for: []
+refresh_policy: manual
+verification_level: none
+status: active
+notes: "Universal repo entrypoint. Navigation only \u2014 no mutable facts. All task\
+  \ classes route through this doc first.\n"
+depends_on: []
+---
 # [YOUR-PROJECT-NAME] — Repository Index
 
 [YOUR-PROJECT-DESCRIPTION]

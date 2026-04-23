@@ -1,3 +1,23 @@
+---
+doc_id: SERVICE_INVENTORY
+doc_class: active
+authority_kind: current_config
+title: Service Inventory
+primary_audience: both
+task_entry_for:
+- investigate_runtime_issue
+system_owner: documentation-governance
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for:
+- inventory of automated governance scripts
+source_inputs:
+- scripts/
+verification_level: repo_derived
+refresh_policy: on_source_change
+status: active
+depends_on: []
+---
 # Service Inventory — Documentation Governance Template
 
 This document identifies the internal "services" (automated scripts) that govern this repository.

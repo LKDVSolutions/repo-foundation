@@ -1,3 +1,19 @@
+---
+doc_id: PROMPT_BACKLOG_INTAKE
+doc_class: active
+authority_kind: plan
+title: 'Prompt Template: Backlog Intake'
+primary_audience: humans
+task_entry_for: []
+system_owner: documentation-governance
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for: []
+refresh_policy: manual
+verification_level: none
+status: active
+depends_on: []
+---
 **Directive**: You are working in: `[PROJECT_ROOT_PATH]`
 
 Create the next backlog intake batch from remaining raw findings/ideas, with strict deduplication and clean planning updates.

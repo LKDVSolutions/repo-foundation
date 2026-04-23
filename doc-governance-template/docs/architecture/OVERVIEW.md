@@ -1,3 +1,21 @@
+---
+doc_id: ARCH_OVERVIEW
+doc_class: active
+authority_kind: blueprint
+title: Architecture Overview
+primary_audience: both
+task_entry_for:
+- implement_change
+- investigate_runtime_issue
+system_owner: documentation-governance
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for:
+- project architecture summary
+refresh_policy: manual
+status: active
+depends_on: []
+---
 # Architecture Overview — Documentation Governance Template
 
 This document provides a high-level summary of the system architecture, primary components, and their interactions for this Documentation Governance Template.
@@ -37,3 +55,14 @@ The system is designed as an "Agent OS" for documentation management. It operate
 - **Agent-First**: Documentation is structured to be parsed and navigated by autonomous agents.
 - **Fail Fast**: The Quality Gate is a mandatory blocker for all PRs and pushes.
 - **Self-Healing**: Common failures (missing headers, stale links) should be fixed programmatically.
+
+## Governed Infrastructure
+
+The following services are documented and governed by the drift detection pipeline.
+
+```yaml governance:services
+web
+db
+worker
+```
+

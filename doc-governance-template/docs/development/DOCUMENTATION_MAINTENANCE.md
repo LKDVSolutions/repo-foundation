@@ -1,3 +1,24 @@
+---
+doc_id: DOCUMENTATION_MAINTENANCE
+doc_class: active
+authority_kind: guide
+title: "Documentation Maintenance \u2014 Procedures and Expectations"
+primary_audience: both
+task_entry_for: []
+system_owner: documentation-governance
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for:
+- documentation maintenance procedures
+- docs gate invocation and interpretation
+- when to update which docs (refresh trigger table)
+- closure output format
+- how to add a new governed doc
+refresh_policy: manual
+verification_level: none
+status: active
+depends_on: []
+---
 # Documentation Maintenance
 
 **doc_id**: DOCUMENTATION_MAINTENANCE

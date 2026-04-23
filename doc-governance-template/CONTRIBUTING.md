@@ -1,3 +1,18 @@
+---
+doc_id: CONTRIBUTING_md
+doc_class: entrypoint
+title: "Contributing Guide \u2014 Rules of the House"
+primary_audience: both
+task_entry_for:
+- bootstrap_project
+status: active
+depends_on: []
+authoritative_for: []
+system_owner: system-wide
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+refresh_policy: manual
+---
 # Contributing to [YOUR-PROJECT-NAME]
 
 This guide defines the "Rules of the House" for [YOUR-PROJECT-NAME]. It ensures that both humans and AI agents follow the same physics for documentation, development, and strategic decision-making.

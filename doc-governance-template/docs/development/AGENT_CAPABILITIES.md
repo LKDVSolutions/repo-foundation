@@ -1,3 +1,23 @@
+---
+doc_id: AGENT_CAPABILITIES
+doc_class: active
+authority_kind: guide
+title: Agent Capabilities & Execution Environment
+primary_audience: agents
+task_entry_for: []
+system_owner: documentation-governance
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for:
+- permitted execution tools
+- package management environment
+- secret access limitations
+- git operations
+refresh_policy: manual
+verification_level: none
+status: active
+depends_on: []
+---
 # Agent Capabilities & Execution Environment
 
 **doc_id**: AGENT_CAPABILITIES

@@ -1,4 +1,4 @@
-.PHONY: build test lint clean check
+.PHONY: build test lint clean aggregate gate drift propose check
 
 # Standard execution targets for Agentic OS
 # Agents should rely on these instead of guessing build commands.
@@ -15,9 +15,24 @@ lint:
 	@echo "Running linters..."
 	# TODO: Add linters (e.g., flake8, ruff)
 
-gate:
+aggregate:
+	@echo "Aggregating registry from frontmatter..."
+	python scripts/aggregate_registry.py
+
+gate: aggregate
 	@echo "Running Doc Governance Gate..."
 	python scripts/docs_gate.py --fast
+
+drift:
+	@echo "Running drift detection..."
+	python scripts/detect_drift.py
+
+propose:
+	@echo "Proposing fixes to .shadow/ (no source files modified)..."
+	python scripts/propose_fixes.py --report
+
+check: aggregate gate drift
+	@echo "Full governance check complete."
 
 clean:
 	@echo "Cleaning workspace..."

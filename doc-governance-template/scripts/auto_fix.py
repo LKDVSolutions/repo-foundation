@@ -1,10 +1,23 @@
 #!/usr/bin/env python3
-"""CLI to automatically repair missing frontmatter and append missing standard headings.
+"""DEPRECATED: auto_fix.py has been superseded by propose_fixes.py.
 
-Usage:
-    python scripts/auto_fix.py             # dry-run (safe, no changes made)
-    python scripts/auto_fix.py --apply     # apply fixes
+This script previously mutated source files directly, which violated the
+Idempotency and 'System proposes; human disposes' principles.
+
+Use instead:
+    python scripts/propose_fixes.py           # propose patches to .shadow/
+    python scripts/propose_fixes.py --report  # dry-run report
+    python scripts/propose_fixes.py --apply   # apply reviewed patches
 """
+
+import sys
+print(
+    "[DEPRECATED] auto_fix.py is retired. "
+    "Use scripts/propose_fixes.py instead.",
+    file=sys.stderr,
+)
+sys.exit(1)
+
 
 import os
 import argparse

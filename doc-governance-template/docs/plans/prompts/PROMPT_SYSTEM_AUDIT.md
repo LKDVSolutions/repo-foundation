@@ -1,3 +1,19 @@
+---
+doc_id: PROMPT_SYSTEM_AUDIT
+doc_class: active
+authority_kind: guide
+title: 'Prompt Template: System Audit'
+primary_audience: humans
+task_entry_for: []
+system_owner: documentation-governance
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for: []
+refresh_policy: manual
+verification_level: none
+status: active
+depends_on: []
+---
 **Directive**: You are waking up in: `[PROJECT_ROOT_PATH]`
 
 Your mission is to perform a **Comprehensive System Audit** of this existing codebase. You must act as a Principal Architect mapping an undocumented system. Your goal is to deeply understand the architecture, data flows, and boundaries, and then formalize that knowledge into the governance framework.

@@ -7,7 +7,7 @@ from datetime import date, timedelta
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-REGISTRY_PATH = REPO_ROOT / "docs" / "reference" / "registry" / "DOC_REGISTRY.yaml"
+REGISTRY_PATH = REPO_ROOT / ".registry_cache.json"
 AGENT_CONFIG_PATH = REPO_ROOT / ".agent_config.yaml"
 
 # Sentinel values injected by auto_fix.py — must not pass the metadata gate.
@@ -62,11 +62,12 @@ def check_metadata():
         print(f"[FAIL] Registry file not found: {REGISTRY_PATH.relative_to(REPO_ROOT)}")
         return passed, warnings, failures + 1
 
+    import json
     with open(REGISTRY_PATH, "r", encoding="utf-8") as f:
         try:
-            data = yaml.safe_load(f)
-        except yaml.YAMLError as e:
-            print(f"[FAIL] YAML parse error: {e}")
+            data = json.load(f)
+        except json.JSONDecodeError as e:
+            print(f"[FAIL] JSON parse error: {e}")
             return passed, warnings, failures + 1
 
     entries = data.get("entries", [])

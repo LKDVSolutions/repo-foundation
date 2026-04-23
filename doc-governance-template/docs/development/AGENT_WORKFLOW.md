@@ -1,3 +1,27 @@
+---
+doc_id: AGENT_WORKFLOW_md
+doc_class: active
+authority_kind: guide
+title: "Agent Workflow \u2014 Task Routing and Read-Order Rules"
+primary_audience: agents
+task_entry_for: []
+system_owner: documentation-governance
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+authoritative_for:
+- agent task routing (which docs to read for each task class)
+- read order rules (authority_kind priority)
+- known authority conflict resolution
+- fallback rules (missing docs, conflicting sources)
+- closure output requirements
+- staleness protocol
+refresh_policy: manual
+verification_level: none
+status: active
+notes: "Normative routing document for agents. If an agent needs freeform search to\
+  \ complete a task, this doc is underspecified \u2014 update it.\n"
+depends_on: []
+---
 # Agent Workflow — Task Routing and Read-Order Rules
 
 **doc_id**: AGENT_WORKFLOW_md

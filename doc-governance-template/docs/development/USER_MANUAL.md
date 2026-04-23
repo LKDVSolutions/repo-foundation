@@ -1,3 +1,20 @@
+---
+doc_id: USER_MANUAL
+doc_class: active
+authority_kind: guide
+title: "User Manual \u2014 Operating the Governance Template"
+primary_audience: both
+task_entry_for:
+- bootstrap_project
+- operate_or_release
+status: active
+depends_on: []
+authoritative_for: []
+system_owner: system-wide
+doc_owner: '[YOUR-NAME]'
+updated_by: human
+refresh_policy: manual
+---
 # User Manual: Operating with the Documentation Governance Template
 
 This guide explains how to use this template to build new software, refactor legacy code, or manage existing systems with high-autonomy AI agents.
