@@ -59,4 +59,4 @@ State one of:
 - **NO-GO:** [Specific blocking risk that must be resolved first].
 
 **Mandatory Validation:**
-Run `python scripts/docs_gate.py --fast` after any file changes.
+Run `python scripts/docs_gate.py --fast` before completing this review.

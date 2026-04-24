@@ -74,7 +74,9 @@ Then produce upgrade recommendations in this format:
 | ...     | ...  | ...| [link to guide] |
 ```
 
-**Mandatory Validation:**
-After human applies any upgrade, run:
-1. The project's test suite.
-2. `python scripts/docs_gate.py --fast`
+**Mandatory Validation (Agent):**
+Run `python scripts/docs_gate.py --fast` to confirm the proposal document was produced without breaking the registry.
+
+**Mandatory Validation (Human — after applying upgrades):**
+1. Run the project's test suite.
+2. Run `python scripts/docs_gate.py --fast`.

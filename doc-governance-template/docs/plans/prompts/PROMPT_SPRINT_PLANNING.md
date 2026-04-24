@@ -22,9 +22,9 @@ Your mission is to produce a structured sprint plan for the upcoming sprint by r
 
 **Phase 1: Current-State Ingestion**
 Read the following files in order and extract their current state:
-1. `docs/plans/[SPRINT_TRACKER.md]` — identify the most recently completed sprint number and its velocity (points completed vs committed).
-2. `docs/plans/[EPIC_TRACKER.md]` — identify all in-progress and next-up epics with their priorities.
-3. `docs/plans/[SCOPE_BOARD.md]` — identify all items in `Ready` status and their estimated effort.
+1. `[SPRINT_TRACKER_PATH]` (e.g., `docs/plans/SPRINT_TRACKER.md`) — identify the most recently completed sprint number and its velocity (points completed vs committed).
+2. `[EPIC_TRACKER_PATH]` (e.g., `docs/plans/EPIC_TRACKER.md`) — identify all in-progress and next-up epics with their priorities.
+3. `[SCOPE_BOARD_PATH]` (e.g., `docs/plans/SCOPE_BOARD.md`) — identify all items in `Ready` status and their estimated effort.
 
 **Phase 2: Capacity Calculation**
 1. Calculate available capacity: `[TEAM_SIZE] × [SPRINT_DAYS] × [HOURS_PER_DAY] = total_hours`. Convert to points using the project's velocity ratio from Phase 1.
@@ -32,7 +32,7 @@ Read the following files in order and extract their current state:
 3. Subtract carry-over from available capacity to get net new capacity.
 
 **Phase 3: Scope Proposal**
-Select items from the `Ready` column of SCOPE_BOARD.md in priority order until net new capacity is consumed. Respect these rules:
+Select items from the `Ready` column of `[SCOPE_BOARD_PATH]` in priority order until net new capacity is consumed. Respect these rules:
 - **No scope creep:** Do not pull items not in `Ready` status.
 - **Epic alignment:** Prefer items that advance an in-progress epic over starting a new one.
 - **Risk buffer:** Reserve 15% of capacity as an unplanned work buffer.
