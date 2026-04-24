@@ -68,15 +68,16 @@ If someone (human or a legacy script) has altered files outside of this process:
     python scripts/detect_drift.py
     ```
     This script compares your `current_config` (e.g., `docker-compose.yml` or source code) against your `blueprint` docs.
-2.  **Auto-Fix the Registry**:
-    If new files were added manually without registration:
+2.  **Propose Frontmatter Fixes (Safe)**:
+    If new files were added manually without proper metadata:
     ```bash
-    python scripts/auto_fix_registry.py
+    python scripts/propose_fixes.py --report
+    python scripts/propose_fixes.py
     ```
-3.  **Self-Heal the Docs**:
-    If documentation headers or sections are missing:
+3.  **Apply Reviewed Fixes (Optional)**:
+    After reviewing proposed patches in `.shadow/`:
     ```bash
-    python scripts/auto_fix.py
+    python scripts/propose_fixes.py --apply
     ```
 
 ## 5. Human-Agent Collaboration (The Interrupt)

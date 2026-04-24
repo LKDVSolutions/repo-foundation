@@ -96,8 +96,8 @@ You must act as a Senior Systems Architect. Your goal is to map the existing cod
 
 1. **Audit the Codebase (Safely):** Do NOT do raw `grep` loops over thousands of files. Start by running `python scripts/generate_tree.py` to get a high-level view of the directory structure. Map the repo *one subsystem at a time*. Find package managers (package.json, requirements.txt, etc.), infrastructure configs (docker-compose, terraform), and existing documentation.
 2. **Draft the Authority Map:** Update `docs/REFERENCE.md`. Based on what you found, define what files are the authoritative sources for different fact classes (e.g., if you found a docker-compose.yml, it owns 'Service Host Placement').
-3. **Register Existing Docs:** Read `docs/reference/registry/DOC_REGISTRY.yaml`. Add entries for the most critical existing documents (like the root README, or architecture docs) so they are governed by the system.
-4. **Rebuild Registry:** Run `python scripts/build_doc_registry_md.py` to apply your changes.
+3. **Register Existing Docs:** Add or update Markdown frontmatter on the most critical existing documents (like the root README, or architecture docs) so they are governed by the system.
+4. **Rebuild Registry:** Run `python scripts/aggregate_registry.py` to apply your changes.
 5. **Verify Governance:** Run `python scripts/docs_gate.py --fast` to ensure the registry and references are compliant.
 6. **Report and Next Steps:** Provide a concise summary of what you found and mapped. Do NOT just stop. You MUST explicitly ask the user what they would like to do next. Provide actionable suggestions, such as:
    - "Would you like me to draft a `PROBLEM_STATEMENT.md` for a new feature?"
@@ -129,7 +129,7 @@ def main():
     replace_placeholders(project_name, author_name)
     
     print(f"[{GREEN}*{RESET}] Generating initial DOC_REGISTRY.md...")
-    subprocess.run([sys.executable, "scripts/build_doc_registry_md.py"])
+    subprocess.run([sys.executable, "scripts/aggregate_registry.py"])
     
     boot_file = generate_boot_instruction(project_type)
     
