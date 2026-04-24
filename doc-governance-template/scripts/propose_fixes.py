@@ -31,8 +31,14 @@ from pathlib import Path
 
 import yaml
 
+try:
+    from governance_logger import get_governance_logger
+except ImportError:  # pragma: no cover - used when imported as scripts.propose_fixes
+    from scripts.governance_logger import get_governance_logger
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SHADOW_DIR = REPO_ROOT / ".shadow"
+LOGGER = get_governance_logger("propose_fixes.py")
 
 # Directories whose Markdown is intentionally non-standard and must be excluded
 EXCLUDE_DIRS = {
@@ -220,12 +226,12 @@ def apply_patches(shadow_dir: Path) -> int:
     """
     patch_files = sorted(shadow_dir.glob("*.patch"))
     if not patch_files:
-        print("[INFO] No pending patches in .shadow/")
+        LOGGER.log("INFO", "patch_apply_empty", "No pending patches in .shadow/", doc_id="PROPOSE_FIXES")
         return 0
 
     applied = 0
     for patch_file in patch_files:
-        print(f"  [APPLY] {patch_file.name}")
+        LOGGER.log("INFO", "patch_apply_start", f"Applying patch {patch_file.name}", doc_id="PROPOSE_FIXES")
         result = subprocess.run(
             ["patch", "-p1", "--input", str(patch_file)],
             cwd=str(REPO_ROOT),
@@ -234,11 +240,15 @@ def apply_patches(shadow_dir: Path) -> int:
         )
         if result.returncode == 0:
             patch_file.unlink()  # Remove applied patch — idempotent cleanup
-            print(f"    ✓ Applied and removed: {patch_file.name}")
+            LOGGER.log("INFO", "patch_apply_success", f"Applied and removed: {patch_file.name}", doc_id="PROPOSE_FIXES")
             applied += 1
         else:
-            print(f"    ✗ FAILED to apply {patch_file.name}:")
-            print(f"      {result.stderr.strip()}")
+            LOGGER.log(
+                "ERROR",
+                "patch_apply_failure",
+                f"FAILED to apply {patch_file.name}: {result.stderr.strip()}",
+                doc_id="PROPOSE_FIXES",
+            )
 
     return applied
 
@@ -269,18 +279,18 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.apply and args.report:
-        print("[ERROR] --apply and --report are mutually exclusive.")
+        LOGGER.log("ERROR", "arg_conflict", "--apply and --report are mutually exclusive.", doc_id="PROPOSE_FIXES")
         sys.exit(1)
 
     if args.apply:
-        print("=== propose_fixes.py [APPLY MODE] ===")
+        LOGGER.log("INFO", "mode", "propose_fixes.py [APPLY MODE]", doc_id="PROPOSE_FIXES")
         applied = apply_patches(SHADOW_DIR)
-        print(f"\nPatches applied: {applied}")
+        LOGGER.log("INFO", "apply_summary", f"Patches applied: {applied}", doc_id="PROPOSE_FIXES")
         sys.exit(0)
 
     dry_run = args.report
     mode_label = "REPORT (dry-run)" if dry_run else "PROPOSE"
-    print(f"=== propose_fixes.py [{mode_label}] ===")
+    LOGGER.log("INFO", "mode", f"propose_fixes.py [{mode_label}]", doc_id="PROPOSE_FIXES")
 
     proposals = scan_and_propose(
         docs_dir=REPO_ROOT / "docs",
@@ -289,21 +299,33 @@ def main() -> None:
     )
 
     if not proposals:
-        print("\n[PASS] No violations found. No patches proposed.")
+        LOGGER.log("INFO", "no_violations", "No violations found. No patches proposed.", doc_id="PROPOSE_FIXES")
         sys.exit(0)
 
-    print(f"\n{'Violations found' if dry_run else 'Patches written'}: {len(proposals)}")
+    LOGGER.log(
+        "ERROR",
+        "violations_found",
+        f"{'Violations found' if dry_run else 'Patches written'}: {len(proposals)}",
+        doc_id="PROPOSE_FIXES",
+    )
     for p in proposals:
         status = "(new)" if p["new"] else "(unchanged)"
         if dry_run:
-            print(f"  [{p['fix_kind']}] {p['file']}")
+            LOGGER.log("ERROR", "violation", f"[{p['fix_kind']}] {p['file']}", doc_id="PROPOSE_FIXES")
         else:
-            print(f"  [{p['fix_kind']}] {p['file']} → .shadow/{p['patch']} {status}")
+            LOGGER.log(
+                "ERROR",
+                "patch_written",
+                f"[{p['fix_kind']}] {p['file']} -> .shadow/{p['patch']} {status}",
+                doc_id="PROPOSE_FIXES",
+            )
 
     if not dry_run:
-        print(
-            f"\nReview patches in .shadow/ then run: "
-            f"python scripts/propose_fixes.py --apply"
+        LOGGER.log(
+            "INFO",
+            "next_step",
+            "Review patches in .shadow/ then run: python scripts/propose_fixes.py --apply",
+            doc_id="PROPOSE_FIXES",
         )
 
     sys.exit(1 if proposals else 0)

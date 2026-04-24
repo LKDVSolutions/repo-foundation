@@ -32,9 +32,9 @@
 
 ## Coverage Summary
 
-- **Total registered docs**: 29
-- **By `doc_class`**: `active`=27, `entrypoint`=2
-- **By `authority_kind`**: `blueprint`=3, `current_config`=2, `guide`=19, `plan`=3
+- **Total registered docs**: 32
+- **By `doc_class`**: `active`=30, `entrypoint`=2
+- **By `authority_kind`**: `blueprint`=3, `current_config`=3, `guide`=20, `plan`=4
 
 ---
 
@@ -45,6 +45,7 @@
 | AGENTS_md | AGENTS.md | active | guide | AGENTS.md — AI Agent Standard Operating Procedures | agents | active | — |
 | AGENT_CAPABILITIES | docs/development/AGENT_CAPABILITIES.md | active | guide | Agent Capabilities & Execution Environment | agents | active | — |
 | AGENT_CLAIMS | docs/history/AGENT_CLAIMS.md | active | current_config | Agent Claims Registry | agents | active | — |
+| AGENT_STATE | docs/history/AGENT_STATE.md | active | current_config | Agent State | agents | active | — |
 | AGENT_WORKFLOW_md | docs/development/AGENT_WORKFLOW.md | active | guide | Agent Workflow — Task Routing and Read-Order Rules | agents | active | Normative routing document for agents. If an agent needs freeform search to complete a task, this doc is underspecified — update it. |
 | ARCH_OVERVIEW | docs/architecture/OVERVIEW.md | active | blueprint | Architecture Overview | both | active | — |
 | CLAUDE_md | CLAUDE.md | active | guide | CLAUDE.md — Agent Instruction Surface | agents | active | Agent instruction surface. Authoritative for behavioral rules. Mutable facts (IPs, ports, service health) belong in current_config or runtime_evidence docs, not here. |
@@ -70,6 +71,8 @@
 | RELEASE_CHECKLIST | docs/development/RELEASE_CHECKLIST.md | active | guide | Release Checklist — Pre-Release Documentation Checks | agents | active | — |
 | SECURITY_AND_DEPENDENCIES | docs/development/SECURITY_AND_DEPENDENCIES.md | active | blueprint | Security and Dependency Governance | both | active | — |
 | SERVICE_INVENTORY | docs/reference/current/SERVICE_INVENTORY.md | active | current_config | Service Inventory | both | active | — |
+| SESSION_ENVELOPE_TEMPLATE | docs/plans/templates/SESSION_ENVELOPE.md | active | plan | Session Envelope Template | agents | active | — |
+| TEMPLATE_CHANGELOG | docs/reference/TEMPLATE_CHANGELOG.md | active | guide | Template Changelog | both | active | — |
 | USER_MANUAL | docs/development/USER_MANUAL.md | active | guide | User Manual — Operating the Governance Template | both | active | — |
 
 ---

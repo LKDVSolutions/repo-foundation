@@ -7,6 +7,9 @@ def test_run_gate_fast():
     with patch("scripts.docs_gate.check_registry", return_value=(1, 0, 0)), \
          patch("scripts.docs_gate.check_metadata", return_value=(1, 0, 0)), \
          patch("scripts.docs_gate.check_registry_sync", return_value=(1, 0, 0)), \
+         patch("scripts.docs_gate.check_evidence_freshness", return_value=(1, 0, 0)), \
+         patch("scripts.docs_gate.check_shell_scripts", return_value=(1, 0, 0)), \
+         patch("scripts.docs_gate.LOGGER.log"), \
          patch("scripts.docs_gate.check_links") as mock_links:
         
         exit_code = run_gate(fast=True)
@@ -17,6 +20,9 @@ def test_run_gate_full():
     with patch("scripts.docs_gate.check_registry", return_value=(1, 0, 0)), \
          patch("scripts.docs_gate.check_metadata", return_value=(1, 0, 0)), \
          patch("scripts.docs_gate.check_registry_sync", return_value=(1, 0, 0)), \
+         patch("scripts.docs_gate.check_evidence_freshness", return_value=(1, 0, 0)), \
+         patch("scripts.docs_gate.check_shell_scripts", return_value=(1, 0, 0)), \
+         patch("scripts.docs_gate.LOGGER.log"), \
          patch("scripts.docs_gate.check_links", return_value=(1, 0, 1)):
         
         exit_code = run_gate(fast=False)

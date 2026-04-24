@@ -100,3 +100,21 @@ The documentation registry (`DOC_REGISTRY.yaml`) is a file-based single source o
 - **Claim before write:** Any agent that will mutate a file in a non-idempotent way (e.g., appending a patch to `.shadow/`, modifying `docs/history/`) MUST run `python scripts/claim_task.py claim <file_path> --agent-id <id>` before starting and `release` after. Check first with `python scripts/claim_task.py check <file_path>` — if claimed, wait or abort.
 
 The ceiling is configured in `.agent_config.yaml` under `governance.max_concurrent_agents` for observability.
+
+---
+
+## 6. Template Versioning and Upgrade Safety
+
+Every project initialized from this template must track the template version in `.agent_config.yaml` so upgrades can be automated safely and idempotently.
+
+**Why this is mandatory:**
+- Without a template version marker, agents cannot determine whether migration steps are required.
+- Upgrade scripts need a source version and target version to avoid destructive or duplicate mutations.
+
+**Guardrails:**
+- `.agent_config.yaml` must include a `template` section with:
+- `version` (semantic version format)
+- `last_migrated` (ISO-8601 UTC timestamp)
+- `changelog_ref` (path to template changelog)
+- Template changes must be recorded in `docs/reference/TEMPLATE_CHANGELOG.md` before release.
+- Release checks must verify template version metadata is present and changelog is updated.

@@ -1,22 +1,3 @@
----
-doc_id: CHECK_NEEDS_ATTENTION
-doc_class: active
-authority_kind: current_config
-title: "check_needs_attention.py \u2014 CI Escalation Gate"
-primary_audience: agents
-task_entry_for: []
-system_owner: documentation-governance
-doc_owner: '[YOUR-NAME]'
-updated_by: agent
-authoritative_for:
-- CI enforcement of NEEDS_ATTENTION.md open blocker detection
-source_inputs:
-- docs/plans/NEEDS_ATTENTION.md
-verification_level: repo_derived
-refresh_policy: on_source_change
-status: active
-depends_on: []
----
 #!/usr/bin/env python3
 """Check that docs/plans/NEEDS_ATTENTION.md has no open (unresolved) agent blockers.
 

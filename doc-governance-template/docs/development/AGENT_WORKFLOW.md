@@ -244,6 +244,25 @@ For audit and review tasks (refresh_current_docs, investigate_runtime_issue), in
 
 ## Section 6: Execution Guidelines & Human Handoff
 
+### Checkpoint before Handoff
+Before any handoff, interruption, or pause, create a session envelope so the next agent can resume from an exact file and line.
+
+1. Create the envelope:
+```bash
+python scripts/manage_session.py create \
+   --parent-task-id <task-id> \
+   --checkpoint-summary "<what was done + what is next>" \
+   --resume-target-file <path/to/file> \
+   --resume-target-line <line-number> \
+   --active-file <path/to/active/file>
+```
+2. Confirm `docs/history/SESSION_<session_id>.md` was created.
+3. Include the generated `session_id` in your handoff note.
+4. The next agent resumes with:
+```bash
+python scripts/manage_session.py resume --session-id <session_id>
+```
+
 ### The Agent Scratchpad
 If a task requires more than 3 steps, or if you need to perform complex refactoring, write your intermediate findings, plans, and next steps to `.agent_scratchpad.md` before executing. This prevents losing context and maintains a clear trail of thought.
 

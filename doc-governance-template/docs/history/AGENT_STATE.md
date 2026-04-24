@@ -1,7 +1,23 @@
 ---
-type: template
-status: draft
-purpose: track current agent task, context, and next steps
+doc_id: AGENT_STATE
+doc_class: active
+authority_kind: current_config
+title: Agent State
+primary_audience: agents
+task_entry_for: []
+system_owner: documentation-governance
+doc_owner: system-wide
+updated_by: auto
+authoritative_for:
+- current agent task context
+- current task status
+- current blockers
+source_inputs:
+- scripts/manage_agent_state.py
+refresh_policy: auto
+verification_level: repo_derived
+status: active
+depends_on: []
 ---
 
 # Agent State

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check that DOC_REGISTRY.yaml exists, parses, and contains required fields using JSON schema."""
+"""Check that registry exists, parses, and contains required fields using JSON schema."""
 
 import sys
 import yaml
@@ -27,10 +27,15 @@ def check_registry():
 
     try:
         with open(REGISTRY_PATH, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        print("[PASS] JSON parses without errors")
+            raw = f.read()
+        try:
+            data = json.loads(raw)
+            print("[PASS] JSON parses without errors")
+        except json.JSONDecodeError:
+            data = yaml.safe_load(raw)
+            print("[PASS] YAML parses without errors")
         passed += 1
-    except json.JSONDecodeError as e:
+    except Exception as e:
         print(f"[FAIL] JSON parse error: {e}")
         failures += 1
         return passed, warnings, failures

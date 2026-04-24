@@ -57,7 +57,8 @@ def test_fresh_evidence_passes(tmp_path):
     now = datetime.now(tz=timezone.utc)
     _runtime_evidence_doc(tmp_path, _iso(now - timedelta(days=1)))
     with patch("scripts.detect_drift.REPO_ROOT", tmp_path), \
-         patch("scripts.detect_drift._load_agent_config", return_value=FAKE_CONFIG):
+            patch("scripts.detect_drift._load_agent_config", return_value=FAKE_CONFIG), \
+            patch("scripts.detect_drift.LOGGER.log"):
         passed, warned, failed = check_evidence_freshness()
     assert passed == 1
     assert warned == 0
@@ -68,7 +69,8 @@ def test_stale_evidence_warns(tmp_path):
     now = datetime.now(tz=timezone.utc)
     _runtime_evidence_doc(tmp_path, _iso(now - timedelta(days=10)))
     with patch("scripts.detect_drift.REPO_ROOT", tmp_path), \
-         patch("scripts.detect_drift._load_agent_config", return_value=FAKE_CONFIG):
+            patch("scripts.detect_drift._load_agent_config", return_value=FAKE_CONFIG), \
+            patch("scripts.detect_drift.LOGGER.log"):
         passed, warned, failed = check_evidence_freshness()
     assert warned == 1
     assert failed == 0
@@ -78,7 +80,8 @@ def test_very_stale_evidence_fails(tmp_path):
     now = datetime.now(tz=timezone.utc)
     _runtime_evidence_doc(tmp_path, _iso(now - timedelta(days=35)))
     with patch("scripts.detect_drift.REPO_ROOT", tmp_path), \
-         patch("scripts.detect_drift._load_agent_config", return_value=FAKE_CONFIG):
+            patch("scripts.detect_drift._load_agent_config", return_value=FAKE_CONFIG), \
+            patch("scripts.detect_drift.LOGGER.log"):
         passed, warned, failed = check_evidence_freshness()
     assert failed == 1
 
@@ -105,6 +108,7 @@ Service is up. (no structured evidence block)
         encoding="utf-8",
     )
     with patch("scripts.detect_drift.REPO_ROOT", tmp_path), \
-         patch("scripts.detect_drift._load_agent_config", return_value=FAKE_CONFIG):
+            patch("scripts.detect_drift._load_agent_config", return_value=FAKE_CONFIG), \
+            patch("scripts.detect_drift.LOGGER.log"):
         passed, warned, failed = check_evidence_freshness()
     assert warned == 1

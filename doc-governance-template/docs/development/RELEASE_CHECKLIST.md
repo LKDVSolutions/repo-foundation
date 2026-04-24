@@ -35,6 +35,11 @@ Run before any deploy or merge to main:
 
 ### Per-Change Checks
 
+**If template governance files changed (scripts, templates, config schema):**
+- [ ] `.agent_config.yaml` `template.version` updated when behavior or schema changed
+- [ ] `docs/reference/TEMPLATE_CHANGELOG.md` updated with migration notes
+- [ ] `template.last_migrated` and `template.changelog_ref` remain valid
+
 **If `docs/` was modified:**
 - [ ] All new docs have metadata headers (`doc_id`, `doc_class`, `authority_kind`, `edit_policy`)
 - [ ] Markdown frontmatter updated on any new or modified docs

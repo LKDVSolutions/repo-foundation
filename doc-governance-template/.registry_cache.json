@@ -70,6 +70,30 @@
       "path": "docs/history/AGENT_CLAIMS.md"
     },
     {
+      "doc_id": "AGENT_STATE",
+      "doc_class": "active",
+      "authority_kind": "current_config",
+      "title": "Agent State",
+      "primary_audience": "agents",
+      "task_entry_for": [],
+      "system_owner": "documentation-governance",
+      "doc_owner": "system-wide",
+      "updated_by": "auto",
+      "authoritative_for": [
+        "current agent task context",
+        "current task status",
+        "current blockers"
+      ],
+      "source_inputs": [
+        "scripts/manage_agent_state.py"
+      ],
+      "refresh_policy": "auto",
+      "verification_level": "repo_derived",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/history/AGENT_STATE.md"
+    },
+    {
       "doc_id": "AGENT_WORKFLOW_md",
       "doc_class": "active",
       "authority_kind": "guide",
@@ -602,6 +626,48 @@
       "status": "active",
       "depends_on": [],
       "path": "docs/reference/current/SERVICE_INVENTORY.md"
+    },
+    {
+      "doc_id": "SESSION_ENVELOPE_TEMPLATE",
+      "doc_class": "active",
+      "authority_kind": "plan",
+      "title": "Session Envelope Template",
+      "primary_audience": "agents",
+      "task_entry_for": [],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [
+        "agent handoff checkpoints",
+        "resumable session metadata"
+      ],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [
+        "AGENT_WORKFLOW_md"
+      ],
+      "path": "docs/plans/templates/SESSION_ENVELOPE.md"
+    },
+    {
+      "doc_id": "TEMPLATE_CHANGELOG",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "Template Changelog",
+      "primary_audience": "both",
+      "task_entry_for": [],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [
+        "template version history",
+        "template migration notes"
+      ],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/reference/TEMPLATE_CHANGELOG.md"
     },
     {
       "doc_id": "USER_MANUAL",

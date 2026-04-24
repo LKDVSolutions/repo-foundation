@@ -12,6 +12,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from aggregate_registry import REGISTRY_MD, extract_governed_entries, render_registry_md
 
 REPO_ROOT = Path(__file__).resolve().parent.parent  # scripts/ -> repo_root
+REGISTRY_YAML = REPO_ROOT / "DOC_REGISTRY.yaml"  # legacy alias for tests
+
+
+def load_registry_entries():
+    """Return registry entries via aggregate_registry for compatibility."""
+    return extract_governed_entries()
 
 
 def check_registry_sync():
@@ -24,7 +30,7 @@ def check_registry_sync():
         print(f"[FAIL] Generated registry Markdown not found: {REGISTRY_MD.relative_to(REPO_ROOT)}")
         return passed, warnings, failures + 1
 
-    entries = extract_governed_entries()
+    entries = load_registry_entries()
     expected = render_registry_md(entries)
     actual = REGISTRY_MD.read_text(encoding="utf-8")
 
