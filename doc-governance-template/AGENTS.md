@@ -61,3 +61,20 @@ This document defines the non-negotiable behavioral standards for all AI agents 
 ## 4. Documentation Governance
 - "Task Done" requires that all related documentation is updated, verified, and the `docs_gate.py` passes.
 - Every claim must be backed by evidence (see `CLAUDE.md` for Evidence Standards).
+
+## 5. Multi-Agent Claim Protocol
+
+Before mutating any file that multiple agents could write concurrently (patch files in `.shadow/`, append-only history files, `docs/history/`), you MUST reserve it:
+
+```bash
+# Check if free
+python scripts/claim_task.py check docs/history/DECISION_LOG.md
+
+# Claim for up to 30 minutes
+python scripts/claim_task.py claim docs/history/DECISION_LOG.md --agent-id [YOUR-SESSION-ID] --ttl 1800
+
+# Release when done
+python scripts/claim_task.py release docs/history/DECISION_LOG.md --agent-id [YOUR-SESSION-ID]
+```
+
+If `check` returns `[CLAIMED]`, **do not proceed**. Write your intent to `docs/plans/NEEDS_ATTENTION.md` and stop.

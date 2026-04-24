@@ -97,5 +97,6 @@ The documentation registry (`DOC_REGISTRY.yaml`) is a file-based single source o
 - **All registry mutations** (`auto_fix_registry.py`, `cascade_staleness.py`) must lock the full read-modify-write transaction, not just the write.
 - **`filelock`** is a hard dependency, not an optional import. Do not add a `try/except ImportError` fallback.
 - **Scaling trigger:** If a project requires >10 concurrent agents operating on the registry, evaluate registry sharding (one YAML per subsystem, aggregated by a collector) or migrate to a lightweight embedded store.
+- **Claim before write:** Any agent that will mutate a file in a non-idempotent way (e.g., appending a patch to `.shadow/`, modifying `docs/history/`) MUST run `python scripts/claim_task.py claim <file_path> --agent-id <id>` before starting and `release` after. Check first with `python scripts/claim_task.py check <file_path>` — if claimed, wait or abort.
 
 The ceiling is configured in `.agent_config.yaml` under `governance.max_concurrent_agents` for observability.

@@ -48,6 +48,25 @@
       "path": "docs/development/AGENT_CAPABILITIES.md"
     },
     {
+      "doc_id": "AGENT_CLAIMS",
+      "doc_class": "active",
+      "authority_kind": "plan",
+      "title": "Agent Claims Registry",
+      "primary_audience": "agents",
+      "task_entry_for": [],
+      "system_owner": "system-wide",
+      "doc_owner": "system-wide",
+      "updated_by": "auto",
+      "authoritative_for": [
+        "active agent file reservations"
+      ],
+      "refresh_policy": "auto",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/history/AGENT_CLAIMS.md"
+    },
+    {
       "doc_id": "AGENT_WORKFLOW_md",
       "doc_class": "active",
       "authority_kind": "guide",

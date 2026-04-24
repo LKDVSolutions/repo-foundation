@@ -32,9 +32,9 @@
 
 ## Coverage Summary
 
-- **Total registered docs**: 28
-- **By `doc_class`**: `active`=26, `entrypoint`=2
-- **By `authority_kind`**: `blueprint`=3, `current_config`=1, `guide`=19, `plan`=3
+- **Total registered docs**: 29
+- **By `doc_class`**: `active`=27, `entrypoint`=2
+- **By `authority_kind`**: `blueprint`=3, `current_config`=1, `guide`=19, `plan`=4
 
 ---
 
@@ -44,6 +44,7 @@
 |---|---|---|---|---|---|---|---|
 | AGENTS_md | AGENTS.md | active | guide | AGENTS.md — AI Agent Standard Operating Procedures | agents | active | — |
 | AGENT_CAPABILITIES | docs/development/AGENT_CAPABILITIES.md | active | guide | Agent Capabilities & Execution Environment | agents | active | — |
+| AGENT_CLAIMS | docs/history/AGENT_CLAIMS.md | active | plan | Agent Claims Registry | agents | active | — |
 | AGENT_WORKFLOW_md | docs/development/AGENT_WORKFLOW.md | active | guide | Agent Workflow — Task Routing and Read-Order Rules | agents | active | Normative routing document for agents. If an agent needs freeform search to complete a task, this doc is underspecified — update it. |
 | ARCH_OVERVIEW | docs/architecture/OVERVIEW.md | active | blueprint | Architecture Overview | both | active | — |
 | CLAUDE_md | CLAUDE.md | active | guide | CLAUDE.md — Agent Instruction Surface | agents | active | Agent instruction surface. Authoritative for behavioral rules. Mutable facts (IPs, ports, service health) belong in current_config or runtime_evidence docs, not here. |
