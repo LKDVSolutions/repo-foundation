@@ -8,3 +8,6 @@ __pycache__/
 
 # Runtime locks
 *.lock
+
+# Superpowers skill plans (managed outside repo)
+docs/superpowers/
