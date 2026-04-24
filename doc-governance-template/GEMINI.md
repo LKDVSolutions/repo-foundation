@@ -42,9 +42,9 @@ This file provides specialized guidance for Gemini CLI and other Gemini-based ag
 
 ### Evidence Standard
 
-Every claim in a `runtime_evidence` doc must be backed by a structured evidence block. Place this fenced block immediately after the prose claim it supports:
+Every claim in a `runtime_evidence` doc must be backed by a structured evidence block. For `current_config` docs, the source file itself is the evidence anchor — cite the file path and field in prose. Place this fenced block immediately after the prose claim it supports:
 
-```yaml evidence
+```yaml governance:evidence
 - host: "10.0.0.20"
   command: "docker ps --filter name=n8n"
   timestamp: "2026-04-24T18:00:00Z"
@@ -54,7 +54,7 @@ Every claim in a `runtime_evidence` doc must be backed by a structured evidence 
 
 **Required fields:** `host` (or `source_file` for local artifacts), `command`, `timestamp` (ISO-8601 UTC), `output` (brief), `confidence` (`verified` / `partial` / `unverified`).
 
-Staleness thresholds come from `.agent_config.yaml` under `governance.staleness_ttl.runtime_evidence`. `detect_drift.py` and `docs_gate.py` enforce these automatically.
+Staleness thresholds are configured in `.agent_config.yaml` under `governance.staleness_ttl.runtime_evidence`. `detect_drift.py` and `docs_gate.py` enforce these automatically once the evidence freshness check is active.
 
 > Legacy free-form evidence prose is still accepted but will generate a `[WARN]` from `docs_gate.py`. Migrate on next refresh.
 
