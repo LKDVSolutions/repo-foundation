@@ -32,7 +32,7 @@ CLAIMS_HEADER = """\
 ---
 doc_id: AGENT_CLAIMS
 doc_class: active
-authority_kind: plan
+authority_kind: current_config
 title: Agent Claims Registry
 primary_audience: agents
 task_entry_for: []
@@ -41,6 +41,8 @@ doc_owner: system-wide
 updated_by: auto
 authoritative_for:
 - active agent file reservations
+source_inputs:
+- scripts/claim_task.py
 refresh_policy: auto
 verification_level: none
 status: active

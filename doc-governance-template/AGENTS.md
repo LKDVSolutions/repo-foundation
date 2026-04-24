@@ -78,3 +78,5 @@ python scripts/claim_task.py release docs/history/DECISION_LOG.md --agent-id [YO
 ```
 
 If `check` returns `[CLAIMED]`, **do not proceed**. Write your intent to `docs/plans/NEEDS_ATTENTION.md` and stop.
+
+If `claim` or `check` returns `[FAIL]` (lock timeout after 30s), the `.lock` file may be stale. Run `python scripts/claim_task.py cleanup` once and retry. If it fails again, write your intent to `docs/plans/NEEDS_ATTENTION.md` and stop.
