@@ -47,7 +47,7 @@ These axes determine where to write facts and where to read them. For example: a
 | Change type | Required doc updates | When |
 |---|---|---|
 | New doc created in `docs/` | Add metadata header to doc; add entry to `docs/reference/registry/DOC_REGISTRY.yaml`; run `python scripts/docs_gate.py --fast` | Before commit |
-| `docs/reference/registry/DOC_REGISTRY.yaml` edited | Run `python scripts/build_doc_registry_md.py`; commit updated `DOC_REGISTRY.md` | Before commit |
+| Markdown frontmatter edited on any governed doc | Run `python scripts/aggregate_registry.py`; commit updated `.registry_cache.json` and `DOC_REGISTRY.md` | Before commit |
 | Source artifact changed (schema, config, etc.) | Update relevant `current_config` doc | Before commit |
 | Runtime behavior verified (SSH or monitoring) | Update relevant `runtime_evidence` doc with evidence entry; update `last_verified` in registry | After verification |
 | Service migrated to different host | Update service placement doc; update runtime status doc's pending list | Before commit |
@@ -126,7 +126,7 @@ Gate output: `[PASS]`, `[WARN]`, or `[FAIL]` per check. Exit code 1 on any `[FAI
 
 | Source file | Refresh trigger | Which doc to update |
 |---|---|---|
-| `docs/reference/registry/DOC_REGISTRY.yaml` | `on_source_change` | `DOC_REGISTRY.md` (run `python scripts/build_doc_registry_md.py`) |
+| Any `docs/**/*.md` frontmatter | `on_source_change` | `.registry_cache.json` + `DOC_REGISTRY.md` (run `python scripts/aggregate_registry.py`) |
 
 <!-- Add your project-specific rows here. Examples:
 | `docker-compose.yml` | `on_source_change` | `docs/reference/current/SERVICE_INVENTORY.md` |
@@ -147,6 +147,6 @@ Gate output: `[PASS]`, `[WARN]`, or `[FAIL]` per check. Exit code 1 on any `[FAI
    **edit_policy**: human
    ```
 3. Add an entry to `docs/reference/registry/DOC_REGISTRY.yaml` with all required fields
-4. Run `python scripts/build_doc_registry_md.py` to regenerate the registry view
+4. Run `python scripts/aggregate_registry.py` to rebuild the registry cache and regenerate the registry view
 5. Run `python scripts/docs_gate.py --fast` to verify
 6. Include the gate result in your task closure summary

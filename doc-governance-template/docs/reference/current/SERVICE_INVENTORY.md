@@ -31,7 +31,7 @@ This document identifies the internal "services" (automated scripts) that govern
 | **Self-Healing CLI** | `scripts/auto_fix.py` | Python 3.12 (Local/Agent) | Manual / Agent-invoked | Repairs common documentation failures; injects sentinel values that fail the gate until corrected |
 | **Escalation Gate** | `scripts/check_needs_attention.py` | Python 3.12 (CI/CD) | GitHub Actions (required status check) | Fails CI if NEEDS_ATTENTION.md contains open `- [ ]` agent blockers |
 | **Context Hydration** | `scripts/hydrate_context.py` | Python 3.12 (Local/Agent) | Agent-invoked | Prepares project and external context for agents |
-| **Registry Builder** | `scripts/build_doc_registry_md.py`| Python 3.12 (Local/Agent) | Makefile / Agent-invoked | Generates human-readable views of the documentation metadata |
+| **Registry Aggregator** | `scripts/aggregate_registry.py` | Python 3.12 (Local/Agent) | Makefile / Agent-invoked | Aggregates Markdown frontmatter into `.registry_cache.json` and `DOC_REGISTRY.md` |
 
 ## External Integrations
 

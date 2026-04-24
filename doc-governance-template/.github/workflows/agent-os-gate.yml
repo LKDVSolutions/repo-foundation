@@ -23,8 +23,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements-dev.txt
 
-      - name: Rebuild Registry Markdown
-        run: python scripts/build_doc_registry_md.py
+      - name: Aggregate Registry from Frontmatter
+        run: python scripts/aggregate_registry.py
 
       - name: Check Registry Synchronization
         run: python scripts/check_doc_registry_sync.py

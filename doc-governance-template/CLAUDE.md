@@ -57,7 +57,7 @@ Every claim in a `current_config` or `runtime_evidence` doc must have:
 
 ## 3. Mandatory Task Closure
 After every change:
-1. `python scripts/build_doc_registry_md.py`
+1. `python scripts/aggregate_registry.py`
 2. `python scripts/check_doc_registry_sync.py`
 3. `python scripts/docs_gate.py --fast`
 

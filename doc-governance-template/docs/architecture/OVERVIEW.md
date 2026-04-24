@@ -26,8 +26,8 @@ The system is designed as an "Agent OS" for documentation management. It operate
 
 ### Core Components
 
-1.  **Documentation Registry (`DOC_REGISTRY.yaml`)**:
-    The central data store (current_config) for all governed documentation. It defines document classification, authority levels, ownership, and verification state.
+1.  **Documentation Registry (Markdown Frontmatter + `.registry_cache.json`)**:
+    The distributed source of truth for all governed documentation. Each doc carries its own metadata as YAML frontmatter. `aggregate_registry.py` aggregates these into `.registry_cache.json` (machine-readable) and `DOC_REGISTRY.md` (human-readable).
 2.  **Automation Engine (`scripts/`)**:
     A suite of Python-based tools that execute governance logic.
     - **`docs_gate.py`**: The primary quality gate for ensuring registry and document integrity.
@@ -44,7 +44,7 @@ The system is designed as an "Agent OS" for documentation management. It operate
 
 ## Data Flows
 
-1.  **Registry Rendering**: Metadata flows from the canonical `DOC_REGISTRY.yaml` into a human-readable `DOC_REGISTRY.md` via `build_doc_registry_md.py`.
+1.  **Registry Aggregation**: Metadata is read from each Markdown file's YAML frontmatter by `aggregate_registry.py`, which writes `.registry_cache.json` (machine-readable) and `DOC_REGISTRY.md` (human-readable). No central YAML file is required.
 2.  **Validation Loop**: The Quality Gate (`docs_gate.py`) reads documentation files and the registry to verify links, metadata, and synchronization.
 3.  **Drift Detection**: `detect_drift.py` compares intended architecture (blueprints) against actual configuration (e.g., `docker-compose.yml`) and logs discrepancies for resolution.
 4.  **Verification**: Manual or automated verification updates the `last_verified` and `verification_level` fields in the registry, providing a confidence metric for agents.

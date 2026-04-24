@@ -68,7 +68,7 @@ Create the next backlog intake batch from remaining raw findings/ideas, with str
 - Keep edits minimal and deterministic. Do not rewrite historical completed rows.
 
 **Mandatory validation (run all):**
-1) `python scripts/build_doc_registry_md.py`
+1) `python scripts/aggregate_registry.py`
 2) `python scripts/check_doc_registry_sync.py`
 3) `python scripts/docs_gate.py --full`
 

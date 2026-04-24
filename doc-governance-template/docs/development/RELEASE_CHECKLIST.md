@@ -37,8 +37,8 @@ Run before any deploy or merge to main:
 
 **If `docs/` was modified:**
 - [ ] All new docs have metadata headers (`doc_id`, `doc_class`, `authority_kind`, `edit_policy`)
-- [ ] `DOC_REGISTRY.yaml` updated with entries for any new docs
-- [ ] `python scripts/build_doc_registry_md.py` ran — `DOC_REGISTRY.md` is committed
+- [ ] Markdown frontmatter updated on any new or modified docs
+- [ ] `python scripts/aggregate_registry.py` ran — `.registry_cache.json` and `DOC_REGISTRY.md` are committed
 
 **If source artifacts changed (schema, config, etc.):**
 - [ ] Relevant `current_config` doc updated
