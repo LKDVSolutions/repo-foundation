@@ -41,6 +41,9 @@ To use these, copy the raw markdown of a prompt, replace the `[BRACKETED_PLACEHO
 | **Backlog Intake** | [PROMPT_BACKLOG_INTAKE.md](PROMPT_BACKLOG_INTAKE.md) | Moving raw ideas/audits into the prioritized Backlog |
 | **Batch Execution** | [PROMPT_BATCH_EXECUTION.md](PROMPT_BATCH_EXECUTION.md) | Assigning a surgical fix batch to an agent (Strict scope) |
 | **QA Gate Review** | [PROMPT_QA_GATE.md](PROMPT_QA_GATE.md) | Forcing an agent to review its own batch before finalizing |
+| **Sprint Planning** | [PROMPT_SPRINT_PLANNING.md](PROMPT_SPRINT_PLANNING.md) | Produce a structured sprint plan from SPRINT_TRACKER, EPIC_TRACKER, and SCOPE_BOARD |
+| **Architecture Review** | [PROMPT_ARCHITECTURE_REVIEW.md](PROMPT_ARCHITECTURE_REVIEW.md) | Pre-implementation SDL-style architecture risk review before writing code |
+| **Dependency Update** | [PROMPT_DEPENDENCY_UPDATE.md](PROMPT_DEPENDENCY_UPDATE.md) | Live-verified dependency upgrade proposal using propose_fixes.py |
 
 ---
 

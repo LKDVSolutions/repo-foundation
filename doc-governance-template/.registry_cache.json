@@ -48,6 +48,28 @@
       "path": "docs/development/AGENT_CAPABILITIES.md"
     },
     {
+      "doc_id": "AGENT_CLAIMS",
+      "doc_class": "active",
+      "authority_kind": "current_config",
+      "title": "Agent Claims Registry",
+      "primary_audience": "agents",
+      "task_entry_for": [],
+      "system_owner": "system-wide",
+      "doc_owner": "system-wide",
+      "updated_by": "auto",
+      "authoritative_for": [
+        "active agent file reservations"
+      ],
+      "source_inputs": [
+        "scripts/claim_task.py"
+      ],
+      "refresh_policy": "auto",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/history/AGENT_CLAIMS.md"
+    },
+    {
       "doc_id": "AGENT_WORKFLOW_md",
       "doc_class": "active",
       "authority_kind": "guide",
@@ -300,6 +322,26 @@
       "path": "docs/plans/NEEDS_ATTENTION.md"
     },
     {
+      "doc_id": "PROMPT_ARCHITECTURE_REVIEW",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "Prompt Template: Architecture Review",
+      "primary_audience": "both",
+      "task_entry_for": [
+        "implement_change",
+        "architectural_decision"
+      ],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/plans/prompts/PROMPT_ARCHITECTURE_REVIEW.md"
+    },
+    {
       "doc_id": "PROMPT_BACKLOG_INTAKE",
       "doc_class": "active",
       "authority_kind": "plan",
@@ -368,6 +410,25 @@
       "path": "docs/plans/prompts/PROMPT_DEPENDENCY_BOOTSTRAP.md"
     },
     {
+      "doc_id": "PROMPT_DEPENDENCY_UPDATE",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "Prompt Template: Dependency Update",
+      "primary_audience": "humans",
+      "task_entry_for": [],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [
+        "PROMPT_DEPENDENCY_BOOTSTRAP"
+      ],
+      "path": "docs/plans/prompts/PROMPT_DEPENDENCY_UPDATE.md"
+    },
+    {
       "doc_id": "PROMPT_INDEX",
       "doc_class": "active",
       "authority_kind": "guide",
@@ -402,6 +463,23 @@
       "status": "active",
       "depends_on": [],
       "path": "docs/plans/prompts/PROMPT_QA_GATE.md"
+    },
+    {
+      "doc_id": "PROMPT_SPRINT_PLANNING",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "Prompt Template: Sprint Planning",
+      "primary_audience": "humans",
+      "task_entry_for": [],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/plans/prompts/PROMPT_SPRINT_PLANNING.md"
     },
     {
       "doc_id": "PROMPT_STRATEGIC_ALIGNMENT",

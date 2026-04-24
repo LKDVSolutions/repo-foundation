@@ -17,6 +17,7 @@ from check_doc_registry import check_registry
 from check_doc_registry_sync import check_registry_sync
 from check_doc_metadata import check_metadata
 from validate_doc_links import check_links
+from detect_drift import check_evidence_freshness
 
 
 def run_gate(fast: bool = True) -> int:
@@ -40,6 +41,12 @@ def run_gate(fast: bool = True) -> int:
 
     print()
     p, w, f = check_registry_sync()
+    total_passed += p
+    total_warnings += w
+    total_failures += f
+
+    print()
+    p, w, f = check_evidence_freshness()
     total_passed += p
     total_warnings += w
     total_failures += f

@@ -32,9 +32,9 @@
 
 ## Coverage Summary
 
-- **Total registered docs**: 25
-- **By `doc_class`**: `active`=23, `entrypoint`=2
-- **By `authority_kind`**: `blueprint`=3, `current_config`=1, `guide`=16, `plan`=3
+- **Total registered docs**: 29
+- **By `doc_class`**: `active`=27, `entrypoint`=2
+- **By `authority_kind`**: `blueprint`=3, `current_config`=2, `guide`=19, `plan`=3
 
 ---
 
@@ -44,6 +44,7 @@
 |---|---|---|---|---|---|---|---|
 | AGENTS_md | AGENTS.md | active | guide | AGENTS.md — AI Agent Standard Operating Procedures | agents | active | — |
 | AGENT_CAPABILITIES | docs/development/AGENT_CAPABILITIES.md | active | guide | Agent Capabilities & Execution Environment | agents | active | — |
+| AGENT_CLAIMS | docs/history/AGENT_CLAIMS.md | active | current_config | Agent Claims Registry | agents | active | — |
 | AGENT_WORKFLOW_md | docs/development/AGENT_WORKFLOW.md | active | guide | Agent Workflow — Task Routing and Read-Order Rules | agents | active | Normative routing document for agents. If an agent needs freeform search to complete a task, this doc is underspecified — update it. |
 | ARCH_OVERVIEW | docs/architecture/OVERVIEW.md | active | blueprint | Architecture Overview | both | active | — |
 | CLAUDE_md | CLAUDE.md | active | guide | CLAUDE.md — Agent Instruction Surface | agents | active | Agent instruction surface. Authoritative for behavioral rules. Mutable facts (IPs, ports, service health) belong in current_config or runtime_evidence docs, not here. |
@@ -54,12 +55,15 @@
 | GEMINI_md | GEMINI.md | active | guide | GEMINI.md — Gemini-Specific Agent Guidelines | agents | active | — |
 | INDEX_md | docs/INDEX.md | entrypoint | — | [YOUR-PROJECT-NAME] — Repository Index | both | active | Universal repo entrypoint. Navigation only — no mutable facts. All task classes route through this doc first. |
 | NEEDS_ATTENTION | docs/plans/NEEDS_ATTENTION.md | active | plan | Human-Agent Handoff (Interrupts) | both | active | — |
+| PROMPT_ARCHITECTURE_REVIEW | docs/plans/prompts/PROMPT_ARCHITECTURE_REVIEW.md | active | guide | Prompt Template: Architecture Review | both | active | — |
 | PROMPT_BACKLOG_INTAKE | docs/plans/prompts/PROMPT_BACKLOG_INTAKE.md | active | plan | Prompt Template: Backlog Intake | humans | active | — |
 | PROMPT_BATCH_EXECUTION | docs/plans/prompts/PROMPT_BATCH_EXECUTION.md | active | guide | Prompt Template: Batch Execution | humans | active | — |
 | PROMPT_DEBT_DISCOVERY | docs/plans/prompts/PROMPT_DEBT_DISCOVERY.md | active | guide | Prompt Template: Debt Discovery | humans | active | — |
 | PROMPT_DEPENDENCY_BOOTSTRAP | docs/plans/prompts/PROMPT_DEPENDENCY_BOOTSTRAP.md | active | guide | Prompt Template: Dependency Bootstrap | humans | active | — |
+| PROMPT_DEPENDENCY_UPDATE | docs/plans/prompts/PROMPT_DEPENDENCY_UPDATE.md | active | guide | Prompt Template: Dependency Update | humans | active | — |
 | PROMPT_INDEX | docs/plans/prompts/PROMPT_INDEX.md | active | guide | Prompt Library Index | both | active | — |
 | PROMPT_QA_GATE | docs/plans/prompts/PROMPT_QA_GATE.md | active | guide | Prompt Template: QA Gate | humans | active | — |
+| PROMPT_SPRINT_PLANNING | docs/plans/prompts/PROMPT_SPRINT_PLANNING.md | active | guide | Prompt Template: Sprint Planning | humans | active | — |
 | PROMPT_STRATEGIC_ALIGNMENT | docs/plans/prompts/PROMPT_STRATEGIC_ALIGNMENT.md | active | plan | Prompt Template: Strategic Alignment & Challenge | both | active | — |
 | PROMPT_SYSTEM_AUDIT | docs/plans/prompts/PROMPT_SYSTEM_AUDIT.md | active | guide | Prompt Template: System Audit | humans | active | — |
 | REFERENCE_md | docs/REFERENCE.md | active | guide | [YOUR-PROJECT-NAME] — Where Is the Truth? | both | active | Where-is-the-truth map. Update when new current_config or runtime_evidence surfaces are added, or when a known transitional state is resolved. |
@@ -76,9 +80,9 @@ The registry assigns `task_entry_for` to help agents and humans find starting po
 
 | Task Class | Declared Entry Doc(s) |
 |---|---|
-| `architectural_decision` | `PROMPT_STRATEGIC_ALIGNMENT` |
+| `architectural_decision` | `PROMPT_ARCHITECTURE_REVIEW`, `PROMPT_STRATEGIC_ALIGNMENT` |
 | `bootstrap_project` | `CONTRIBUTING_md`, `PROMPT_STRATEGIC_ALIGNMENT`, `USER_MANUAL` |
-| `implement_change` | `AGENTS_md`, `ARCH_OVERVIEW`, `CLAUDE_md`, `GEMINI_md`, `INDEX_md` |
+| `implement_change` | `AGENTS_md`, `ARCH_OVERVIEW`, `CLAUDE_md`, `GEMINI_md`, `INDEX_md`, `PROMPT_ARCHITECTURE_REVIEW` |
 | `investigate_runtime_issue` | `AGENTS_md`, `ARCH_OVERVIEW`, `CLAUDE_md`, `GEMINI_md`, `INDEX_md`, `SERVICE_INVENTORY` |
 | `operate_or_release` | `AGENTS_md`, `CLAUDE_md`, `GEMINI_md`, `INDEX_md`, `USER_MANUAL` |
 | `refresh_current_docs` | `AGENTS_md`, `CLAUDE_md`, `GEMINI_md`, `INDEX_md` |

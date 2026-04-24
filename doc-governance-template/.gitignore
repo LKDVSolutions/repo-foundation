@@ -5,3 +5,9 @@ __pycache__/
 *.pyc
 .env
 .shadow/
+
+# Runtime locks
+*.lock
+
+# Superpowers skill plans (managed outside repo)
+docs/superpowers/
