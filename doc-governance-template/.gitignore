@@ -5,3 +5,6 @@ __pycache__/
 *.pyc
 .env
 .shadow/
+
+# Runtime locks
+*.lock
