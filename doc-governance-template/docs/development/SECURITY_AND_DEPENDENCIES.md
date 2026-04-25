@@ -10,6 +10,7 @@ doc_owner: '[YOUR-NAME]'
 updated_by: human
 authoritative_for:
 - dependency pinning rules
+- dependency advisory enforcement
 - secret management rules
 refresh_policy: manual
 verification_level: none
@@ -39,6 +40,16 @@ When initializing a project or adding a new dependency, the agent MUST use a she
 - **Exact versions only.** Every package must be pinned to a specific, verified version (e.g., `"react": "18.2.0"` not `"react": "^18.2.0"`).
 - **Lockfiles are authoritative.** A `package-lock.json`, `poetry.lock`, or `Cargo.lock` must be generated and committed immediately after dependency definition.
 
+### The "Verified Dependencies" Rule
+- **Pinned is necessary but insufficient.** Python dependencies must also be scanned for published advisories.
+- **Local verification command.** Run `python scripts/check_dependency_advisories.py` to execute `pip-audit` against `requirements-dev.txt`.
+- **CI enforcement.** The hosted CI system should enforce a dependency-advisory check alongside the documentation and drift checks. In this template repository, the reference implementation is the `dependency-advisory` GitHub Actions job.
+- **Failure policy.** Any reported advisory is merge-blocking until the affected package is upgraded, removed, or explicitly triaged outside this template.
+
+### The "Protected Default Branch" Rule
+- **Security outcome.** The default branch must require checks equivalent to `doc-gate`, `drift-detection`, and `dependency-advisory` before merge.
+- **Provider-specific enforcement.** Use the source-control platform's native protection or branch policy mechanism. GitHub automation is implemented in `python scripts/verify_branch_protection.py`; other providers may require manual verification until an adapter exists.
+
 ---
 
 ## 2. Core Security Guardrails
@@ -62,6 +73,8 @@ All external input must be validated at the system edge before being processed b
 
 - When running the `PROMPT_DEBT_DISCOVERY` routine, agents must explicitly check for violations of these security and dependency rules.
 - To update dependencies, agents should use the `PROMPT_DEPENDENCY_BOOTSTRAP` routine to safely query registries and apply updates.
+- Before merging dependency or workflow changes, run `python scripts/check_dependency_advisories.py` locally and confirm the `dependency-advisory` CI job passes.
+- Before release, confirm that the project's hosting platform enforces the documented default-branch policy. If the project uses GitHub, `python scripts/verify_branch_protection.py` can audit it directly.
 
 ---
 
@@ -120,6 +133,7 @@ While many frameworks focus on discovering vulnerabilities, the SDL focuses on b
 3. **Perform security design review and threat modeling:** Identify potential threats and attack vectors early in the design phase (`ARCHITECTURE_DECISION.md`) before writing code.
 4. **Define and use cryptography standards:** Ensure that data is protected using industry-standard encryption and hashing algorithms; never roll custom crypto.
 5. **Secure the software supply chain:** Manage and verify the security of third-party libraries, open-source components, and dependencies via strict pinning and lockfiles.
+	In this template, that means both exact version pinning and a clean `pip-audit` result for the Python manifest used by CI.
 6. **Secure the engineering environment:** Protect the tools, build pipelines, and source control systems used to create the software.
 7. **Perform security testing:** Use Static Analysis (SAST), Dynamic Analysis (DAST), and dependency audits to find vulnerabilities proactively during development.
 8. **Ensure operational platform security:** Secure the underlying infrastructure (cloud, servers, containers) where the code runs, applying least-privilege principles.

@@ -4,9 +4,7 @@ doc_class: active
 authority_kind: guide
 title: "User Manual \u2014 Operating the Governance Template"
 primary_audience: both
-task_entry_for:
-- bootstrap_project
-- operate_or_release
+task_entry_for: []
 status: active
 depends_on: []
 authoritative_for: []
@@ -94,7 +92,7 @@ This framework is highly autonomous, but it is designed to stop when it hits hig
 | `make gate` | Run the mandatory documentation quality check. |
 | `make build` | Install dependencies and prepare the environment. |
 | `python scripts/calculate_health_score.py` | Get a % score of how "governed" your repo is. |
-| `python scripts/cascade_staleness.py` | Automatically mark docs as stale when their code dependencies change. |
+| `python scripts/aggregate_registry.py` | Regenerate `.registry_cache.json` and `docs/reference/registry/DOC_REGISTRY.md` from governed frontmatter. |
 
 ---
 

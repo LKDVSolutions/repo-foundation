@@ -13,6 +13,12 @@ repos:
         language: system
         files: ^docs/.*\.md$
         pass_filenames: false
+      - id: check-shell-scripts
+        name: Check Shell Scripts (fail-fast)
+        entry: python scripts/check_shell_scripts.py
+        language: system
+        files: \.(sh)$
+        pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:

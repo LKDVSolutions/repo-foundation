@@ -24,7 +24,7 @@ Create the next backlog intake batch from remaining raw findings/ideas, with str
 3) `docs/plans/EPIC_TRACKER.md`
 4) `docs/plans/SCOPE_BOARD.md`
 5) `[PATH_TO_INPUT_SOURCE_E.G._AUDIT_CSV_OR_IDEA_INBOX]`
-6) `docs/reference/registry/DOC_REGISTRY.yaml`
+6) `docs/reference/registry/DOC_REGISTRY.md` and `.registry_cache.json`
 
 **Scope for this run:**
 - Add exactly `[N]` new backlog items:

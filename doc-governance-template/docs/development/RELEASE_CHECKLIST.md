@@ -32,8 +32,24 @@ Run before any deploy or merge to main:
 
 ### Fast Gate (required)
 - [ ] `python scripts/docs_gate.py --fast` — exits 0
+- [ ] `python scripts/check_dependency_advisories.py` — exits 0
+
+### Branch Policy Verification (provider-specific)
+- [ ] Default branch protection or policy requires checks equivalent to `doc-gate`, `drift-detection`, and `dependency-advisory`
+- [ ] If using GitHub, `python scripts/verify_branch_protection.py` exits 0
+- [ ] If using another provider, manual verification is recorded until a provider adapter exists
 
 ### Per-Change Checks
+
+**If template governance files changed (scripts, templates, config schema):**
+- [ ] `.agent_config.yaml` `template.version` updated when behavior or schema changed
+- [ ] `docs/reference/TEMPLATE_CHANGELOG.md` updated with migration notes
+- [ ] `template.last_migrated` and `template.changelog_ref` remain valid
+
+**If dependency manifests or CI workflows changed:**
+- [ ] `requirements-dev.txt` remains strictly pinned
+- [ ] `dependency-advisory` remains present in `.github/workflows/agent-os-gate.yml`
+- [ ] The platform-native default branch policy still requires checks equivalent to `doc-gate`, `drift-detection`, and `dependency-advisory`
 
 **If `docs/` was modified:**
 - [ ] All new docs have metadata headers (`doc_id`, `doc_class`, `authority_kind`, `edit_policy`)
@@ -46,7 +62,7 @@ Run before any deploy or merge to main:
 
 **If services added or moved:**
 - [ ] Service placement doc updated
-- [ ] `DOC_REGISTRY.yaml` updated if new docs were created
+- [ ] Frontmatter added or updated and `python scripts/aggregate_registry.py` run if new governed docs were created
 
 <!-- Add project-specific checks here. Examples:
 
@@ -71,3 +87,5 @@ Run before any deploy or merge to main:
 - Runtime evidence docs older than 7 days: flag for verification
 - Blueprint docs with no `last_verified`: schedule verification
 - Docs with `verification_level: none` carrying runtime claims: review for removal or migration to evidence-backed surface
+- Extra required GitHub checks beyond the documented baseline: review docs for drift, even if enforcement is stronger than required
+- Non-GitHub branch policy verification performed manually: confirm the manual record remains current until an adapter exists

@@ -84,7 +84,7 @@ When an AI agent is tasked to `investigate_runtime_issue`, it relies entirely on
 
 ## 5. Agent Concurrency Model
 
-The documentation registry (`DOC_REGISTRY.yaml`) is a file-based single source of truth protected by a `FileLock` covering the full read-modify-write cycle. This is intentionally simple and imposes a hard concurrency ceiling.
+Governed doc frontmatter, surfaced through `.registry_cache.json` and `docs/reference/registry/DOC_REGISTRY.md`, is the file-based source of truth protected by `FileLock` on mutation paths. This is intentionally simple and imposes a hard concurrency ceiling.
 
 **Design ceiling: ≤10 concurrent agents per project.**
 
@@ -94,9 +94,27 @@ The documentation registry (`DOC_REGISTRY.yaml`) is a file-based single source o
 - Introducing a database or distributed lock just to support >10 agents adds operational complexity that contradicts the "simplicity first" principle for the target use case.
 
 **Guardrails:**
-- **All registry mutations** (`auto_fix_registry.py`, `cascade_staleness.py`) must lock the full read-modify-write transaction, not just the write.
+- **All metadata mutation paths** must lock the full read-modify-write transaction, not just the write.
 - **`filelock`** is a hard dependency, not an optional import. Do not add a `try/except ImportError` fallback.
-- **Scaling trigger:** If a project requires >10 concurrent agents operating on the registry, evaluate registry sharding (one YAML per subsystem, aggregated by a collector) or migrate to a lightweight embedded store.
+- **Scaling trigger:** If a project requires >10 concurrent agents operating on governed metadata, evaluate registry sharding or migrate to a lightweight embedded store.
 - **Claim before write:** Any agent that will mutate a file in a non-idempotent way (e.g., appending a patch to `.shadow/`, modifying `docs/history/`) MUST run `python scripts/claim_task.py claim <file_path> --agent-id <id>` before starting and `release` after. Check first with `python scripts/claim_task.py check <file_path>` — if claimed, wait or abort.
 
 The ceiling is configured in `.agent_config.yaml` under `governance.max_concurrent_agents` for observability.
+
+---
+
+## 6. Template Versioning and Upgrade Safety
+
+Every project initialized from this template must track the template version in `.agent_config.yaml` so upgrades can be automated safely and idempotently.
+
+**Why this is mandatory:**
+- Without a template version marker, agents cannot determine whether migration steps are required.
+- Upgrade scripts need a source version and target version to avoid destructive or duplicate mutations.
+
+**Guardrails:**
+- `.agent_config.yaml` must include a `template` section with:
+- `version` (semantic version format)
+- `last_migrated` (ISO-8601 UTC timestamp)
+- `changelog_ref` (path to template changelog)
+- Template changes must be recorded in `docs/reference/TEMPLATE_CHANGELOG.md` before release.
+- Release checks must verify template version metadata is present and changelog is updated.

@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 """Validate that internal markdown links in governed docs resolve to real files.
 
-Scope: all active and generated docs registered in DOC_REGISTRY.yaml.
+Scope: all active and generated docs registered in `.registry_cache.json`.
 Falls back to a hardcoded list of core docs if the registry is unavailable.
 """
 
+import json
 import re
 import sys
-import yaml
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-REGISTRY_PATH = REPO_ROOT / "docs" / "reference" / "registry" / "DOC_REGISTRY.yaml"
+REGISTRY_PATH = REPO_ROOT / ".registry_cache.json"
 
 # Fallback list used only when the registry cannot be loaded
 FALLBACK_DOCS = [
@@ -33,7 +33,7 @@ def get_docs_to_check() -> list[Path]:
 
     try:
         with open(REGISTRY_PATH, encoding="utf-8") as f:
-            data = yaml.safe_load(f)
+            data = json.load(f)
     except Exception as e:
         print(f"[WARN] Could not load registry ({e}) — falling back to hardcoded doc list")
         return [p for p in FALLBACK_DOCS if p.exists()]

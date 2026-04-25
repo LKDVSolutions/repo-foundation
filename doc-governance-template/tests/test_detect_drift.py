@@ -4,11 +4,20 @@ from pathlib import Path
 
 from scripts.detect_drift import (
     DockerComposeAdapter,
+    EnvVarAdapter,
+    GitHubActionsAdapter,
+    RequirementsPinAdapter,
     DriftReport,
     log_drift,
     extract_governance_block,
     main,
 )
+
+
+@pytest.fixture(autouse=True)
+def _patch_logger():
+    with patch("scripts.detect_drift.LOGGER.log"):
+        yield
 
 
 # --- existing tests (preserved) ---
@@ -169,3 +178,93 @@ def test_extract_governance_block_empty_when_no_match():
     content = "# Doc\n\nNo services section here.\n"
     items = extract_governance_block(content, "services")
     assert items == []
+
+
+def test_requirements_adapter_detects_unpinned_dependency(tmp_path):
+    requirements_file = tmp_path / "requirements.txt"
+    requirements_file.write_text("pytest>=7.0.0\n", encoding="utf-8")
+
+    blueprint = tmp_path / "docs" / "development" / "SECURITY_AND_DEPENDENCIES.md"
+    blueprint.parent.mkdir(parents=True)
+    blueprint.write_text("# Security\n## The \"Strict Pinning\" Rule\n", encoding="utf-8")
+
+    adapter = RequirementsPinAdapter()
+    with patch("scripts.detect_drift.REPO_ROOT", tmp_path):
+        report = adapter.check()
+
+    assert report is not None
+    assert report.has_drift
+    assert any("requirements.txt:pytest>=7.0.0" in entry for entry in report.undocumented)
+
+
+def test_requirements_adapter_checks_requirements_dev_txt(tmp_path):
+    requirements_file = tmp_path / "requirements-dev.txt"
+    requirements_file.write_text("pytest>=7.0.0\n", encoding="utf-8")
+
+    blueprint = tmp_path / "docs" / "development" / "SECURITY_AND_DEPENDENCIES.md"
+    blueprint.parent.mkdir(parents=True)
+    blueprint.write_text("# Security\n## The \"Strict Pinning\" Rule\n", encoding="utf-8")
+
+    adapter = RequirementsPinAdapter()
+    with patch("scripts.detect_drift.REPO_ROOT", tmp_path):
+        report = adapter.check()
+
+    assert report is not None
+    assert report.has_drift
+    assert any("requirements-dev.txt:pytest>=7.0.0" in entry for entry in report.undocumented)
+
+
+def test_env_var_adapter_detects_missing_env_key(tmp_path):
+    env_file = tmp_path / ".env.example"
+    env_file.write_text("APP_ENV=development\n", encoding="utf-8")
+
+    code_file = tmp_path / "src" / "main.py"
+    code_file.parent.mkdir(parents=True)
+    code_file.write_text("import os\nvalue = os.getenv('DATABASE_URL')\n", encoding="utf-8")
+
+    adapter = EnvVarAdapter()
+    with patch("scripts.detect_drift.REPO_ROOT", tmp_path):
+        report = adapter.check()
+
+    assert report is not None
+    assert report.has_drift
+    assert "DATABASE_URL" in report.undocumented
+
+
+def test_github_actions_adapter_detects_service_mismatch(tmp_path):
+    workflow_file = tmp_path / ".github" / "workflows" / "ci.yml"
+    workflow_file.parent.mkdir(parents=True)
+    workflow_file.write_text(
+        """
+name: ci
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      cache:
+        image: redis
+""",
+        encoding="utf-8",
+    )
+
+    blueprint = tmp_path / "docs" / "architecture" / "OVERVIEW.md"
+    blueprint.parent.mkdir(parents=True)
+    blueprint.write_text(
+        """
+# Architecture
+```yaml governance:services
+web
+db
+```
+""",
+        encoding="utf-8",
+    )
+
+    adapter = GitHubActionsAdapter()
+    with patch("scripts.detect_drift.REPO_ROOT", tmp_path):
+        report = adapter.check()
+
+    assert report is not None
+    assert report.has_drift
+    assert "cache" in report.undocumented

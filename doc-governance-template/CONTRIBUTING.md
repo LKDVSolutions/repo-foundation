@@ -3,8 +3,7 @@ doc_id: CONTRIBUTING_md
 doc_class: entrypoint
 title: "Contributing Guide \u2014 Rules of the House"
 primary_audience: both
-task_entry_for:
-- bootstrap_project
+task_entry_for: []
 status: active
 depends_on: []
 authoritative_for: []
@@ -52,7 +51,7 @@ Before writing a single line of code, verify these **5 mandatory items**:
 2.  **Authority Check**: Have you identified the `current_config` or `runtime_evidence` that owns this class of fact in [`docs/REFERENCE.md`](docs/REFERENCE.md)?
 3.  **Success Criteria**: Have you explicitly stated exactly what "done" looks like with a verification command?
 4.  **Surgical Changes**: Does this change touch only what is strictly necessary? (No drive-by refactors).
-5.  **Documentation Sync**: Will this change require an update to the Documentation Registry (`DOC_REGISTRY.yaml`)?
+5.  **Documentation Sync**: Will this change require frontmatter updates and a regenerated registry view via `python scripts/aggregate_registry.py`?
 
 ---
 

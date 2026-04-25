@@ -4,6 +4,8 @@ doc_class: entrypoint
 title: "[YOUR-PROJECT-NAME] \u2014 Repository Index"
 primary_audience: both
 task_entry_for:
+- bootstrap_project
+- architectural_decision
 - implement_change
 - investigate_runtime_issue
 - refresh_current_docs
@@ -17,7 +19,6 @@ read_sequence:
   - AGENT_WORKFLOW_md
   - CLAUDE_md
 - refresh_current_docs:
-  - DOC_REGISTRY_YAML
   - REFERENCE_md
 - update_plan_or_roadmap: []
 - operate_or_release:
@@ -63,7 +64,7 @@ Full route: [docs/development/AGENT_WORKFLOW.md](development/AGENT_WORKFLOW.md#t
 ### refresh_current_docs
 Updating current-state docs (`current_config` or `runtime_evidence` surfaces) after a source artifact changes.
 
-Start at: [docs/reference/registry/DOC_REGISTRY.yaml](reference/registry/DOC_REGISTRY.yaml) to identify which docs are affected, then [docs/REFERENCE.md](REFERENCE.md) for the authority surface map.
+Start at: [docs/reference/registry/DOC_REGISTRY.md](reference/registry/DOC_REGISTRY.md) to identify which docs are affected, then [docs/REFERENCE.md](REFERENCE.md) for the authority surface map.
 Full route: [docs/development/AGENT_WORKFLOW.md](development/AGENT_WORKFLOW.md#task-class-refresh_current_docs)
 
 ### update_plan_or_roadmap
@@ -97,7 +98,7 @@ Start at your project's README for system context, then navigate to the relevant
 Start at [docs/INDEX.md](INDEX.md) (here), navigate to the task class above, then follow [docs/development/AGENT_WORKFLOW.md](development/AGENT_WORKFLOW.md) for required read order and fallback rules. Always check [docs/REFERENCE.md](REFERENCE.md) before treating any mutable fact as current.
 
 ### Agent — audit or review
-Start at [docs/reference/registry/DOC_REGISTRY.yaml](reference/registry/DOC_REGISTRY.yaml) for doc classification. Use [docs/REFERENCE.md](REFERENCE.md) for resolution chains.
+Start at [docs/reference/registry/DOC_REGISTRY.md](reference/registry/DOC_REGISTRY.md) for doc classification. Use `.registry_cache.json` when you need machine-readable entries, then [docs/REFERENCE.md](REFERENCE.md) for resolution chains.
 
 ---
 
@@ -111,7 +112,7 @@ Start at [docs/reference/registry/DOC_REGISTRY.yaml](reference/registry/DOC_REGI
 | Agent Workflow | `docs/development/AGENT_WORKFLOW.md` | Normative task routing and read-order rules for agents |
 | Agent Capabilities | `docs/development/AGENT_CAPABILITIES.md` | Permitted tools and execution environment |
 | Needs Attention | `docs/plans/NEEDS_ATTENTION.md` | Human-Agent Handoff / Interrupt blockers |
-| Documentation Registry | `docs/reference/registry/DOC_REGISTRY.yaml` | Canonical doc classification, routing, and ownership |
+| Documentation Registry | `docs/reference/registry/DOC_REGISTRY.md` | Rendered doc classification, routing, and ownership |
 | Maintenance Guide | `docs/development/DOCUMENTATION_MAINTENANCE.md` | When and how to update governed docs |
 | Release Checklist | `docs/development/RELEASE_CHECKLIST.md` | Pre-release documentation checks |
 

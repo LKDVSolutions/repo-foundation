@@ -23,6 +23,11 @@ agent:
     state_file: "docs/history/AGENT_STATE.md"
     decision_log: "docs/history/DECISION_LOG.md"
 
+template:
+  version: "1.1.0"
+  last_migrated: "2026-04-24T00:00:00Z"
+  changelog_ref: "docs/reference/TEMPLATE_CHANGELOG.md"
+
 governance:
   # Staleness TTL thresholds per authority_kind.
   # warn_days: emit [WARN] — doc is potentially stale

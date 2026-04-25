@@ -4,11 +4,7 @@ doc_class: active
 authority_kind: guide
 title: "CLAUDE.md \u2014 Agent Instruction Surface"
 primary_audience: agents
-task_entry_for:
-- implement_change
-- investigate_runtime_issue
-- operate_or_release
-- refresh_current_docs
+task_entry_for: []
 system_owner: system-wide
 doc_owner: '[YOUR-NAME]'
 updated_by: human
@@ -35,7 +31,7 @@ This file provides specialized guidance for Claude Code and other Claude-based a
 - **Plan Mode for All PRs:** You MUST enter `plan` mode (or explicitly state your plan) before any non-trivial change. Do not act without a peer-reviewed plan.
 - **Verification Loops:** Always run tests and type-checks BEFORE declaring a task "Done". If you hit a wall, summarize and hand off via `docs/plans/NEEDS_ATTENTION.md`.
 - **Subagents for Exploration:** Use subagents for broad searches, data analysis, or speculative research to keep your primary context window lean and high-signal.
-- **Reference the Registry:** Every doc-related change MUST be preceded by reading `docs/reference/registry/DOC_REGISTRY.yaml` to ensure sync.
+- **Reference the Registry:** Every doc-related change MUST be preceded by checking `docs/reference/registry/DOC_REGISTRY.md` or `.registry_cache.json` to ensure routing and ownership stay in sync with frontmatter.
 
 ## 2. Documentation Governance (Mandatory)
 
@@ -87,4 +83,5 @@ End every implementation task with:
 - **Task routing**: [`docs/INDEX.md`](docs/INDEX.md)
 - **Authority map**: [`docs/REFERENCE.md`](docs/REFERENCE.md)
 - **Agent task routing**: [`docs/development/AGENT_WORKFLOW.md`](docs/development/AGENT_WORKFLOW.md)
-- **Registry**: [`docs/reference/registry/DOC_REGISTRY.yaml`](docs/reference/registry/DOC_REGISTRY.yaml)
+- **Registry view**: [`docs/reference/registry/DOC_REGISTRY.md`](docs/reference/registry/DOC_REGISTRY.md)
+- **Registry cache**: `.registry_cache.json`

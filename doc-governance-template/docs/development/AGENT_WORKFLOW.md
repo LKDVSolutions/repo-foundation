@@ -36,7 +36,7 @@ This is a **normative** document. It prescribes required agent behavior. Followi
 
 ## Section 1: Required Read Order by Authority Kind
 
-Before consuming any document, identify its `authority_kind` from [DOC_REGISTRY.yaml](../reference/registry/DOC_REGISTRY.yaml). Then apply the following read-order rules.
+Before consuming any document, identify its `authority_kind` from the generated registry view [DOC_REGISTRY.md](../reference/registry/DOC_REGISTRY.md) or `.registry_cache.json` for machine-readable lookups. Then apply the following read-order rules.
 
 ### When to read each kind
 
@@ -113,11 +113,11 @@ Updating `current_config` or `runtime_evidence` docs after source artifacts chan
 
 | Field | Value |
 |---|---|
-| Start at | `docs/reference/registry/DOC_REGISTRY.yaml` (identify which docs are affected), then `docs/REFERENCE.md` (authority surface map) |
+| Start at | `docs/reference/registry/DOC_REGISTRY.md` (identify which docs are affected), then `docs/REFERENCE.md` (authority surface map) |
 | Required read order | current_config (registry) → guide (REFERENCE.md) → current_config (affected source artifacts) |
-| Key authority surfaces | `docs/reference/registry/DOC_REGISTRY.yaml`, source artifact for the changed system |
-| Typical output | Updated `current_config` or `runtime_evidence` doc, updated `last_verified` and `verification_level` in DOC_REGISTRY.yaml |
-| Fallback rule | If no current_config doc exists for the changed system, create one under `docs/reference/current/` before updating DOC_REGISTRY.yaml |
+| Key authority surfaces | `docs/reference/registry/DOC_REGISTRY.md`, `.registry_cache.json`, source artifact for the changed system |
+| Typical output | Updated `current_config` or `runtime_evidence` doc, updated `last_verified` and `verification_level` in the doc frontmatter, then regenerated registry artifacts |
+| Fallback rule | If no current_config doc exists for the changed system, create one under `docs/reference/current/` with governed frontmatter before regenerating the registry |
 
 ---
 
@@ -207,13 +207,13 @@ These rules apply when expected documents are missing or when two sources confli
 
 1. **Missing required doc:** Log the missing doc_id in the task closure `unresolved_drift` field. Proceed by searching the relevant source directories for the artifact directly. Do not halt.
 
-2. **Two docs conflict, no resolution chain defined:** Prefer the source with higher authority_kind (see Section 1). If same kind, prefer the one with a more recent `last_verified` in DOC_REGISTRY.yaml. If neither has one, prefer source artifacts over narrative docs.
+2. **Two docs conflict, no resolution chain defined:** Prefer the source with higher authority_kind (see Section 1). If same kind, prefer the one with a more recent `last_verified` in governed doc frontmatter. If neither has one, prefer source artifacts over narrative docs.
 
 3. **CLAUDE.md vs current_config conflict on a mutable fact:** Prefer `current_config`. Preserve CLAUDE.md's behavioral rule if one is present. Record the conflict in `unresolved_drift`.
 
 4. **No current_config doc exists for a system:** Treat the relevant source config file (docker-compose.yml, schema.yaml, etc.) as the baseline `current_config`. Do not use CLAUDE.md or README.md runtime claims as authoritative facts.
 
-5. **"Last Updated" manual timestamp in any doc:** Do not treat it as a freshness guarantee. It is not machine-verifiable. Use `last_verified` and `verification_level` in DOC_REGISTRY.yaml as the authoritative staleness signals.
+5. **"Last Updated" manual timestamp in any doc:** Do not treat it as a freshness guarantee. It is not machine-verifiable. Use `last_verified` and `verification_level` in governed doc frontmatter, surfaced through `.registry_cache.json`, as the authoritative staleness signals.
 
 6. **runtime_evidence claim older than 7 days:** Flag it as potentially stale in the task closure `unresolved_drift` field. Verify via the appropriate method (SSH, monitoring dashboard) before acting on it.
 
@@ -243,6 +243,25 @@ For audit and review tasks (refresh_current_docs, investigate_runtime_issue), in
 ---
 
 ## Section 6: Execution Guidelines & Human Handoff
+
+### Checkpoint before Handoff
+Before any handoff, interruption, or pause, create a session envelope so the next agent can resume from an exact file and line.
+
+1. Create the envelope:
+```bash
+python scripts/manage_session.py create \
+   --parent-task-id <task-id> \
+   --checkpoint-summary "<what was done + what is next>" \
+   --resume-target-file <path/to/file> \
+   --resume-target-line <line-number> \
+   --active-file <path/to/active/file>
+```
+2. Confirm `docs/history/SESSION_<session_id>.md` was created.
+3. Include the generated `session_id` in your handoff note.
+4. The next agent resumes with:
+```bash
+python scripts/manage_session.py resume --session-id <session_id>
+```
 
 ### The Agent Scratchpad
 If a task requires more than 3 steps, or if you need to perform complex refactoring, write your intermediate findings, plans, and next steps to `.agent_scratchpad.md` before executing. This prevents losing context and maintains a clear trail of thought.
@@ -280,7 +299,7 @@ Confirm the gate passes, then tell the agent to "Resume from NEEDS_ATTENTION."
 
 1. **"Last Updated" timestamps are advisory only.** They appear in README files and overview docs. They are set manually and are not machine-verifiable. A "Last Updated: YYYY-MM-DD" header does not mean every claim in the document was true on that date.
 
-2. **Authoritative staleness signals** are the `last_verified` and `verification_level` fields in [DOC_REGISTRY.yaml](../reference/registry/DOC_REGISTRY.yaml):
+2. **Authoritative staleness signals** are the `last_verified` and `verification_level` fields in governed doc frontmatter, surfaced in [DOC_REGISTRY.md](../reference/registry/DOC_REGISTRY.md) and `.registry_cache.json`:
    - `verification_level: none` — no verification has been done; treat all mutable claims as unverified
    - `verification_level: repo_derived` — content was derived from source artifacts in the repo, not live system verification
    - `verification_level: ssh_verified` — claims were verified via live SSH commands (highest available level)
@@ -295,4 +314,4 @@ Confirm the gate passes, then tell the agent to "Resume from NEEDS_ATTENTION."
    - **WARN** (`age >= warn_days`): Record in task closure `unresolved_drift`; re-verify before acting on the stale claim.
    - **FAIL** (`age >= fail_days`): Gate exits 1. The doc must be re-verified and `last_verified` updated before any PR touching that doc can merge.
 
-4. **When an agent refreshes a doc**, it must update `last_verified` to the current date and set `verification_level` appropriately in DOC_REGISTRY.yaml as part of the closure output.
+4. **When an agent refreshes a doc**, it must update `last_verified` to the current date and set `verification_level` appropriately in the doc frontmatter, then regenerate the registry artifacts as part of the closure output.

@@ -4,11 +4,7 @@ doc_class: active
 authority_kind: guide
 title: "GEMINI.md \u2014 Gemini-Specific Agent Guidelines"
 primary_audience: agents
-task_entry_for:
-- implement_change
-- investigate_runtime_issue
-- operate_or_release
-- refresh_current_docs
+task_entry_for: []
 system_owner: system-wide
 doc_owner: '[YOUR-NAME]'
 updated_by: human
@@ -80,4 +76,5 @@ End every implementation task with:
 - **Task routing**: [`docs/INDEX.md`](docs/INDEX.md)
 - **Authority map**: [`docs/REFERENCE.md`](docs/REFERENCE.md)
 - **Agent task routing**: [`docs/development/AGENT_WORKFLOW.md`](docs/development/AGENT_WORKFLOW.md)
-- **Registry**: [`docs/reference/registry/DOC_REGISTRY.yaml`](docs/reference/registry/DOC_REGISTRY.yaml)
+- **Registry view**: [`docs/reference/registry/DOC_REGISTRY.md`](docs/reference/registry/DOC_REGISTRY.md)
+- **Registry cache**: `.registry_cache.json`

@@ -49,3 +49,9 @@ This file is intentionally lightweight:
 
 ## Automated Drift Report
 **Detected:** docker-compose: 1 service(s) in blueprint not in source: ['worker']
+
+## Automated Drift Report
+**Detected:** env-vars: 1 env_var(s) in source not in blueprint: ['USER']
+
+## Automated Drift Report
+**Detected:** github-actions: 3 dependency(s) in blueprint not in source: ['db', 'web', 'worker']

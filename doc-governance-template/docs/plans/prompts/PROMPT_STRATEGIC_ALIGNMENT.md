@@ -4,9 +4,7 @@ doc_class: active
 authority_kind: plan
 title: 'Prompt Template: Strategic Alignment & Challenge'
 primary_audience: both
-task_entry_for:
-- bootstrap_project
-- architectural_decision
+task_entry_for: []
 status: active
 depends_on: []
 authoritative_for: []
@@ -39,7 +37,7 @@ Synthesize your research into a structured report:
 
 ### Phase 4: Governance Bootstrapping
 If the user approves the "Go" signal:
-1. Initialize the `DOC_REGISTRY.yaml` with the first `plan` and `blueprint` IDs.
+1. Add governed frontmatter to the first `plan` and `blueprint` docs, then run `python scripts/aggregate_registry.py`.
 2. Create the initial `docs/architecture/DECISION_LOG.md` to record why these specific choices were made.
 
 **Output Requirement**:

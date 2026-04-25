@@ -2,6 +2,7 @@
 """Check that active/generated docs in the registry have required metadata fields."""
 
 import sys
+import json
 import yaml
 from datetime import date, timedelta
 from pathlib import Path
@@ -62,13 +63,20 @@ def check_metadata():
         print(f"[FAIL] Registry file not found: {REGISTRY_PATH.relative_to(REPO_ROOT)}")
         return passed, warnings, failures + 1
 
-    import json
     with open(REGISTRY_PATH, "r", encoding="utf-8") as f:
+        raw = f.read()
         try:
-            data = json.load(f)
-        except json.JSONDecodeError as e:
-            print(f"[FAIL] JSON parse error: {e}")
-            return passed, warnings, failures + 1
+            data = json.loads(raw)
+        except json.JSONDecodeError:
+            try:
+                data = yaml.safe_load(raw)
+            except yaml.YAMLError as e:
+                print(f"[FAIL] Registry parse error (YAML): {e}")
+                return passed, warnings, failures + 1
+
+    if not isinstance(data, dict):
+        print("[FAIL] Registry parse error: expected a mapping at the top level")
+        return passed, warnings, failures + 1
 
     entries = data.get("entries", [])
     if not entries:
