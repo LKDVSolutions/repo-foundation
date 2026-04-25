@@ -4,9 +4,7 @@ doc_class: active
 authority_kind: blueprint
 title: Architecture Overview
 primary_audience: both
-task_entry_for:
-- implement_change
-- investigate_runtime_issue
+task_entry_for: []
 system_owner: documentation-governance
 doc_owner: '[YOUR-NAME]'
 updated_by: human
@@ -31,16 +29,24 @@ The system is designed as an "Agent OS" for documentation management. It operate
 2.  **Automation Engine (`scripts/`)**:
     A suite of Python-based tools that execute governance logic.
     - **`docs_gate.py`**: The primary quality gate for ensuring registry and document integrity.
-    - **`auto_fix.py` / `auto_fix_registry.py`**: Self-healing mechanisms that programmatically repair documentation failures. auto_fix injects sentinel values (`FIXME-NEEDS-TITLE`) that intentionally fail the gate until a human corrects them.
+    - **`auto_fix.py`**: Self-healing mechanism that programmatically repairs limited documentation failures. It injects sentinel values (`FIXME-NEEDS-TITLE`) that intentionally fail the gate until a human corrects them.
+    - **`check_dependency_advisories.py`**: Supply-chain verification wrapper that runs `pip-audit` against the pinned Python manifest used by CI.
     - **`detect_drift.py`**: Proactive drift detection between source artifacts and documentation blueprints. Exits 1 on drift — this is a required CI status check.
     - **`check_needs_attention.py`**: Blocks CI merges when `docs/plans/NEEDS_ATTENTION.md` contains open `- [ ]` agent blockers.
-    - **`cascade_staleness.py` / `auto_fix_registry.py`**: Registry mutation scripts. Both use a full read-modify-write FileLock to prevent concurrent-write data loss (see ENGINEERING_STANDARDS.md — Agent Concurrency Model).
+    - **`aggregate_registry.py`**: Regenerates `.registry_cache.json` and `DOC_REGISTRY.md` from governed frontmatter.
 3.  **Agent Context Layer**:
     - **`hydrate_context.py`**: Aggregates repository and external context for AI agent memory.
     - **`manage_agent_state.py`**: Tracks active agent tasks and blockers.
 4.  **CI/CD Pipeline**:
-    - **GitHub Actions**: Daily and push-triggered quality gates ensuring documentation doesn't rot over time.
-    - Both `doc-gate` and `drift-detection` jobs are required status checks — PRs cannot merge if either fails.
+    - **Reference implementation**: GitHub Actions provides daily and push-triggered quality gates for this template repository.
+    - The security outcome is provider-agnostic: the default branch should require checks equivalent to `doc-gate`, `drift-detection`, and `dependency-advisory` on whichever source-control platform the project uses.
+    - `verify_branch_protection.py` is the GitHub adapter for that policy today. Unsupported providers fall back to manual verification until an adapter exists.
+
+## Operational Limits
+
+- **Concurrency ceiling:** The file-lock design is intentionally operated at no more than 10 concurrent agents per project.
+- **Rationale:** Beyond that level, lock contention and timeout failures become likely enough to create operational friction even if data corruption is avoided.
+- **Out-of-scope scaling:** Supporting more than 10 concurrent agents requires a different coordination design and is intentionally deferred until real demand exists.
 
 ## Data Flows
 

@@ -14,6 +14,7 @@ authoritative_for:
 - current blockers
 source_inputs:
 - scripts/manage_agent_state.py
+last_verified: 2026-04-25
 refresh_policy: auto
 verification_level: repo_derived
 status: active

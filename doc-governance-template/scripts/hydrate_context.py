@@ -6,12 +6,15 @@ Run from repo root:
 """
 
 import argparse
+import json
 import subprocess
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
 CONTEXT_FILE = REPO_ROOT / ".agent_context.md"
+REGISTRY_CACHE = REPO_ROOT / ".registry_cache.json"
+REGISTRY_MD = REPO_ROOT / "docs" / "reference" / "registry" / "DOC_REGISTRY.md"
 
 def fetch_github_context(issue: str) -> str:
     try:
@@ -26,6 +29,16 @@ def fetch_jira_context(issue: str) -> str:
         "Configure JIRA_API_TOKEN and JIRA_BASE_URL environment variables and implement this function."
     )
 
+
+def registry_is_available() -> bool:
+    if REGISTRY_CACHE.exists():
+        try:
+            data = json.loads(REGISTRY_CACHE.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return False
+        return isinstance(data.get("entries"), list)
+    return REGISTRY_MD.exists()
+
 def main():
     parser = argparse.ArgumentParser(description="Hydrate agent context.")
     parser.add_argument("--backlog-item", type=str, help="Path to the active backlog item or task.")
@@ -36,9 +49,8 @@ def main():
     context_parts = ["# Agent Context\n\nThis file is dynamically generated. Do not edit manually.\n"]
     
     # 1. Load Registry Status Summary
-    registry_yaml = REPO_ROOT / "docs" / "reference" / "registry" / "DOC_REGISTRY.yaml"
-    if registry_yaml.exists():
-        context_parts.append("## Documentation Registry\nStatus: Active. See `docs/reference/registry/DOC_REGISTRY.yaml` for full index.\n")
+    if registry_is_available():
+        context_parts.append("## Documentation Registry\nStatus: Active. See `docs/reference/registry/DOC_REGISTRY.md` for the rendered index and `.registry_cache.json` for machine-readable entries.\n")
     
     # 2. Load Top-Level Guardrails
     claude_md = REPO_ROOT / "CLAUDE.md"

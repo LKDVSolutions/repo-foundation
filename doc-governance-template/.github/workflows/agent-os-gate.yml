@@ -29,11 +29,28 @@ jobs:
       - name: Check Registry Synchronization
         run: python scripts/check_doc_registry_sync.py
 
-      - name: Run Documentation Gate (Fast)
-        run: python scripts/docs_gate.py --fast
+      - name: Run Documentation Gate (Full)
+        run: python scripts/docs_gate.py --full
 
       - name: Check NEEDS_ATTENTION (open agent blockers block merge)
         run: python scripts/check_needs_attention.py
+
+  dependency-advisory:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Run Dependency Advisory Scan
+        run: python scripts/check_dependency_advisories.py
 
   drift-detection:
     runs-on: ubuntu-latest

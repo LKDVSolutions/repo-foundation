@@ -6,9 +6,8 @@ from scripts import hydrate_context
 
 def test_hydrate_context(tmp_path):
     context_file = tmp_path / ".agent_context.md"
-    registry_yaml = tmp_path / "docs" / "reference" / "registry" / "DOC_REGISTRY.yaml"
-    registry_yaml.parent.mkdir(parents=True, exist_ok=True)
-    registry_yaml.write_text("")
+    registry_cache = tmp_path / ".registry_cache.json"
+    registry_cache.write_text('{"entries": []}', encoding="utf-8")
     
     with patch("scripts.hydrate_context.CONTEXT_FILE", context_file), \
          patch("scripts.hydrate_context.REPO_ROOT", tmp_path), \

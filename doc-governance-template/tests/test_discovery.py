@@ -1,6 +1,6 @@
 import os
 import sys
-import yaml
+import json
 import pytest
 from pathlib import Path
 
@@ -10,7 +10,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from scripts.discover_unregistered_docs import load_registry, find_all_markdown_files
 
 def test_load_registry_empty(tmp_path):
-    registry_file = tmp_path / "DOC_REGISTRY.yaml"
+    registry_file = tmp_path / ".registry_cache.json"
     # File doesn't exist
     assert load_registry(registry_file) == []
     
@@ -19,13 +19,13 @@ def test_load_registry_empty(tmp_path):
     assert load_registry(registry_file) == []
 
 def test_load_registry_valid(tmp_path):
-    registry_file = tmp_path / "DOC_REGISTRY.yaml"
-    content = """
-entries:
-  - path: docs/test.md
-    title: Test Doc
-"""
-    registry_file.write_text(content)
+    registry_file = tmp_path / ".registry_cache.json"
+    content = {
+        "entries": [
+            {"path": "docs/test.md", "title": "Test Doc"}
+        ]
+    }
+    registry_file.write_text(json.dumps(content), encoding="utf-8")
     registry = load_registry(registry_file)
     assert len(registry) == 1
     assert registry[0]['path'] == 'docs/test.md'

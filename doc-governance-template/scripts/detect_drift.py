@@ -204,7 +204,7 @@ class DockerComposeAdapter:
 
 class RequirementsPinAdapter:
     name = "requirements-pin"
-    source_files = ("requirements.txt", "package.json", "pyproject.toml")
+    source_files = ("requirements.txt", "requirements-dev.txt", "package.json", "pyproject.toml")
     blueprint_file = "docs/development/SECURITY_AND_DEPENDENCIES.md"
     item_label = "dependency"
 
@@ -266,7 +266,7 @@ class RequirementsPinAdapter:
             if not path.exists():
                 continue
             try:
-                if source_file == "requirements.txt":
+                if source_file in {"requirements.txt", "requirements-dev.txt"}:
                     violations.extend(self._check_requirements_txt(path))
                 elif source_file == "package.json":
                     violations.extend(self._check_package_json(path))

@@ -6,12 +6,7 @@
       "authority_kind": "guide",
       "title": "AGENTS.md \u2014 AI Agent Standard Operating Procedures",
       "primary_audience": "agents",
-      "task_entry_for": [
-        "implement_change",
-        "investigate_runtime_issue",
-        "operate_or_release",
-        "refresh_current_docs"
-      ],
+      "task_entry_for": [],
       "system_owner": "system-wide",
       "doc_owner": "[YOUR-NAME]",
       "updated_by": "human",
@@ -63,6 +58,7 @@
       "source_inputs": [
         "scripts/claim_task.py"
       ],
+      "last_verified": "2026-04-25",
       "refresh_policy": "auto",
       "verification_level": "none",
       "status": "active",
@@ -87,6 +83,7 @@
       "source_inputs": [
         "scripts/manage_agent_state.py"
       ],
+      "last_verified": "2026-04-25",
       "refresh_policy": "auto",
       "verification_level": "repo_derived",
       "status": "active",
@@ -124,10 +121,7 @@
       "authority_kind": "blueprint",
       "title": "Architecture Overview",
       "primary_audience": "both",
-      "task_entry_for": [
-        "implement_change",
-        "investigate_runtime_issue"
-      ],
+      "task_entry_for": [],
       "system_owner": "documentation-governance",
       "doc_owner": "[YOUR-NAME]",
       "updated_by": "human",
@@ -145,12 +139,7 @@
       "authority_kind": "guide",
       "title": "CLAUDE.md \u2014 Agent Instruction Surface",
       "primary_audience": "agents",
-      "task_entry_for": [
-        "implement_change",
-        "investigate_runtime_issue",
-        "operate_or_release",
-        "refresh_current_docs"
-      ],
+      "task_entry_for": [],
       "system_owner": "system-wide",
       "doc_owner": "[YOUR-NAME]",
       "updated_by": "human",
@@ -171,9 +160,7 @@
       "doc_class": "entrypoint",
       "title": "Contributing Guide \u2014 Rules of the House",
       "primary_audience": "both",
-      "task_entry_for": [
-        "bootstrap_project"
-      ],
+      "task_entry_for": [],
       "status": "active",
       "depends_on": [],
       "authoritative_for": [],
@@ -254,12 +241,7 @@
       "authority_kind": "guide",
       "title": "GEMINI.md \u2014 Gemini-Specific Agent Guidelines",
       "primary_audience": "agents",
-      "task_entry_for": [
-        "implement_change",
-        "investigate_runtime_issue",
-        "operate_or_release",
-        "refresh_current_docs"
-      ],
+      "task_entry_for": [],
       "system_owner": "system-wide",
       "doc_owner": "[YOUR-NAME]",
       "updated_by": "human",
@@ -278,6 +260,8 @@
       "title": "[YOUR-PROJECT-NAME] \u2014 Repository Index",
       "primary_audience": "both",
       "task_entry_for": [
+        "bootstrap_project",
+        "architectural_decision",
         "implement_change",
         "investigate_runtime_issue",
         "refresh_current_docs",
@@ -299,7 +283,6 @@
         },
         {
           "refresh_current_docs": [
-            "DOC_REGISTRY_YAML",
             "REFERENCE_md"
           ]
         },
@@ -346,15 +329,33 @@
       "path": "docs/plans/NEEDS_ATTENTION.md"
     },
     {
+      "doc_id": "PROMPT_ARCHITECTURAL_AUDIT",
+      "doc_class": "active",
+      "authority_kind": "guide",
+      "title": "Prompt Template: Brutally Honest Architectural Audit",
+      "primary_audience": "both",
+      "task_entry_for": [
+        "architecture_review",
+        "hardening",
+        "technical_debt_discovery"
+      ],
+      "system_owner": "documentation-governance",
+      "doc_owner": "[YOUR-NAME]",
+      "updated_by": "human",
+      "authoritative_for": [],
+      "refresh_policy": "manual",
+      "verification_level": "none",
+      "status": "active",
+      "depends_on": [],
+      "path": "docs/plans/prompts/PROMPT_ARCHITECTURAL_AUDIT.md"
+    },
+    {
       "doc_id": "PROMPT_ARCHITECTURE_REVIEW",
       "doc_class": "active",
       "authority_kind": "guide",
       "title": "Prompt Template: Architecture Review",
       "primary_audience": "both",
-      "task_entry_for": [
-        "implement_change",
-        "architectural_decision"
-      ],
+      "task_entry_for": [],
       "system_owner": "documentation-governance",
       "doc_owner": "[YOUR-NAME]",
       "updated_by": "human",
@@ -511,10 +512,7 @@
       "authority_kind": "plan",
       "title": "Prompt Template: Strategic Alignment & Challenge",
       "primary_audience": "both",
-      "task_entry_for": [
-        "bootstrap_project",
-        "architectural_decision"
-      ],
+      "task_entry_for": [],
       "status": "active",
       "depends_on": [],
       "authoritative_for": [],
@@ -595,6 +593,7 @@
       "updated_by": "human",
       "authoritative_for": [
         "dependency pinning rules",
+        "dependency advisory enforcement",
         "secret management rules"
       ],
       "refresh_policy": "manual",
@@ -609,9 +608,7 @@
       "authority_kind": "current_config",
       "title": "Service Inventory",
       "primary_audience": "both",
-      "task_entry_for": [
-        "investigate_runtime_issue"
-      ],
+      "task_entry_for": [],
       "system_owner": "documentation-governance",
       "doc_owner": "[YOUR-NAME]",
       "updated_by": "human",
@@ -621,6 +618,7 @@
       "source_inputs": [
         "scripts/"
       ],
+      "last_verified": "2026-04-25",
       "verification_level": "repo_derived",
       "refresh_policy": "on_source_change",
       "status": "active",
@@ -675,10 +673,7 @@
       "authority_kind": "guide",
       "title": "User Manual \u2014 Operating the Governance Template",
       "primary_audience": "both",
-      "task_entry_for": [
-        "bootstrap_project",
-        "operate_or_release"
-      ],
+      "task_entry_for": [],
       "status": "active",
       "depends_on": [],
       "authoritative_for": [],

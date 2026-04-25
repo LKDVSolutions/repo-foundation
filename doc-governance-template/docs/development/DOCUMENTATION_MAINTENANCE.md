@@ -38,7 +38,7 @@ This document defines how documentation is maintained in this repo. It is the au
 
 Every doc in this repo carries two axes of classification. The `doc_class` axis describes lifecycle state: `entrypoint` (navigation only), `active` (human-maintained, normative), `generated` (auto-refreshed from source artifacts), or `historical` (archived). The `authority_kind` axis describes what kind of question the doc can answer with authority: `plan` (why and in what order), `blueprint` (how it is designed), `guide` (how to execute), `current_config` (what source artifacts currently define), or `runtime_evidence` (what has been verified in the live environment).
 
-These axes determine where to write facts and where to read them. For example: a new service port belongs in the relevant config source file and is reflected in a `current_config` doc — it does not belong as an inline claim in a `guide`-class doc like CLAUDE.md. The full classification of every registered doc is in [DOC_REGISTRY.yaml](../reference/registry/DOC_REGISTRY.yaml).
+These axes determine where to write facts and where to read them. For example: a new service port belongs in the relevant config source file and is reflected in a `current_config` doc — it does not belong as an inline claim in a `guide`-class doc like CLAUDE.md. The full classification of every registered doc is in [DOC_REGISTRY.md](../reference/registry/DOC_REGISTRY.md), with `.registry_cache.json` as the machine-readable registry cache.
 
 ---
 
@@ -46,7 +46,7 @@ These axes determine where to write facts and where to read them. For example: a
 
 | Change type | Required doc updates | When |
 |---|---|---|
-| New doc created in `docs/` | Add metadata header to doc; add entry to `docs/reference/registry/DOC_REGISTRY.yaml`; run `python scripts/docs_gate.py --fast` | Before commit |
+| New doc created in `docs/` | Add governed frontmatter to the doc; run `python scripts/aggregate_registry.py`; run `python scripts/docs_gate.py --fast` | Before commit |
 | Markdown frontmatter edited on any governed doc | Run `python scripts/aggregate_registry.py`; commit updated `.registry_cache.json` and `DOC_REGISTRY.md` | Before commit |
 | Source artifact changed (schema, config, etc.) | Update relevant `current_config` doc | Before commit |
 | Runtime behavior verified (SSH or monitoring) | Update relevant `runtime_evidence` doc with evidence entry; update `last_verified` in registry | After verification |
@@ -146,7 +146,7 @@ Gate output: `[PASS]`, `[WARN]`, or `[FAIL]` per check. Exit code 1 on any `[FAI
    **authority_kind**: guide
    **edit_policy**: human
    ```
-3. Add an entry to `docs/reference/registry/DOC_REGISTRY.yaml` with all required fields
+3. Add governed frontmatter with all required fields to the new document
 4. Run `python scripts/aggregate_registry.py` to rebuild the registry cache and regenerate the registry view
 5. Run `python scripts/docs_gate.py --fast` to verify
 6. Include the gate result in your task closure summary

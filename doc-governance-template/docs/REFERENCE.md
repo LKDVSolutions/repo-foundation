@@ -46,7 +46,7 @@ Every document in this repo is classified by `authority_kind`. The kind determin
 
 **Priority rule (conflicts):** `runtime_evidence` > `current_config` > `blueprint` > `plan` > `guide`. If two docs of different authority_kind conflict on a mutable fact, prefer the higher-specificity source.
 
-Full classification of all registered docs: [docs/reference/registry/DOC_REGISTRY.yaml](reference/registry/DOC_REGISTRY.yaml)
+Full classification of all registered docs: [docs/reference/registry/DOC_REGISTRY.md](reference/registry/DOC_REGISTRY.md). For machine-readable entries, use `.registry_cache.json`.
 
 ---
 
@@ -59,7 +59,7 @@ For each class of fact, this table identifies the single authoritative source.
 | Fact class | Authoritative source | Format | Notes |
 |---|---|---|---|
 | Agent behavioral guardrails | `CLAUDE.md` | Markdown | Behavioral rules only — not mutable facts |
-| Documentation classification and routing | `docs/reference/registry/DOC_REGISTRY.yaml` | YAML | |
+| Documentation classification and routing | `docs/reference/registry/DOC_REGISTRY.md` + `.registry_cache.json` | Markdown + JSON | Generated from governed doc frontmatter |
 | Registry validation schema | `docs/reference/registry/DOC_REGISTRY.schema.json` | JSON | |
 | CI/CD quality gate rules | `.github/workflows/agent-os-gate.yml` | YAML | |
 | Dependency pinning and constraints | `requirements-dev.txt` | Text | |
@@ -118,5 +118,5 @@ No conflicts documented yet. Add entries here when two docs are found to give co
 
 ---
 
-*For full document classification and routing, see [docs/reference/registry/DOC_REGISTRY.yaml](reference/registry/DOC_REGISTRY.yaml).*
+*For full document classification and routing, see [docs/reference/registry/DOC_REGISTRY.md](reference/registry/DOC_REGISTRY.md). Use `.registry_cache.json` for machine-readable lookups.*
 *For normative agent task routing, see [docs/development/AGENT_WORKFLOW.md](development/AGENT_WORKFLOW.md).*

@@ -32,9 +32,9 @@
 
 ## Coverage Summary
 
-- **Total registered docs**: 32
-- **By `doc_class`**: `active`=30, `entrypoint`=2
-- **By `authority_kind`**: `blueprint`=3, `current_config`=3, `guide`=20, `plan`=4
+- **Total registered docs**: 33
+- **By `doc_class`**: `active`=31, `entrypoint`=2
+- **By `authority_kind`**: `blueprint`=3, `current_config`=3, `guide`=21, `plan`=4
 
 ---
 
@@ -56,6 +56,7 @@
 | GEMINI_md | GEMINI.md | active | guide | GEMINI.md — Gemini-Specific Agent Guidelines | agents | active | — |
 | INDEX_md | docs/INDEX.md | entrypoint | — | [YOUR-PROJECT-NAME] — Repository Index | both | active | Universal repo entrypoint. Navigation only — no mutable facts. All task classes route through this doc first. |
 | NEEDS_ATTENTION | docs/plans/NEEDS_ATTENTION.md | active | plan | Human-Agent Handoff (Interrupts) | both | active | — |
+| PROMPT_ARCHITECTURAL_AUDIT | docs/plans/prompts/PROMPT_ARCHITECTURAL_AUDIT.md | active | guide | Prompt Template: Brutally Honest Architectural Audit | both | active | — |
 | PROMPT_ARCHITECTURE_REVIEW | docs/plans/prompts/PROMPT_ARCHITECTURE_REVIEW.md | active | guide | Prompt Template: Architecture Review | both | active | — |
 | PROMPT_BACKLOG_INTAKE | docs/plans/prompts/PROMPT_BACKLOG_INTAKE.md | active | plan | Prompt Template: Backlog Intake | humans | active | — |
 | PROMPT_BATCH_EXECUTION | docs/plans/prompts/PROMPT_BATCH_EXECUTION.md | active | guide | Prompt Template: Batch Execution | humans | active | — |
@@ -83,12 +84,15 @@ The registry assigns `task_entry_for` to help agents and humans find starting po
 
 | Task Class | Declared Entry Doc(s) |
 |---|---|
-| `architectural_decision` | `PROMPT_ARCHITECTURE_REVIEW`, `PROMPT_STRATEGIC_ALIGNMENT` |
-| `bootstrap_project` | `CONTRIBUTING_md`, `PROMPT_STRATEGIC_ALIGNMENT`, `USER_MANUAL` |
-| `implement_change` | `AGENTS_md`, `ARCH_OVERVIEW`, `CLAUDE_md`, `GEMINI_md`, `INDEX_md`, `PROMPT_ARCHITECTURE_REVIEW` |
-| `investigate_runtime_issue` | `AGENTS_md`, `ARCH_OVERVIEW`, `CLAUDE_md`, `GEMINI_md`, `INDEX_md`, `SERVICE_INVENTORY` |
-| `operate_or_release` | `AGENTS_md`, `CLAUDE_md`, `GEMINI_md`, `INDEX_md`, `USER_MANUAL` |
-| `refresh_current_docs` | `AGENTS_md`, `CLAUDE_md`, `GEMINI_md`, `INDEX_md` |
+| `architectural_decision` | `INDEX_md` |
+| `architecture_review` | `PROMPT_ARCHITECTURAL_AUDIT` |
+| `bootstrap_project` | `INDEX_md` |
+| `hardening` | `PROMPT_ARCHITECTURAL_AUDIT` |
+| `implement_change` | `INDEX_md` |
+| `investigate_runtime_issue` | `INDEX_md` |
+| `operate_or_release` | `INDEX_md` |
+| `refresh_current_docs` | `INDEX_md` |
+| `technical_debt_discovery` | `PROMPT_ARCHITECTURAL_AUDIT` |
 | `test_or_operate_dev_environment` | `INDEX_md` |
 | `update_plan_or_roadmap` | `INDEX_md` |
 

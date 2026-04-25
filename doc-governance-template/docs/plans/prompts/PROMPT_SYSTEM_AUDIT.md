@@ -26,7 +26,7 @@ Thoroughly investigate the codebase using your file and search tools. Do not mak
 4. **Understand Security**: Look for authentication middleware, RBAC implementations, and secret management.
 
 **Phase 2: Formalization (Write)**
-Once you have a complete mental model, translate your findings into the following authoritative documents. If a document does not exist, create it (and add it to `DOC_REGISTRY.yaml`).
+Once you have a complete mental model, translate your findings into the following authoritative documents. If a document does not exist, create it with governed frontmatter and regenerate the registry artifacts.
 
 1. **Update `docs/REFERENCE.md` (Authority Surface Map)**:
    - Document exactly which files own which classes of facts (e.g., "The PostgreSQL schema is authoritative for data models, located in `infra/schema.sql`").
@@ -34,8 +34,8 @@ Once you have a complete mental model, translate your findings into the followin
    - Write a high-level summary of the system architecture, primary components, and their interactions.
 3. **Draft/Update `docs/reference/current/SERVICE_INVENTORY.md`**:
    - List all running services, their internal/external ports, and their deployment mechanisms based on your reading of the infrastructure files.
-4. **Update `DOC_REGISTRY.yaml`**:
-   - Ensure all newly created or discovered critical documentation is registered.
+4. **Regenerate the registry artifacts**:
+   - Ensure all newly created or discovered critical documentation has governed frontmatter, then run `python scripts/aggregate_registry.py`.
 
 **Output format (strict):**
 - **architecture_summary**: [1 paragraph high-level description]

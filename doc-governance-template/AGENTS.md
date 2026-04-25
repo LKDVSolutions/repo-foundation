@@ -4,11 +4,7 @@ doc_class: active
 authority_kind: guide
 title: "AGENTS.md \u2014 AI Agent Standard Operating Procedures"
 primary_audience: agents
-task_entry_for:
-- implement_change
-- investigate_runtime_issue
-- operate_or_release
-- refresh_current_docs
+task_entry_for: []
 system_owner: system-wide
 doc_owner: '[YOUR-NAME]'
 updated_by: human
@@ -56,7 +52,7 @@ This document defines the non-negotiable behavioral standards for all AI agents 
 - **Runtime:** Python 3.12
 - **Build System:** `Makefile` (use `make help` to discover commands)
 - **Quality Gate:** `scripts/docs_gate.py` (Mandatory check for all doc-related changes)
-- **Governance:** All governed docs are registered in `docs/reference/registry/DOC_REGISTRY.yaml`.
+- **Governance:** All governed docs carry frontmatter and are aggregated into `.registry_cache.json` and `docs/reference/registry/DOC_REGISTRY.md`.
 
 ## 4. Documentation Governance
 - "Task Done" requires that all related documentation is updated, verified, and the `docs_gate.py` passes.

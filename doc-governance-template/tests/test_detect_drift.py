@@ -197,6 +197,23 @@ def test_requirements_adapter_detects_unpinned_dependency(tmp_path):
     assert any("requirements.txt:pytest>=7.0.0" in entry for entry in report.undocumented)
 
 
+def test_requirements_adapter_checks_requirements_dev_txt(tmp_path):
+    requirements_file = tmp_path / "requirements-dev.txt"
+    requirements_file.write_text("pytest>=7.0.0\n", encoding="utf-8")
+
+    blueprint = tmp_path / "docs" / "development" / "SECURITY_AND_DEPENDENCIES.md"
+    blueprint.parent.mkdir(parents=True)
+    blueprint.write_text("# Security\n## The \"Strict Pinning\" Rule\n", encoding="utf-8")
+
+    adapter = RequirementsPinAdapter()
+    with patch("scripts.detect_drift.REPO_ROOT", tmp_path):
+        report = adapter.check()
+
+    assert report is not None
+    assert report.has_drift
+    assert any("requirements-dev.txt:pytest>=7.0.0" in entry for entry in report.undocumented)
+
+
 def test_env_var_adapter_detects_missing_env_key(tmp_path):
     env_file = tmp_path / ".env.example"
     env_file.write_text("APP_ENV=development\n", encoding="utf-8")

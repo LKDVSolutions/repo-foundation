@@ -4,9 +4,7 @@ doc_class: active
 authority_kind: guide
 title: 'Prompt Template: Architecture Review'
 primary_audience: both
-task_entry_for:
-- implement_change
-- architectural_decision
+task_entry_for: []
 system_owner: documentation-governance
 doc_owner: '[YOUR-NAME]'
 updated_by: human
