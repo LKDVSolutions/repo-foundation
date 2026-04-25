@@ -112,6 +112,19 @@ You must act as a Senior Systems Architect. Your goal is to map the existing cod
 
 def main():
     print_header("Agentic OS Initialization")
+    
+    # Load template version
+    version = "Unknown"
+    config_path = Path('.agent_config.yaml')
+    if config_path.exists():
+        try:
+            import yaml
+            cfg = yaml.safe_load(config_path.read_text(encoding='utf-8'))
+            version = cfg.get('template', {}).get('version', 'Unknown')
+        except Exception:
+            pass
+            
+    print(f"Installing Agentic OS Governance Template {BOLD}v{version}{RESET}")
     print("This script will bootstrap the documentation governance framework.")
     
     project_name = prompt("Project Name", default=Path.cwd().name)

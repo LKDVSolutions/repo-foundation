@@ -32,8 +32,8 @@
 
 ## Coverage Summary
 
-- **Total registered docs**: 33
-- **By `doc_class`**: `active`=31, `entrypoint`=2
+- **Total registered docs**: 34
+- **By `doc_class`**: `active`=31, `entrypoint`=2, `historical`=1
 - **By `authority_kind`**: `blueprint`=3, `current_config`=3, `guide`=21, `plan`=4
 
 ---
@@ -48,6 +48,7 @@
 | AGENT_STATE | docs/history/AGENT_STATE.md | active | current_config | Agent State | agents | active | — |
 | AGENT_WORKFLOW_md | docs/development/AGENT_WORKFLOW.md | active | guide | Agent Workflow — Task Routing and Read-Order Rules | agents | active | Normative routing document for agents. If an agent needs freeform search to complete a task, this doc is underspecified — update it. |
 | ARCH_OVERVIEW | docs/architecture/OVERVIEW.md | active | blueprint | Architecture Overview | both | active | — |
+| CHANGELOG | CHANGELOG.md | historical | — | Template Changelog | all | active | — |
 | CLAUDE_md | CLAUDE.md | active | guide | CLAUDE.md — Agent Instruction Surface | agents | active | Agent instruction surface. Authoritative for behavioral rules. Mutable facts (IPs, ports, service health) belong in current_config or runtime_evidence docs, not here. |
 | CONTRIBUTING_md | CONTRIBUTING.md | entrypoint | — | Contributing Guide — Rules of the House | both | active | — |
 | DOCUMENTATION_MAINTENANCE | docs/development/DOCUMENTATION_MAINTENANCE.md | active | guide | Documentation Maintenance — Procedures and Expectations | both | active | — |

@@ -19,32 +19,20 @@ refresh_policy: auto
 verification_level: repo_derived
 status: active
 depends_on: []
+agent_state:
+  status: Idle
+  blockers: []
 ---
 
 # Agent State
 
-## Current Task
-- **Goal**: [Brief description of the current primary objective]
-- **Status**: [e.g., In Progress, Blocked, Reviewing]
-- **Started**: [Date/Time]
-- **Ticket/Reference**: [Link or ID]
+**Authoritative state is in the YAML frontmatter above.**
 
-## Active Context
-- **Working Branch**: [Branch name]
-- **Key Files**: 
-  - [File 1]
-  - [File 2]
-- **Recent Discoveries**:
-  - [Note 1]
-  - [Note 2]
+This document provides a trace of the current agent's operational status. The `manage_agent_state.py` script maintains the frontmatter keys.
 
-## Blockers / Issues
-- [ ] [Description of any current blockers]
+## Active Status
+- **Current Status**: Idle
+- **Last Updated**: 2026-04-25
 
-## Next Steps
-1. [ ] [Immediate next action]
-2. [ ] [Following action]
-3. [ ] [Validation step]
-
-## Scratchpad / Notes
-[Free-form area for temporary thoughts, shell command outputs, or observations]
+## Blockers
+- None

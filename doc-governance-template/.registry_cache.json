@@ -88,6 +88,10 @@
       "verification_level": "repo_derived",
       "status": "active",
       "depends_on": [],
+      "agent_state": {
+        "status": "Idle",
+        "blockers": []
+      },
       "path": "docs/history/AGENT_STATE.md"
     },
     {
@@ -132,6 +136,18 @@
       "status": "active",
       "depends_on": [],
       "path": "docs/architecture/OVERVIEW.md"
+    },
+    {
+      "doc_id": "CHANGELOG",
+      "doc_class": "historical",
+      "authority_kind": null,
+      "title": "Template Changelog",
+      "primary_audience": "all",
+      "task_entry_for": [],
+      "updated_by": "human",
+      "status": "active",
+      "depends_on": [],
+      "path": "CHANGELOG.md"
     },
     {
       "doc_id": "CLAUDE_md",
