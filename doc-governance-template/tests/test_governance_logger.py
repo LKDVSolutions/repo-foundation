@@ -1,11 +1,10 @@
 import json
-from pathlib import Path
 
-from scripts.governance_logger import GovernanceLogger
+from scripts.governance_logger import AUDIT_TRAIL_PATH, GovernanceLogger
 
 
 def test_governance_logger_writes_jsonl(tmp_path):
-    audit_path = tmp_path / "docs" / "history" / "AGENT_AUDIT_TRAIL.jsonl"
+    audit_path = tmp_path / ".runtime" / "AGENT_AUDIT_TRAIL.jsonl"
     logger = GovernanceLogger(script="unit-test", audit_path=audit_path)
 
     logger.log("INFO", "event_name", "hello", doc_id="DOC_1")
@@ -20,3 +19,7 @@ def test_governance_logger_writes_jsonl(tmp_path):
     assert payload["doc_id"] == "DOC_1"
     assert payload["message"] == "hello"
     assert "timestamp" in payload
+
+
+def test_default_audit_trail_path_is_runtime_local():
+    assert AUDIT_TRAIL_PATH.parts[-2:] == (".runtime", "AGENT_AUDIT_TRAIL.jsonl")

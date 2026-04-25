@@ -53,6 +53,7 @@ This document identifies the internal "services" (automated scripts) that govern
 
 - **Required default-branch policy outcome**: enforce checks equivalent to `doc-gate`, `drift-detection`, and `dependency-advisory` on the selected hosting platform.
 - **Current repository implementation**: GitHub branch protection on `main` requires `doc-gate`, `drift-detection`, and `dependency-advisory`.
+- **Governance audit trail location**: the versioned `docs/history/AGENT_AUDIT_TRAIL.jsonl` file is a stub only. Live runtime audit entries are written to the ignored `.runtime/AGENT_AUDIT_TRAIL.jsonl` path.
 - **Supported concurrency ceiling**: Up to 10 concurrent agents per project using the current file-lock coordination model.
 - **Reason**: Registry and state mutations are serialized through file locks; above 10 concurrent writers, timeout-driven operational friction becomes likely.
 - **Escalation trigger**: If routine operation requires more than 10 concurrent agents, redesign the coordination model instead of raising the limit informally.

@@ -11,7 +11,7 @@ from filelock import FileLock
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
-AUDIT_TRAIL_PATH = REPO_ROOT / "docs" / "history" / "AGENT_AUDIT_TRAIL.jsonl"
+AUDIT_TRAIL_PATH = REPO_ROOT / ".runtime" / "AGENT_AUDIT_TRAIL.jsonl"
 LOCK_TIMEOUT_SECONDS = 30
 
 
@@ -24,7 +24,7 @@ class GovernanceLogger:
         self.lock_path = audit_path.with_suffix(".jsonl.lock")
 
     def log(self, level: str, event: str, message: str, doc_id: str = "none") -> None:
-        """Write one structured event record to AGENT_AUDIT_TRAIL.jsonl."""
+        """Write one structured event record to the runtime audit trail."""
         record = {
             "timestamp": datetime.now(tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "level": level,
