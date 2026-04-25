@@ -1,21 +1,4 @@
-{"timestamp": "2026-04-24T20:34:56Z", "level": "INFO", "script": "docs_gate.py", "event": "gate_start", "doc_id": "DOCS_GATE", "message": "Starting docs gate in fast mode"}
-{"timestamp": "2026-04-24T20:34:56Z", "level": "INFO", "script": "docs_gate.py", "event": "check_start", "doc_id": "DOC_REGISTRY", "message": "Running check_doc_registry"}
-{"timestamp": "2026-04-24T20:34:56Z", "level": "INFO", "script": "docs_gate.py", "event": "check_complete", "doc_id": "DOC_REGISTRY", "message": "check_doc_registry results: pass=7, warn=6, fail=0"}
-{"timestamp": "2026-04-24T20:34:56Z", "level": "INFO", "script": "docs_gate.py", "event": "check_start", "doc_id": "DOC_METADATA", "message": "Running check_doc_metadata"}
-{"timestamp": "2026-04-24T20:34:56Z", "level": "INFO", "script": "docs_gate.py", "event": "check_complete", "doc_id": "DOC_METADATA", "message": "check_doc_metadata results: pass=5, warn=2, fail=0"}
-{"timestamp": "2026-04-24T20:34:56Z", "level": "INFO", "script": "docs_gate.py", "event": "check_start", "doc_id": "DOC_REGISTRY", "message": "Running check_doc_registry_sync"}
-{"timestamp": "2026-04-24T20:34:56Z", "level": "INFO", "script": "docs_gate.py", "event": "check_complete", "doc_id": "DOC_REGISTRY", "message": "check_doc_registry_sync results: pass=1, warn=0, fail=0"}
-{"timestamp": "2026-04-24T20:34:56Z", "level": "INFO", "script": "docs_gate.py", "event": "check_start", "doc_id": "RUNTIME_EVIDENCE", "message": "Running check_evidence_freshness"}
-{"timestamp": "2026-04-24T20:34:56Z", "level": "INFO", "script": "detect_drift.py", "event": "evidence_none", "doc_id": "runtime_evidence", "message": "No runtime_evidence docs found."}
-{"timestamp": "2026-04-24T20:34:56Z", "level": "INFO", "script": "docs_gate.py", "event": "check_complete", "doc_id": "RUNTIME_EVIDENCE", "message": "check_evidence_freshness results: pass=0, warn=0, fail=0"}
-{"timestamp": "2026-04-24T20:34:56Z", "level": "INFO", "script": "docs_gate.py", "event": "check_start", "doc_id": "ENGINEERING_STANDARDS", "message": "Running check_shell_scripts"}
-{"timestamp": "2026-04-24T20:34:56Z", "level": "INFO", "script": "check_shell_scripts.py", "event": "shell_check_empty", "doc_id": "ENGINEERING_STANDARDS", "message": "No shell scripts found"}
-{"timestamp": "2026-04-24T20:34:56Z", "level": "INFO", "script": "docs_gate.py", "event": "check_complete", "doc_id": "ENGINEERING_STANDARDS", "message": "check_shell_scripts results: pass=0, warn=0, fail=0"}
-{"timestamp": "2026-04-24T20:34:56Z", "level": "INFO", "script": "docs_gate.py", "event": "gate_summary", "doc_id": "DOCS_GATE", "message": "docs_gate [fast] summary: 13 passed, 8 warnings, 0 failures"}
-{"timestamp": "2026-04-24T20:34:56Z", "level": "INFO", "script": "docs_gate.py", "event": "gate_result", "doc_id": "DOCS_GATE", "message": "Gate: PASS"}
-{"timestamp": "2026-04-24T20:37:09Z", "level": "INFO", "script": "detect_drift.py", "event": "drift_start", "doc_id": "DRIFT", "message": "Starting drift detection"}
-{"timestamp": "2026-04-24T20:37:09Z", "level": "INFO", "script": "detect_drift.py", "event": "adapter_start", "doc_id": "DRIFT", "message": "Running adapter: docker-compose"}
-{"timestamp": "2026-04-24T20:37:09Z", "level": "INFO", "script": "detect_drift.py", "event": "adapter_skip", "doc_id": "ARCH_OVERVIEW", "message": "docker-compose: docker-compose.yml not found"}
+{"timestamp": "1970-01-01T00:00:00Z", "level": "INFO", "script": "repository", "event": "stub", "doc_id": "AGENT_AUDIT_TRAIL", "message": "Tracked stub only. Runtime audit log entries should be written to a non-versioned location."}
 {"timestamp": "2026-04-24T20:37:09Z", "level": "INFO", "script": "detect_drift.py", "event": "adapter_start", "doc_id": "DRIFT", "message": "Running adapter: requirements-pin"}
 {"timestamp": "2026-04-24T20:37:09Z", "level": "INFO", "script": "detect_drift.py", "event": "adapter_skip", "doc_id": "SECURITY_AND_DEPENDENCIES", "message": "requirements-pin: no dependency source files found"}
 {"timestamp": "2026-04-24T20:37:09Z", "level": "INFO", "script": "detect_drift.py", "event": "adapter_start", "doc_id": "DRIFT", "message": "Running adapter: env-vars"}
