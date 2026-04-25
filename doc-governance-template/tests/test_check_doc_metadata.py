@@ -1,4 +1,5 @@
 import pytest
+import json
 import yaml
 from datetime import date, timedelta
 from pathlib import Path
@@ -250,3 +251,41 @@ def test_depends_on_no_cycle_passes(tmp_path):
          patch("scripts.check_doc_metadata.AGENT_CONFIG_PATH", tmp_path / "nonexistent.yaml"):
         _, _, failures = check_metadata()
         assert failures == 0
+
+
+def test_registry_non_dict_fails(tmp_path):
+    """Registry that parses to a non-dict (e.g. a list) should emit a clear FAIL."""
+    registry_file = tmp_path / "registry.json"
+    registry_file.write_text(json.dumps([{"doc_id": "doc1"}]))
+    with patch("scripts.check_doc_metadata.REGISTRY_PATH", registry_file), \
+         patch("scripts.check_doc_metadata.REPO_ROOT", tmp_path), \
+         patch("scripts.check_doc_metadata.AGENT_CONFIG_PATH", tmp_path / "nonexistent.yaml"):
+        _, _, failures = check_metadata()
+        assert failures > 0
+
+
+def test_registry_yaml_null_fails(tmp_path):
+    """Registry YAML that parses to None (empty file) should emit a clear FAIL."""
+    registry_file = tmp_path / "registry.yaml"
+    registry_file.write_text("")
+    with patch("scripts.check_doc_metadata.REGISTRY_PATH", registry_file), \
+         patch("scripts.check_doc_metadata.REPO_ROOT", tmp_path), \
+         patch("scripts.check_doc_metadata.AGENT_CONFIG_PATH", tmp_path / "nonexistent.yaml"):
+        _, _, failures = check_metadata()
+        assert failures > 0
+
+
+def test_registry_yaml_parse_error_message(tmp_path, capsys):
+    """YAML parse failure should report a YAML-specific error, not JSON parse error."""
+    registry_file = tmp_path / "registry.yaml"
+    # JSON parse will fail; YAML parse will also fail on this content
+    registry_file.write_text("{ unclosed: [bad yaml\n  : }")
+    with patch("scripts.check_doc_metadata.REGISTRY_PATH", registry_file), \
+         patch("scripts.check_doc_metadata.REPO_ROOT", tmp_path), \
+         patch("scripts.check_doc_metadata.AGENT_CONFIG_PATH", tmp_path / "nonexistent.yaml"):
+        _, _, failures = check_metadata()
+    captured = capsys.readouterr()
+    assert failures > 0
+    assert "JSON parse error" not in captured.out
+    assert "YAML" in captured.out or "parse error" in captured.out.lower()
+

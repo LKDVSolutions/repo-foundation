@@ -51,3 +51,48 @@ def test_check_registry_invalid_schema(tmp_path):
          patch("scripts.check_doc_registry.REPO_ROOT", tmp_path):
         passed, warnings, failures = check_registry()
         assert failures > 0
+
+
+def test_check_registry_non_dict_fails(tmp_path):
+    """Registry that parses to a non-dict should fail with a clear message."""
+    registry_file = tmp_path / "registry.json"
+    registry_file.write_text(json.dumps([{"doc_id": "doc1"}]))
+    schema_file = tmp_path / "schema.json"
+    schema_file.write_text(json.dumps({"type": "object"}))
+
+    with patch("scripts.check_doc_registry.SCHEMA_PATH", schema_file), \
+         patch("scripts.check_doc_registry.REGISTRY_PATH", registry_file), \
+         patch("scripts.check_doc_registry.REPO_ROOT", tmp_path):
+        passed, warnings, failures = check_registry()
+        assert failures > 0
+
+
+def test_check_registry_yaml_null_fails(tmp_path):
+    """Empty YAML registry (parses to None) should fail gracefully."""
+    registry_file = tmp_path / "registry.yaml"
+    registry_file.write_text("")
+    schema_file = tmp_path / "schema.json"
+    schema_file.write_text(json.dumps({"type": "object"}))
+
+    with patch("scripts.check_doc_registry.SCHEMA_PATH", schema_file), \
+         patch("scripts.check_doc_registry.REGISTRY_PATH", registry_file), \
+         patch("scripts.check_doc_registry.REPO_ROOT", tmp_path):
+        passed, warnings, failures = check_registry()
+        assert failures > 0
+
+
+def test_check_registry_parse_error_message(tmp_path, capsys):
+    """Error messages should reflect the actual error type, not always 'JSON parse error'."""
+    registry_file = tmp_path / "registry.yaml"
+    registry_file.write_text("{ unclosed: [bad\n  : }")
+    schema_file = tmp_path / "schema.json"
+    schema_file.write_text(json.dumps({"type": "object"}))
+
+    with patch("scripts.check_doc_registry.SCHEMA_PATH", schema_file), \
+         patch("scripts.check_doc_registry.REGISTRY_PATH", registry_file), \
+         patch("scripts.check_doc_registry.REPO_ROOT", tmp_path):
+        passed, warnings, failures = check_registry()
+    captured = capsys.readouterr()
+    assert failures > 0
+    assert "JSON parse error" not in captured.out
+

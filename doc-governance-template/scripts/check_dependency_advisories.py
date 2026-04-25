@@ -97,6 +97,12 @@ def check_dependency_advisories() -> tuple[int, int, int]:
             print(result.stderr.strip())
         return passed, warnings, failures + 1
 
+    if payload is None:
+        print("[FAIL] pip-audit produced no output — audit may not have run correctly")
+        if result.stderr.strip():
+            print(result.stderr.strip())
+        return passed, warnings, failures + 1
+
     findings = extract_vulnerabilities(payload)
     if findings:
         print(f"[FAIL] Found {len(findings)} dependency advisories in {REQUIREMENTS_PATH.name}")

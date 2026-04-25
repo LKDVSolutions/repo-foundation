@@ -88,3 +88,22 @@ def test_check_dependency_advisories_fails_when_tool_output_is_invalid(tmp_path)
         passed, warnings, failures = check_dependency_advisories()
 
     assert (passed, warnings, failures) == (0, 0, 1)
+
+
+def test_check_dependency_advisories_fails_when_output_is_empty(tmp_path):
+    """pip-audit returning exit code 0 with no stdout should fail, not silently pass."""
+    requirements_path = tmp_path / "requirements-dev.txt"
+    requirements_path.write_text("pytest==9.0.3\n", encoding="utf-8")
+
+    result = subprocess.CompletedProcess(
+        args=["python", "-m", "pip_audit"],
+        returncode=0,
+        stdout="",
+        stderr="",
+    )
+
+    with patch("scripts.check_dependency_advisories.REQUIREMENTS_PATH", requirements_path), \
+         patch("scripts.check_dependency_advisories.subprocess.run", return_value=result):
+        passed, warnings, failures = check_dependency_advisories()
+
+    assert (passed, warnings, failures) == (0, 0, 1)

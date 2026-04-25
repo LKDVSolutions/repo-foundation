@@ -11,3 +11,6 @@ __pycache__/
 
 # Superpowers skill plans (managed outside repo)
 docs/superpowers/
+
+# Runtime audit log (stub is versioned; runtime entries must not be committed)
+docs/history/AGENT_AUDIT_TRAIL.jsonl

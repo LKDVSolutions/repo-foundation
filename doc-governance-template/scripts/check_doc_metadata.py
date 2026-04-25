@@ -71,8 +71,12 @@ def check_metadata():
             try:
                 data = yaml.safe_load(raw)
             except yaml.YAMLError as e:
-                print(f"[FAIL] JSON parse error: {e}")
+                print(f"[FAIL] Registry parse error (YAML): {e}")
                 return passed, warnings, failures + 1
+
+    if not isinstance(data, dict):
+        print("[FAIL] Registry parse error: expected a mapping at the top level")
+        return passed, warnings, failures + 1
 
     entries = data.get("entries", [])
     if not entries:

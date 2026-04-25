@@ -32,13 +32,24 @@ def check_registry():
             data = json.loads(raw)
             print("[PASS] JSON parses without errors")
         except json.JSONDecodeError:
-            data = yaml.safe_load(raw)
-            print("[PASS] YAML parses without errors")
-        passed += 1
+            try:
+                data = yaml.safe_load(raw)
+                print("[PASS] YAML parses without errors")
+            except yaml.YAMLError as e:
+                print(f"[FAIL] Registry parse error (YAML): {e}")
+                failures += 1
+                return passed, warnings, failures
     except Exception as e:
-        print(f"[FAIL] JSON parse error: {e}")
+        print(f"[FAIL] Registry read/parse error: {e}")
         failures += 1
         return passed, warnings, failures
+
+    if not isinstance(data, dict):
+        print("[FAIL] Registry parse error: expected a mapping at the top level")
+        failures += 1
+        return passed, warnings, failures
+
+    passed += 1
 
     # Load JSON schema
     try:
