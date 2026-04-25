@@ -1,37 +1,37 @@
 import pytest
 from unittest.mock import patch, MagicMock
 from pathlib import Path
+import os
 
 from scripts.request_human import request_human
 
-def test_request_human(tmp_path):
-    needs_attention_file = tmp_path / "docs" / "plans" / "NEEDS_ATTENTION.md"
-    needs_attention_file.parent.mkdir(parents=True, exist_ok=True)
-    
-    # Needs to mock Path to control where needs_attention_file points.
-    # Since request_human.py defines needs_attention_file = Path("docs/plans/NEEDS_ATTENTION.md")
-    # we can change the working directory or mock it.
-    
-    import os
+def test_request_human_uses_repo_root_path_from_any_cwd(tmp_path):
+    repo_root = tmp_path / "repo"
+    repo_root.mkdir()
+    needs_attention_file = repo_root / "docs" / "plans" / "NEEDS_ATTENTION.md"
+
+    outside_cwd = tmp_path / "outside"
+    outside_cwd.mkdir()
     current_dir = os.getcwd()
-    os.chdir(tmp_path)
-    
+    os.chdir(outside_cwd)
+
     try:
-        with patch("subprocess.run") as mock_run, \
+        with patch("scripts.request_human.REPO_ROOT", repo_root), \
+             patch("subprocess.run") as mock_run, \
              patch("sys.exit") as mock_exit:
-             
+
             mock_proc = MagicMock()
             mock_proc.stdout = "diff output"
             mock_run.return_value = mock_proc
-            
+
             request_human("Please help")
-            
+
             mock_exit.assert_called_once_with(1)
-            
-            actual_file = tmp_path / "docs" / "plans" / "NEEDS_ATTENTION.md"
-            assert actual_file.exists()
-            content = actual_file.read_text()
+
+            assert needs_attention_file.exists()
+            content = needs_attention_file.read_text()
             assert "**AGENT REQUEST**: Please help" in content
             assert "diff output" in content
+            assert not (outside_cwd / "docs" / "plans" / "NEEDS_ATTENTION.md").exists()
     finally:
         os.chdir(current_dir)

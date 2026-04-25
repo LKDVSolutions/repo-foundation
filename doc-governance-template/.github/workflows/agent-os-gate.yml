@@ -9,7 +9,43 @@ on:
     branches: [ main, master ]
 
 jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Run Unit Tests
+        run: python -m pytest tests/
+
+  lint:
+    needs: unit-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Run Lint
+        run: python -m ruff check scripts src
+
   doc-gate:
+    needs: unit-tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -36,6 +72,7 @@ jobs:
         run: python scripts/check_needs_attention.py
 
   dependency-advisory:
+    needs: unit-tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -53,6 +90,7 @@ jobs:
         run: python scripts/check_dependency_advisories.py
 
   drift-detection:
+    needs: unit-tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

@@ -12,7 +12,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from aggregate_registry import REGISTRY_MD, extract_governed_entries, render_registry_md
 
 REPO_ROOT = Path(__file__).resolve().parent.parent  # scripts/ -> repo_root
-REGISTRY_YAML = REPO_ROOT / "DOC_REGISTRY.yaml"  # legacy alias retained for compatibility tests
 
 
 def load_registry_entries():

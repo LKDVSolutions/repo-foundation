@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 import sys
-import os
 import json
 import subprocess
 from pathlib import Path
 
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
 def request_human(message):
-    needs_attention_file = Path("docs/plans/NEEDS_ATTENTION.md")
+    needs_attention_file = REPO_ROOT / "docs" / "plans" / "NEEDS_ATTENTION.md"
     
     # Ensure the file exists
     if not needs_attention_file.exists():

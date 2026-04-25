@@ -22,7 +22,6 @@ from __future__ import annotations
 
 import argparse
 import difflib
-import hashlib
 import os
 import re
 import subprocess
@@ -81,8 +80,7 @@ def _write_patch(shadow_dir: Path, patch_name: str, diff_content: str, dry_run: 
     Returns True if a new/changed patch was written.
     """
     patch_path = shadow_dir / patch_name
-    content_hash = hashlib.sha256(diff_content.encode()).hexdigest()[:12]
-    
+
     # Idempotency: if identical patch already exists, skip
     if patch_path.exists():
         existing = patch_path.read_text(encoding="utf-8")

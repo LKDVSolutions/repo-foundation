@@ -7,6 +7,7 @@ Run from repo root:
 
 import argparse
 import json
+import re
 import subprocess
 from pathlib import Path
 
@@ -15,6 +16,7 @@ REPO_ROOT = SCRIPT_DIR.parent
 CONTEXT_FILE = REPO_ROOT / ".agent_context.md"
 REGISTRY_CACHE = REPO_ROOT / ".registry_cache.json"
 REGISTRY_MD = REPO_ROOT / "docs" / "reference" / "registry" / "DOC_REGISTRY.md"
+GITHUB_ISSUE_RE = re.compile(r"^(#\d+|[^/\s]+/[^/\s]+#\d+)$")
 
 def fetch_github_context(issue: str) -> str:
     try:
@@ -28,6 +30,10 @@ def fetch_jira_context(issue: str) -> str:
         f"[NOT IMPLEMENTED] Jira integration not configured. Issue: {issue}. "
         "Configure JIRA_API_TOKEN and JIRA_BASE_URL environment variables and implement this function."
     )
+
+
+def is_valid_github_issue_ref(issue: str) -> bool:
+    return bool(GITHUB_ISSUE_RE.fullmatch(issue.strip()))
 
 
 def registry_is_available() -> bool:
@@ -76,6 +82,9 @@ def main():
         context_parts.append(fetch_jira_context(args.jira))
         
     if args.github:
+        if not is_valid_github_issue_ref(args.github):
+            print("Invalid --github value. Expected '#123' or 'owner/repo#123'.")
+            raise SystemExit(1)
         context_parts.append(f"\n## GitHub Context ({args.github})\n")
         context_parts.append(fetch_github_context(args.github))
 

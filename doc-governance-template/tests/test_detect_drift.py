@@ -139,6 +139,36 @@ def test_main_returns_0_when_no_drift(tmp_path):
     assert exit_code == 0
 
 
+def test_main_uses_adapter_specific_issue_titles(tmp_path):
+    compose_file = tmp_path / "docker-compose.yml"
+    compose_file.write_text("services:\n  web:\n    image: nginx\n  db:\n    image: postgres\n")
+
+    req_file = tmp_path / "requirements.txt"
+    req_file.write_text("pytest>=7.0.0\n", encoding="utf-8")
+
+    arch_blueprint = tmp_path / "docs" / "architecture" / "OVERVIEW.md"
+    arch_blueprint.parent.mkdir(parents=True)
+    arch_blueprint.write_text("# Architecture\n## Services\n- web\n")
+
+    sec_blueprint = tmp_path / "docs" / "development" / "SECURITY_AND_DEPENDENCIES.md"
+    sec_blueprint.parent.mkdir(parents=True)
+    sec_blueprint.write_text("# Security\n## The \"Strict Pinning\" Rule\n", encoding="utf-8")
+
+    inbox = tmp_path / "docs" / "plans" / "IDEA_INBOX.md"
+    inbox.parent.mkdir(parents=True)
+    inbox.write_text("# Idea Inbox\n\n")
+
+    with patch("scripts.detect_drift.REPO_ROOT", tmp_path), \
+         patch("scripts.detect_drift.IDEA_INBOX", inbox), \
+         patch("scripts.detect_drift.create_github_issue") as issue_mock:
+        exit_code = main()
+
+    assert exit_code == 1
+    adapter_names = {call.args[1] for call in issue_mock.call_args_list if len(call.args) > 1}
+    assert "docker-compose" in adapter_names
+    assert "requirements-pin" in adapter_names
+
+
 # --- structured comment block parser tests ---
 
 def test_extract_governance_block_structured_comment():

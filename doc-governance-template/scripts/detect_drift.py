@@ -433,9 +433,9 @@ def _open_issue_exists(title: str) -> bool:
         return False
 
 
-def create_github_issue(message: str) -> None:
+def create_github_issue(message: str, adapter_name: str | None = None) -> None:
     """Create a GitHub issue for drift. Skips duplicates and auth/tooling failures."""
-    title = "Drift Detected"
+    title = f"Drift Detected: {adapter_name}" if adapter_name else "Drift Detected"
     try:
         if _open_issue_exists(title):
             LOGGER.log("INFO", "github_issue_skip", f"Open issue '{title}' already exists", doc_id="DRIFT_ISSUE")
@@ -579,7 +579,7 @@ def main() -> int:
                 )
                 LOGGER.log("ERROR", "drift_detected", msg, doc_id="DRIFT")
                 log_drift(msg)
-                create_github_issue(msg)
+                create_github_issue(msg, adapter.name)
 
             if report.missing_from_source:
                 msg = _format_missing_message(
@@ -591,6 +591,7 @@ def main() -> int:
                 )
                 LOGGER.log("ERROR", "drift_detected", msg, doc_id="DRIFT")
                 log_drift(msg)
+                create_github_issue(msg, adapter.name)
         else:
             LOGGER.log("INFO", "adapter_pass", f"{adapter.name}: no drift detected", doc_id="DRIFT")
 

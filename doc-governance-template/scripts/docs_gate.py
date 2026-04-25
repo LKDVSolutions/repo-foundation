@@ -38,49 +38,29 @@ def run_gate(fast: bool = True) -> int:
     LOGGER.log("INFO", "gate_start", f"Starting docs gate in {mode} mode", doc_id="DOCS_GATE")
 
     # --- Fast checks (always run) ---
-    LOGGER.log("INFO", "check_start", "Running check_doc_registry", doc_id="DOC_REGISTRY")
-    p, w, f = check_registry()
-    total_passed += p
-    total_warnings += w
-    total_failures += f
-    LOGGER.log("INFO", "check_complete", f"check_doc_registry results: pass={p}, warn={w}, fail={f}", doc_id="DOC_REGISTRY")
-
-    LOGGER.log("INFO", "check_start", "Running check_doc_metadata", doc_id="DOC_METADATA")
-    p, w, f = check_metadata()
-    total_passed += p
-    total_warnings += w
-    total_failures += f
-    LOGGER.log("INFO", "check_complete", f"check_doc_metadata results: pass={p}, warn={w}, fail={f}", doc_id="DOC_METADATA")
-
-    LOGGER.log("INFO", "check_start", "Running check_doc_registry_sync", doc_id="DOC_REGISTRY")
-    p, w, f = check_registry_sync()
-    total_passed += p
-    total_warnings += w
-    total_failures += f
-    LOGGER.log("INFO", "check_complete", f"check_doc_registry_sync results: pass={p}, warn={w}, fail={f}", doc_id="DOC_REGISTRY")
-
-    LOGGER.log("INFO", "check_start", "Running check_evidence_freshness", doc_id="RUNTIME_EVIDENCE")
-    p, w, f = check_evidence_freshness()
-    total_passed += p
-    total_warnings += w
-    total_failures += f
-    LOGGER.log("INFO", "check_complete", f"check_evidence_freshness results: pass={p}, warn={w}, fail={f}", doc_id="RUNTIME_EVIDENCE")
-
-    LOGGER.log("INFO", "check_start", "Running check_shell_scripts", doc_id="ENGINEERING_STANDARDS")
-    p, w, f = check_shell_scripts()
-    total_passed += p
-    total_warnings += w
-    total_failures += f
-    LOGGER.log("INFO", "check_complete", f"check_shell_scripts results: pass={p}, warn={w}, fail={f}", doc_id="ENGINEERING_STANDARDS")
+    checks = [
+        ("check_doc_registry", "DOC_REGISTRY", check_registry),
+        ("check_doc_metadata", "DOC_METADATA", check_metadata),
+        ("check_doc_registry_sync", "DOC_REGISTRY", check_registry_sync),
+        ("check_evidence_freshness", "RUNTIME_EVIDENCE", check_evidence_freshness),
+        ("check_shell_scripts", "ENGINEERING_STANDARDS", check_shell_scripts),
+    ]
 
     # --- Full checks (adds link validation) ---
     if not fast:
-        LOGGER.log("INFO", "check_start", "Running validate_doc_links", doc_id="DOC_LINKS")
-        p, w, f = check_links()
-        total_passed += p
-        total_warnings += w
-        total_failures += f
-        LOGGER.log("INFO", "check_complete", f"validate_doc_links results: pass={p}, warn={w}, fail={f}", doc_id="DOC_LINKS")
+        checks.append(("validate_doc_links", "DOC_LINKS", check_links))
+
+    for check_name, doc_id, check_func in checks:
+        LOGGER.log("INFO", "check_start", f"Running {check_name}", doc_id=doc_id)
+        try:
+            p, w, f = check_func()
+            total_passed += p
+            total_warnings += w
+            total_failures += f
+            LOGGER.log("INFO", "check_complete", f"{check_name} results: pass={p}, warn={w}, fail={f}", doc_id=doc_id)
+        except Exception as exc:
+            total_failures += 1
+            LOGGER.log("ERROR", "check_exception", f"{check_name} raised {type(exc).__name__}: {exc}", doc_id=doc_id)
 
     # --- Summary ---
     summary = (

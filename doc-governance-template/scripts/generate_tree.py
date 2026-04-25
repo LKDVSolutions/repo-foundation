@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import os
-import sys
 
 def generate_tree(dir_path, prefix=""):
     """Generates a tree representation of the directory, ignoring certain folders."""

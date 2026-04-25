@@ -24,7 +24,7 @@ def find_all_markdown_files(docs_dir: Path) -> set:
                 full_path = Path(root) / file
                 try:
                     rel_path = full_path.relative_to(docs_dir.parent)
-                    markdown_files.add(str(rel_path).replace('\\\\', '/'))
+                    markdown_files.add(str(rel_path).replace('\\', '/'))
                 except ValueError:
                     pass
     return markdown_files

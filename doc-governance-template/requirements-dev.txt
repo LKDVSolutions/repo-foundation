@@ -5,3 +5,4 @@ jsonschema==4.26.0
 filelock==3.29.0
 marko==2.2.2
 pip-audit==2.10.0
+ruff==0.13.1

@@ -4,8 +4,8 @@
 # Agents should rely on these instead of guessing build commands.
 
 build:
-	@echo "Building application..."
-	# TODO: Replace with actual build command (e.g., npm run build, cargo build)
+	@echo "Build target is not configured for this template. Configure 'build' for your project."
+	@exit 1
 
 test:
 	@echo "Running tests..."
@@ -13,7 +13,7 @@ test:
 
 lint:
 	@echo "Running linters..."
-	# TODO: Add linters (e.g., flake8, ruff)
+	python -m ruff check scripts src
 
 aggregate:
 	@echo "Aggregating registry from frontmatter..."

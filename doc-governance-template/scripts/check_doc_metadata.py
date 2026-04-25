@@ -4,7 +4,7 @@
 import sys
 import json
 import yaml
-from datetime import date, timedelta
+from datetime import date
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -38,19 +38,6 @@ def _load_staleness_config() -> dict:
     except Exception:
         pass
     return defaults
-
-
-def _detect_cycle(start: str, graph: dict[str, list[str]]) -> bool:
-    """Return True if start has a cycle in the directed graph."""
-    visited: set[str] = set()
-    current = start
-    while current:
-        if current in visited:
-            return True
-        visited.add(current)
-        neighbors = graph.get(current, [])
-        current = neighbors[0] if neighbors else None
-    return False
 
 
 def check_metadata():

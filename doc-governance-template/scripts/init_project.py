@@ -2,7 +2,6 @@
 import os
 import sys
 import subprocess
-import json
 from pathlib import Path
 
 # ANSI colors for terminal output
@@ -28,7 +27,7 @@ def prompt(text, options=None, default=None):
     response = input(f"{YELLOW}{query}{RESET}").strip()
     return response if response else default
 
-def replace_placeholders(project_name, author_name):
+def replace_placeholders(project_name, author_name, project_description):
     print(f"[{GREEN}*{RESET}] Replacing placeholders across markdown and yaml files...")
     
     # Files to process
@@ -38,7 +37,7 @@ def replace_placeholders(project_name, author_name):
     replacements = {
         '[YOUR-PROJECT-NAME]': project_name,
         '[YOUR-NAME]': author_name,
-        '[YOUR-PROJECT-DESCRIPTION]': 'Agentic OS managed project.'
+        '[YOUR-PROJECT-DESCRIPTION]': project_description
     }
     
     for root, dirs, files in os.walk('.'):
@@ -117,6 +116,7 @@ def main():
     
     project_name = prompt("Project Name", default=Path.cwd().name)
     author_name = prompt("Author Name", default=os.getenv('USER', 'agent'))
+    project_description = prompt("Project Description", default="Agentic OS managed project.")
     
     print("Are you starting a brand new project, or retrofitting this governance into an existing codebase?")
     print("  [1] Blank Canvas (New Project)")
@@ -126,10 +126,10 @@ def main():
     
     print_header("Executing Bootstrap")
     
-    replace_placeholders(project_name, author_name)
+    replace_placeholders(project_name, author_name, project_description)
     
     print(f"[{GREEN}*{RESET}] Generating initial DOC_REGISTRY.md...")
-    subprocess.run([sys.executable, "scripts/aggregate_registry.py"])
+    subprocess.run([sys.executable, "scripts/aggregate_registry.py"], check=True)
     
     boot_file = generate_boot_instruction(project_type)
     
